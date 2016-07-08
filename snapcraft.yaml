@@ -11,6 +11,6 @@ parts:
     plugin: go
     source: ./core
   mycat:
-    type: python2
+    plugin: python2
     source: ./pyserver
 
