@@ -307,4 +307,4 @@ def setup(args=None):
     reactor.listenTCP(portalPort, website)
 
     # Never return from here
-    reactor.run()
+    reactor.run(installSignalHandlers=0)

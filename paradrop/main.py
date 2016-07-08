@@ -35,11 +35,6 @@ class Nexus(nexus.NexusBase):
             return self.connect(apiinternal.RouterSession)
 
     def onStop(self):
-        # if self.session is not None:
-        #     self.session.leave()
-        # else:
-        #     print 'No session found!'
-
         super(Nexus, self).onStop()
 
 
@@ -61,9 +56,9 @@ def main():
     p.add_argument('--unittest', help="Run the server in unittest mode", action='store_true')
     p.add_argument('--verbose', '-v', help='Enable verbose', action='store_true')
 
-    # args = p.get_default()
     args = p.parse_args([])
 
+    # TESTING
     args.local = True
 
     # Temp- this should go to nexus (the settings portion of it, at least)
