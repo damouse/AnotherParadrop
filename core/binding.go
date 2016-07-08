@@ -25,7 +25,7 @@ import (
 
 var lock sync.Mutex
 
-func init() {
+func InitPyEnv() {
 	C.initialize_python()
 }
 

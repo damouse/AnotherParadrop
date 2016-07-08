@@ -153,3 +153,12 @@ To run directly:
 export PYTHONPATH=paradrop/docker
 go run core/main.go
 ```
+
+## Random TODO
+
+- Convert nexus and settings into a conf file that the core reads
+- Migrate settings to the core
+- Set up webserver
+- Pass argslist onto python from go 
+- Deal with multiple `pthread`s accessing the python modules
+- Integrate pdtools
