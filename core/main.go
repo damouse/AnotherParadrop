@@ -30,13 +30,13 @@ static void initialize_python () {
 
     if (Py_IsInitialized() == 0) {
         Py_Initialize();
-        // fprintf(stdout, "> Py_Initialize\n");
+        fprintf(stdout, "> Py_Initialize\n");
     }
 
     // make sure the GIL is correctly initialized
     if (PyEval_ThreadsInitialized() == 0) {
         PyEval_InitThreads();
-        // fprintf(stdout, "> PyEval_ThreadsInitialized\n");
+        fprintf(stdout, "> PyEval_ThreadsInitialized\n");
     }
 
     PyObject *module = Py_InitModule("Foo", ModuleMethods);
@@ -84,7 +84,7 @@ func checkError(e error) {
 }
 
 func embed_function(num int) {
-	_module := python.PyImport_ImportModuleNoBlock("json_dump")
+	_module := python.PyImport_ImportModuleNoBlock("dock")
 
 	// get the function
 	_attr := _module.GetAttrString("run")
