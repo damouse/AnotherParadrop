@@ -1,4 +1,4 @@
-package gosnake
+package main
 
 // Conversion between C.Python and python.PyObject types to and from G
 

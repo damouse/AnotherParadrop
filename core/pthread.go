@@ -1,4 +1,4 @@
-package gosnake
+package main
 
 /*
 #include <pthread.h>

@@ -2,7 +2,7 @@
 
 Version 2-- no pex, snappy-remote, vagrant, or kvm. Or twisted, if I have my way! These are instructions for working on Paradrop, not making chutes. 
 
-## Building Paradrop
+## Setting up Environment
 
 Install the dev tools. Paradrop is built as a snap using `snapcraft`.
 

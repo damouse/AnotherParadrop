@@ -18,7 +18,11 @@ services:
 parts:
   core:
     plugin: go
-    source: core/runner
+    source: core
+    build-packages:
+      - python-dev
+    stage-packages:
+      - python-dev
 
   paradrop:
     plugin: python2

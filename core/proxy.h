@@ -29,13 +29,13 @@ static void initialize_python () {
 
     if (Py_IsInitialized() == 0) {
         Py_Initialize();
-        // fprintf(stdout, "> Py_Initialize\n");
+        fprintf(stdout, "> Py_Initialize\n");
     }
 
     // make sure the GIL is correctly initialized
     if (PyEval_ThreadsInitialized() == 0) {
         PyEval_InitThreads();
-        // fprintf(stdout, "> PyEval_ThreadsInitialized\n");
+        fprintf(stdout, "> PyEval_ThreadsInitialized\n");
     }
 
     Py_InitModule("Foo", ModuleMethods);

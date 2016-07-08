@@ -1,6 +1,4 @@
-package paradrop
-
-import "./gosnake"
+package main
 
 // Entry point into core and rest of paradrop system
 
@@ -12,5 +10,5 @@ func checkError(e error) {
 
 // Dummy entry point tester
 func Create_thread(num int) {
-	gosnake.RunTest(num)
+	RunTest(num)
 }

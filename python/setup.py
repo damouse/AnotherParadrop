@@ -8,7 +8,6 @@ setup(
     install_requires=[
         'docker-py',
         'ipaddress',
-        'twisted',
         'txdbus',
         'wget',
         'pyyaml',
@@ -23,11 +22,18 @@ setup(
         'pyyaml>=3.11',
         'requests>=2.7.0',
         'service-identity>=14.0.0',
-        'twisted==14.0.2',
+        'twisted>=14.2',
         'enum34',
         'smokesignal>=0.7.0',
         'autobahn==0.10.5-2'
     ],
 
     packages=find_packages(),
+
+    entry_points={
+        'console_scripts': [
+            'paradrop=paradrop:main',
+            'pdconfd=paradrop:run_pdconfd'
+        ],
+    },
 )
