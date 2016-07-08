@@ -13,7 +13,7 @@ extern PyObject* port(PyObject *self, PyObject *args);
 
 #define _gopy_max_varargs 8
 
-static PyObject* PCallFunction(PyObject *o, int len, long long unsigned int pyfmtt, void *cargs) {
+static PyObject* PCallFunction(PyObject *o, int len, void * pyfmtt, void *cargs) {
     void ** args = (void**)cargs;
     char *pyfmt = (char *) pyfmtt;
 
@@ -210,14 +210,17 @@ func CallFunction(self *python.PyObject, args ...interface{}) *python.PyObject {
 		return togo(o)
 	}
 
-	fmted := C.CString(strings.Join(types, ""))
-	p := *(*uint64)(unsafe.Pointer(&fmted))
-	defer C.free(unsafe.Pointer(fmted))
+	fmted := (*[]byte)(unsafe.Pointer(C.CString(strings.Join(types, ""))))
+
+	//p := *(*uint64)(unsafe.Pointer(&fmted))
+	// p := et_data(unsafe.Pointer(&data[0]))
+
+	// defer C.free(unsafe.Pointer(fmted))
 
 	o := C.PCallFunction(
 		topy(self),
 		C.int(len(args)),
-		p,
+		&fmted,
 		unsafe.Pointer(&cargs[0]),
 	)
 
