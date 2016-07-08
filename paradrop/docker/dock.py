@@ -1,12 +1,16 @@
-import os
-from flask import Flask
-app = Flask(__name__)
+
+import json
+import threading
+import Foo
+
+counter = 1
 
 
-@app.route("/")
-def hello():
-    return "Hello from Python!"
+def run(*a):
+    global counter
+    counter += 1
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    print Foo.doSomething("this is patrick")
+
+    print "PY: invocation", a, counter
+    return "Hello from python!"

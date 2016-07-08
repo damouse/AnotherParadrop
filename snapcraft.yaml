@@ -20,6 +20,6 @@ parts:
     plugin: go
     source: core
 
-  pddocker:
+  paradrop:
     plugin: python2
-    source: pddocker
+    source: .
