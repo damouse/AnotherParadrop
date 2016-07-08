@@ -1,0 +1,16 @@
+name: paradrop
+version: 1
+summary: Routers
+description: Routers and Virtualization
+confinement: strict
+vendor: ParadropLabs <pd@paradrop.org>
+icon: ./icon.png
+
+parts:
+  core:
+    plugin: go
+    source: ./core
+  mycat:
+    type: python2
+    source: ./pyserver
+
