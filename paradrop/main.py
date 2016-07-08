@@ -44,7 +44,7 @@ class Nexus(nexus.NexusBase):
 
 
 def main():
-    p = argparse.ArgumentParser(description='Paradrop API server running on client')
+    p = argparse.ArgumentParser(prog='Paradrop', description='Paradrop API server running on client')
     p.add_argument('-s', '--settings', help='Overwrite settings, format is "KEY:VALUE"',
                    action='append', type=str, default=[])
     p.add_argument('--config', help='Run as the configuration daemon',
@@ -61,8 +61,10 @@ def main():
     p.add_argument('--unittest', help="Run the server in unittest mode", action='store_true')
     p.add_argument('--verbose', '-v', help='Enable verbose', action='store_true')
 
-    args = p.parse_args()
-    # print args
+    # args = p.get_default()
+    args = p.parse_args([])
+
+    args.local = True
 
     # Temp- this should go to nexus (the settings portion of it, at least)
     # Change the confd directories so we can run locally
@@ -94,7 +96,6 @@ def main():
 
         # Now setup the RESTful API server for Paradrop
         pdfcd.server.setup(args)
-
 
 if __name__ == "__main__":
     main()

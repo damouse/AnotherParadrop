@@ -13,61 +13,6 @@ extern PyObject* port(PyObject *self, PyObject *args);
 
 #define _gopy_max_varargs 8
 
-static PyObject* PCallFunction(PyObject *o, int len, void * pyfmtt, void *cargs) {
-    void ** args = (void**)cargs;
-    char *pyfmt = (char *) pyfmtt;
-
-    if (pyfmtt == 0) {
-        pyfmt = NULL;
-    }
-
-    if (len > _gopy_max_varargs) {
-            PyErr_Format(
-                    PyExc_RuntimeError,
-                    "python: maximum number of varargs (%d) exceeded (%d)",
-                    _gopy_max_varargs,
-                    len
-            );
-            return NULL;
-    }
-
-    switch (len) {
-        case 0:
-            return PyObject_CallFunction(o, pyfmt);
-
-        case 1:
-            return PyObject_CallFunction(o, pyfmt, args[0]);
-
-        case 2:
-            return PyObject_CallFunction(o, pyfmt, args[0], args[1]);
-
-        case 3:
-            return PyObject_CallFunction(o, pyfmt, args[0], args[1], args[2]);
-
-        case 4:
-            return PyObject_CallFunction(o, pyfmt, args[0], args[1], args[2], args[3]);
-
-        case 5:
-            return PyObject_CallFunction(o, pyfmt, args[0], args[1], args[2], args[3], args[4]);
-
-        case 6:
-            return PyObject_CallFunction(o, pyfmt, args[0], args[1], args[2], args[3], args[4], args[5]);
-
-        case 7:
-            return PyObject_CallFunction(o, pyfmt, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
-
-        case 8:
-            return PyObject_CallFunction(o, pyfmt, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
-
-        default:
-            PyErr_Format(PyExc_RuntimeError, "python: invalid number of arguments (%d)", len);
-            return NULL;
-
-    }
-
-    return NULL;
-}
-
 // Get rid of this, use the manual exporting
 static PyObject* Foo_doSomething(PyObject *self, PyObject *args){
     PyObject* objectsRepresentation = PyObject_Repr(args);
@@ -114,7 +59,6 @@ import "C"
 
 import (
 	"fmt"
-	"strings"
 	"sync"
 	"unsafe"
 
@@ -171,8 +115,11 @@ func embed_function(num int) {
 
 func testFunctionTypes(name string, age int) {
 	_module := python.PyImport_ImportModuleNoBlock("paradrop")
+	attr := _module.GetAttrString("main")
 
-	fmt.Println("Havve", _module)
+	// main := attr.GetAttrString("main")
+
+	fmt.Println("Havve", attr.Check_Callable())
 
 	// attr := _module.GetAttrString("talk")
 
@@ -180,54 +127,17 @@ func testFunctionTypes(name string, age int) {
 	// python.PyTuple_SET_ITEM(a, 0, python.PyString_FromString(name))
 	// python.PyTuple_SET_ITEM(a, 1, python.PyInt_FromLong(age))
 
-	// attr.CallObject(a)
-	// // CallFunction(attr, name, age)
+	ret := attr.CallObject(python.PyTuple_New(0))
 
-	// fmt.Println("GO: Done")
+	// Python threw an exception!
+	if ret == nil {
+		python.PyErr_PrintEx(false)
+	}
+
+	fmt.Println("GO: Done", ret)
 }
 
-func CallFunction(self *python.PyObject, args ...interface{}) *python.PyObject {
-	if len(args) > int(C._gopy_max_varargs) {
-		panic(fmt.Errorf(
-			"gopy: maximum number of varargs (%d) exceeded (%d)",
-			int(C._gopy_max_varargs),
-			len(args),
-		))
-	}
-
-	types := make([]string, 0, len(args))
-	cargs := make([]unsafe.Pointer, 0, len(args))
-
-	for _, arg := range args {
-		ptr, typ := pyfmt(arg)
-		types = append(types, typ)
-		cargs = append(cargs, ptr)
-		if typ == "s" {
-			defer func(ptr unsafe.Pointer) {
-				C.free(ptr)
-			}(ptr)
-		}
-	}
-
-	if len(args) <= 0 {
-		o := C.PCallFunction(topy(self), 0, 0, nil)
-		return togo(o)
-	}
-
-	fmted := C.CString(strings.Join(types, ""))
-	defer C.free(unsafe.Pointer(fmted))
-
-	o := C.PCallFunction(
-		topy(self),
-		C.int(len(args)),
-		fmted,
-		unsafe.Pointer(&cargs[0]),
-	)
-
-	return togo(o)
-}
-
-// pyfmt returns the python format string for a given go value
+// // pyfmt returns the python format string for a given go value
 func pyfmt(v interface{}) (unsafe.Pointer, string) {
 	switch v := v.(type) {
 	case bool:
@@ -340,7 +250,7 @@ func checkError(e error) {
 func main() {
 	end := make(chan bool)
 
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 1; i++ {
 		go create_thread(i)
 	}
 
