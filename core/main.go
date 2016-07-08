@@ -153,33 +153,37 @@ func port(self *C.PyObject, args *C.PyObject) *C.PyObject {
 }
 
 func embed_function(num int) {
-	_module := python.PyImport_ImportModuleNoBlock("dock")
+	_module := python.PyImport_ImportModuleNoBlock("paradrop")
+	fmt.Println("Havve", _module)
 
 	// get the function
-	_attr := _module.GetAttrString("run")
+	// _attr := _module.GetAttrString("run")
 
-	// pack arguments
-	a := python.PyTuple_New(1)
-	python.PyTuple_SET_ITEM(a, 0, python.PyInt_FromLong(num))
+	// // pack arguments
+	// a := python.PyTuple_New(1)
+	// python.PyTuple_SET_ITEM(a, 0, python.PyInt_FromLong(num))
 
-	_result := _attr.CallObject(a)
-	r := python.PyString_AsString(_result)
+	// _result := _attr.CallObject(a)
+	// r := python.PyString_AsString(_result)
 
-	fmt.Println("GO: ", r)
+	// fmt.Println("GO: ", r)
 }
 
 func testFunctionTypes(name string, age int) {
-	_module := python.PyImport_ImportModuleNoBlock("dock")
-	attr := _module.GetAttrString("talk")
+	_module := python.PyImport_ImportModuleNoBlock("paradrop")
 
-	a := python.PyTuple_New(2)
-	python.PyTuple_SET_ITEM(a, 0, python.PyString_FromString(name))
-	python.PyTuple_SET_ITEM(a, 1, python.PyInt_FromLong(age))
+	fmt.Println("Havve", _module)
 
-	//_attr.CallObject(a)
-	CallFunction(attr, name, age)
+	// attr := _module.GetAttrString("talk")
 
-	fmt.Println("GO: Done")
+	// a := python.PyTuple_New(2)
+	// python.PyTuple_SET_ITEM(a, 0, python.PyString_FromString(name))
+	// python.PyTuple_SET_ITEM(a, 1, python.PyInt_FromLong(age))
+
+	// attr.CallObject(a)
+	// // CallFunction(attr, name, age)
+
+	// fmt.Println("GO: Done")
 }
 
 func CallFunction(self *python.PyObject, args ...interface{}) *python.PyObject {
@@ -210,17 +214,13 @@ func CallFunction(self *python.PyObject, args ...interface{}) *python.PyObject {
 		return togo(o)
 	}
 
-	fmted := (*[]byte)(unsafe.Pointer(C.CString(strings.Join(types, ""))))
-
-	//p := *(*uint64)(unsafe.Pointer(&fmted))
-	// p := et_data(unsafe.Pointer(&data[0]))
-
-	// defer C.free(unsafe.Pointer(fmted))
+	fmted := C.CString(strings.Join(types, ""))
+	defer C.free(unsafe.Pointer(fmted))
 
 	o := C.PCallFunction(
 		topy(self),
 		C.int(len(args)),
-		&fmted,
+		fmted,
 		unsafe.Pointer(&cargs[0]),
 	)
 

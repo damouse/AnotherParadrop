@@ -6,6 +6,7 @@ image/
 *.snap
 
 *.pyc
+*.pyo
 *.egg-info
 
 env
