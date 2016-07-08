@@ -1,16 +1,35 @@
 name: paradrop
-version: 1
+version: 3
 summary: Routers
 description: Routers and Virtualization
 confinement: strict
 vendor: ParadropLabs <pd@paradrop.org>
 icon: ./icon.png
 
+services:
+  sev:
+    start: ./bin/core
+    description: "Paradrop Daemon"
+    caps:
+      - network-client
+      - network-service
+      - network-admin
+
 parts:
   core:
     plugin: go
     source: ./core
+    # filesets:
+    #   go-server:
+    #     - bin/golang-*
+    #   snap:
+    #     - $go-server
   mycat:
     plugin: python2
     source: ./pyserver
+  # glue:
+  #   plugin: copy
+  #   files:
+  #     runner: bin/runner
 
+# Note: I'm not sure which of these are still needed, but I'm leaving them here for now

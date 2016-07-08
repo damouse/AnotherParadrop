@@ -7,5 +7,5 @@ import (
 
 func main() {
 	fmt.Println("Starting up!")
-	panic(http.ListenAndServe(":8080", http.FileServer(http.Dir("."))))
+	panic(http.ListenAndServe(":7979", http.FileServer(http.Dir(".."))))
 }

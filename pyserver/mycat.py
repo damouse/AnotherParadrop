@@ -1,17 +1,14 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 
-import sys
+import os
+from flask import Flask
+app = Flask(__name__)
 
-def main(argv):
-    try:
-        with open(argv[1], 'r') as fp:
-            buf = fp.read(4096)
-            while buf:
-                sys.stdout.write(buf)
-                buf = fp.read(4096)
-    except Exception as exc:
-        print("Error:", str(exc))
-        return 1
+
+@app.route("/")
+def hello():
+    return "Hello from Python!"
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv))
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)

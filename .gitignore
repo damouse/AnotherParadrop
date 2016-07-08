@@ -1,4 +1,5 @@
 parts/
 snap/
 stage/
+image/
 *.snap
