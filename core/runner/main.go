@@ -1,18 +1,14 @@
 package main
 
-// Entry point into core and rest of paradrop system
+// Simple starter script to kick off the go core
 
-func checkError(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
+import paradrop ".."
 
 func main() {
 	end := make(chan bool)
 
 	for i := 0; i < 1; i++ {
-		go create_thread(i)
+		go paradrop.Create_thread(i)
 	}
 
 	<-end

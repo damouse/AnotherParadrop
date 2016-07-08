@@ -1,4 +1,4 @@
-package main
+package gosnake
 
 // Bindings between go and python
 
@@ -15,7 +15,6 @@ import (
 	"unsafe"
 
 	"github.com/sbinet/go-python"
-	"github.com/spikeekips/go-pthreads"
 )
 
 // Steps to expose a method to python:
@@ -71,7 +70,7 @@ func testFunctionTypes(name string, age int) {
 
 	ret := attr.CallObject(python.PyTuple_New(0))
 
-	// Python threw an exception!
+	// Python threw an exception! Return an error here to the go caller?
 	if ret == nil {
 		python.PyErr_PrintEx(false)
 	}
@@ -79,12 +78,12 @@ func testFunctionTypes(name string, age int) {
 	fmt.Println("GO: Done", ret)
 }
 
-func create_thread(num int) {
+func RunTest(num int) {
 	lock.Lock()
 	defer lock.Unlock()
 	done := make(chan bool)
 
-	thread := pthread.Create(func() {
+	thread := PtCreate(func() {
 		gil := C.PyGILState_Ensure()
 		defer C.PyGILState_Release(gil)
 
