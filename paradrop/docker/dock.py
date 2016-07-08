@@ -1,5 +1,3 @@
-#!/usr/bin/env python2
-
 import os
 from flask import Flask
 app = Flask(__name__)

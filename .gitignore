@@ -2,4 +2,10 @@ parts/
 snap/
 stage/
 image/
+
 *.snap
+
+*.pyc
+*.egg-info
+
+env

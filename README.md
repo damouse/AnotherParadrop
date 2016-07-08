@@ -32,6 +32,20 @@ Finally, to run the snap:
 snapcraft run
 ```
 
+You can also execute the binary directly:
+
+```
+# note: name may be different
+stage/bin/core
+```
+
+As well as drop into a `snapcraft shell`, where you have access to the full environment as if you were installed: python packages, go, etc.
+
+```
+$ snapcraft shell
+$ snapcraft: core
+```
+
 This downloads an ubuntu container and launches the snap within it. Be warned that the container cant do much in terms of networking. You'll need to pass arguments along to `kvm` to set up forwarding.  
 
 ```
@@ -60,6 +74,8 @@ sudo snappy service logs ethereum
 Start, stop, or restart services: 
 
 ```
+# with a service called "ethereum"
+
 sudo snappy service start ethereum
 sudo snappy service stop ethereum
 sudo snappy service restart ethereum

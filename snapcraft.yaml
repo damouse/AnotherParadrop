@@ -18,18 +18,8 @@ services:
 parts:
   core:
     plugin: go
-    source: ./core
-    # filesets:
-    #   go-server:
-    #     - bin/golang-*
-    #   snap:
-    #     - $go-server
-  mycat:
-    plugin: python2
-    source: ./pyserver
-  # glue:
-  #   plugin: copy
-  #   files:
-  #     runner: bin/runner
+    source: core
 
-# Note: I'm not sure which of these are still needed, but I'm leaving them here for now
+  pddocker:
+    plugin: python2
+    source: pddocker
