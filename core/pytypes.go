@@ -1,5 +1,13 @@
 package main
 
+// Conversion between C.Python and python.PyObject types to and from G
+
+/*
+#cgo pkg-config: python-2.7
+#include "Python.h"
+*/
+import "C"
+
 import (
 	"fmt"
 	"unsafe"
@@ -7,7 +15,7 @@ import (
 	"github.com/sbinet/go-python"
 )
 
-// // pyfmt returns the python format string for a given go value
+// pyfmt returns the python format string for a given go value
 func pyfmt(v interface{}) (unsafe.Pointer, string) {
 	switch v := v.(type) {
 	case bool:
@@ -78,4 +86,16 @@ func pyfmt(v interface{}) (unsafe.Pointer, string) {
 	}
 
 	panic(fmt.Errorf("python: unknown type (%v)", v))
+}
+
+func topy(self *python.PyObject) *C.PyObject {
+	return (*C.PyObject)(unsafe.Pointer(self))
+}
+
+func togo(obj *C.PyObject) *python.PyObject {
+	if obj == nil {
+		return nil
+	}
+
+	return python.PyObject_FromVoidPtr(unsafe.Pointer(obj))
 }
