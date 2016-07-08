@@ -11,10 +11,15 @@ def run(*a):
     counter += 1
 
     print Foo.doSomething("this is patrick")
+    Foo.exporteed()
+    # Foo.testFunctionTypes()
 
     print "PY: invocation", a, counter
     return "Hello from python!"
 
+
+def talk(name, age):
+    print "Python: ", name, age
 
 '''
 Hypothetically, what needs to get done to have a go-core interface up with python.

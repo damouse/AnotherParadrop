@@ -92,3 +92,10 @@ We may be able to let snaps update themselves.See `snapd-control` [here](https:/
 Random notes follow.
 
 Information on installing python packages as part of the yaml file: https://gist.github.com/ericoporto/87996bef1bf492e2fabf161ea7219994
+
+To run directly: 
+
+```
+export PYTHONPATH=paradrop/docker
+go run core/main.go
+```
