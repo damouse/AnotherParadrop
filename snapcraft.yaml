@@ -18,8 +18,8 @@ services:
 parts:
   core:
     plugin: go
-    source: core
+    source: core/runner
 
   paradrop:
     plugin: python2
-    source: .
+    source: python

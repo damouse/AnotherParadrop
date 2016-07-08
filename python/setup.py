@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="paradrop",
@@ -29,5 +29,5 @@ setup(
         'autobahn==0.10.5-2'
     ],
 
-    packages=['paradrop'],
+    packages=find_packages(),
 )
