@@ -162,3 +162,5 @@ go run core/main.go
 - Pass argslist onto python from go 
 - Deal with multiple `pthread`s accessing the python modules
 - Integrate pdtools
+
+See here for the 2.7 problem: https://github.com/docker/docker-py/issues/1019
