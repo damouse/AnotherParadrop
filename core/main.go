@@ -2,12 +2,17 @@ package main
 
 // Simple starter script to kick off the go core
 
-import "github.com/damouse/gosnake"
+import (
+	"os"
+	"strings"
+
+	"github.com/damouse/gosnake"
+)
 
 func main() {
-	// fmt.Println("Go: Starting Paradrop")
+	args := strings.Join(os.Args[1:], " ")
 
 	pymodule := gosnake.NewBinding()
 	pymodule.Import("paradrop")
-	pymodule.Call("paradrop", "main", "callme")
+	pymodule.Call("paradrop", "main", args)
 }
