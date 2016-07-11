@@ -227,7 +227,10 @@ class BaseOutput(object):
         printing to console.
         '''
         trace = '[%s.%s#%s @ %s] ' % (logDict['package'], logDict['module'], logDict['line'], pdutils.stimestr(logDict['timestamp']))
-        return self.type['color'] + self.type['glyph'] + ' ' + trace + logDict['message'] + colorama.Style.RESET_ALL
+        return self.type['color'] + trace + logDict['message'] + colorama.Style.RESET_ALL
+
+        # Removed because it doesnt seem useful
+        # return self.type['color'] + self.type['glyph'] + ' ' + trace
 
     def __repr__(self):
         return "REPR"

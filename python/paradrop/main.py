@@ -40,7 +40,7 @@ def main(args_string=None):
     settings.updateSettings(args.settings)
 
     # Globally assign the nexus object singleton
-    nexus.core = nexus.NexusBase(args.mode, settings=args.settings, stealStdio=False, printToConsole=True)
+    nexus.core = nexus.NexusBase(args.mode, settings=args.settings, stealStdio=True, printToConsole=True)
 
     if args.config:
         from paradrop.confd import main
