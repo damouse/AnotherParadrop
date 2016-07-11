@@ -571,20 +571,3 @@ class Output():
 
     def logToConsole(self, newStatus):
         self.__dict__['printLogs'] = newStatus
-
-
-log = Output(
-    header=BaseOutput(LOG_TYPES[Level.HEADER]),
-    testing=BaseOutput(LOG_TYPES[Level.VERBOSE]),
-    verbose=BaseOutput(LOG_TYPES[Level.VERBOSE]),
-    info=BaseOutput(LOG_TYPES[Level.INFO]),
-    usage=BaseOutput(LOG_TYPES[Level.USAGE]),
-    perf=BaseOutput(LOG_TYPES[Level.PERF]),
-    warn=BaseOutput(LOG_TYPES[Level.WARN]),
-    err=BaseOutput(LOG_TYPES[Level.ERR]),
-    exception=ExceptionOutput(LOG_TYPES[Level.ERR]),
-    security=BaseOutput(LOG_TYPES[Level.SECURITY]),
-    fatal=BaseOutput(LOG_TYPES[Level.FATAL]),
-    twisted=TwistedOutput(LOG_TYPES[Level.INFO]),
-    twistedErr=TwistedException(LOG_TYPES[Level.ERR])
-)
