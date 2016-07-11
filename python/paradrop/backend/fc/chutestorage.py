@@ -16,7 +16,7 @@ from paradrop.lib import settings
 
 # from paradrop.lib.utils.storage import PDStorage
 
-from paradrop.lib.chute import Chute
+# from paradrop.lib.chute import Chute
 from twisted.internet.task import LoopingCall
 
 

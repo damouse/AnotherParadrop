@@ -261,10 +261,6 @@ class ParadropAPIServer(pdapi.APIResource):
         return ""
 
 
-###############################################################################
-# Initialization
-###############################################################################
-
 def initializeSystem():
     """
     Perform some initialization steps such as writing important configuration.
