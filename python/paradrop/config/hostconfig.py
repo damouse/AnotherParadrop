@@ -14,11 +14,8 @@ settings.
 """
 
 import itertools
-import os
-import re
 import yaml
 
-from paradrop.shared.output import out
 from paradrop.lib import settings
 from paradrop.config import devices as config_devices
 

@@ -10,12 +10,9 @@ devices, for example "wifi-device" sections.  These are shared between chutes,
 so they only need to be added when missing.
 """
 
-import itertools
-import os
 import re
 
 from paradrop.lib.utils import pdos, uci
-from paradrop.shared.output import out
 from paradrop.lib import settings
 from paradrop.config import uciutils
 

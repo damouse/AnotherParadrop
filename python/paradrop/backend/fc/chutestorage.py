@@ -4,20 +4,12 @@
 ###################################################################
 
 import sys
-import json
 import copy
-import base64
 import pickle
 
 from paradrop.shared.output import out
-from paradrop.shared import pdutils
 from paradrop.lib.utils import pdos
 from paradrop.lib import settings
-
-# from paradrop.lib.utils.storage import PDStorage
-
-# from paradrop.lib.chute import Chute
-from twisted.internet.task import LoopingCall
 
 
 class PDStorage(object):

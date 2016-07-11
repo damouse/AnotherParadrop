@@ -3,13 +3,11 @@
 
 import re
 import random
-import math
 
 from itertools import ifilter
 from functools import wraps
-from twisted.web.resource import Resource
-from twisted.web.resource import NoResource
-# DFW: I think this is old: from twisted.web.error import NoResource
+from twisted.web.resource import Resource, NoResource
+
 from zope.interface.advice import addClassAdvisor
 from twisted.web.server import NOT_DONE_YET
 

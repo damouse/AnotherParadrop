@@ -27,7 +27,6 @@
 """
 
 import os
-import re
 import sys
 
 DEBUG_MODE = False

@@ -2,13 +2,12 @@ import json
 import smokesignal
 
 from twisted.web import xmlrpc
-from twisted.internet import utils
-from twisted.internet.defer import inlineCallbacks, returnValue, Deferred
+from twisted.internet.defer import inlineCallbacks, returnValue
 
 from paradrop.lib import pdinstall
 from paradrop.config import hostconfig
 from paradrop.shared.output import out
-from paradrop.shared import names, nexus, cxbr
+from paradrop.shared import nexus, cxbr
 
 from . import apibridge
 

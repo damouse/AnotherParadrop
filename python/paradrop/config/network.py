@@ -1,10 +1,9 @@
-import ipaddress
 import itertools
 
 from paradrop.lib import settings
-from paradrop.config import configservice, uciutils
+from paradrop.config import uciutils
 from paradrop.config.pool import NetworkPool, NumericPool
-from paradrop.lib.utils import addresses, uci
+from paradrop.lib.utils import uci
 from paradrop.shared.output import out
 from paradrop.shared import pdutils
 

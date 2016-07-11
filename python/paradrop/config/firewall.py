@@ -1,6 +1,6 @@
 import fnmatch
 
-from paradrop.config import configservice, uciutils
+from paradrop.config import uciutils
 from paradrop.lib.utils import uci
 from paradrop.shared.output import out
 

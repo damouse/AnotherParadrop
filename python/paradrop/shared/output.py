@@ -16,7 +16,6 @@ import Queue
 import threading
 import time
 import colorama
-import traceback
 import os
 import json
 

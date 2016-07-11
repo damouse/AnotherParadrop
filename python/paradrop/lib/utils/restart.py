@@ -12,9 +12,9 @@ starting chutes.
 
 from paradrop.shared.output import out
 from paradrop.backend.fc import chutestorage
-from paradrop.shared.pdutils import json2str, str2json, timeint, urlDecodeMe
+from paradrop.shared.pdutils import str2json, timeint
 from paradrop.confd.client import waitSystemUp
-from paradrop.lib import chute, settings
+from paradrop.lib import settings
 from paradrop.config.network import reclaimNetworkResources
 import time
 
@@ -24,6 +24,7 @@ FAILURE_WARNING = """
     Perhaps hardware on the device has changed? 
     The chute has been stopped and will need to be started.
     """
+
 
 def reloadChutes():
     """
@@ -41,14 +42,14 @@ def reloadChutes():
     if not settings.PDCONFD_ENABLED:
         return []
     chuteStore = chutestorage.ChuteStorage()
-    chutes = [ ch for ch in chuteStore.getChuteList() if ch.state == 'running']
+    chutes = [ch for ch in chuteStore.getChuteList() if ch.state == 'running']
 
     # Part of restoring the chute to its previously running state is reclaiming
     # IP addresses, interface names, etc. that it had previously.
     for chute in chutes:
         reclaimNetworkResources(chute)
 
-    #We need to make sure confd is up and all interfaces have been brought up properly
+    # We need to make sure confd is up and all interfaces have been brought up properly
     confdup = False
     while not confdup:
         confdInfo = waitSystemUp()
@@ -58,8 +59,8 @@ def reloadChutes():
         confdup = True
         confdInfo = str2json(confdInfo)
 
-    #Remove any chutes from the restart queue if confd failed to bring up the
-    #proper interfaces
+    # Remove any chutes from the restart queue if confd failed to bring up the
+    # proper interfaces
     #
     # At this point, we only care about the chute names, not the full objects.
     # We are using sets of chute names for their O(1) membership test and
@@ -86,20 +87,21 @@ def reloadChutes():
                 out.warn('Failed to load config section for '
                          'unrecognized chute: {}'.format(failedChuteName))
 
-    #First stop all chutes that failed to bring up interfaces according to
-    #pdconfd then start successful ones #We do this because pdfcd needs to
-    #handle cleaning up uci files and then tell pdconfd
+    # First stop all chutes that failed to bring up interfaces according to
+    # pdconfd then start successful ones #We do this because pdfcd needs to
+    # handle cleaning up uci files and then tell pdconfd
     updates = []
     for ch in failedChutes:
         updates.append(dict(updateClass='CHUTE', updateType='stop', name=ch,
-                       tok=timeint(), func=updateStatus,
-                       warning=FAILURE_WARNING))
+                            tok=timeint(), func=updateStatus,
+                            warning=FAILURE_WARNING))
 
     for ch in okChutes:
         updates.append(dict(updateClass='CHUTE', updateType='restart', name=ch,
-                       tok=timeint(), func=updateStatus))
+                            tok=timeint(), func=updateStatus))
 
     return updates
+
 
 def updateStatus(update):
     """

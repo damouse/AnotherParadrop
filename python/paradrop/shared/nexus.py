@@ -35,7 +35,7 @@ import smokesignal
 from twisted.internet import reactor
 from twisted.internet.defer import inlineCallbacks, returnValue
 
-from paradrop.shared import output, cxbr
+from paradrop.shared import output
 
 # Global access. Assign this wherever you instantiate the Nexus object:
 #       nexus.core = MyNexusSubclass()

@@ -7,8 +7,6 @@ import time
 import threading
 
 from paradrop.shared.output import out
-from paradrop.shared.pdutils import timeint, str2json
-
 from paradrop.lib import settings
 from paradrop.lib.utils.restart import reloadChutes
 
@@ -86,7 +84,7 @@ class PDConfigurer:
                     else it puts itself to sleep for a little while
         """
 
-        #add any chutes that should already be running to the front of the update queue before processing any updates
+        # add any chutes that should already be running to the front of the update queue before processing any updates
         startQueue = reloadChutes()
         self.updateLock.acquire()
         # insert the data into the front of our update queue so that all old chutes restart befor new ones are processed
@@ -108,7 +106,7 @@ class PDConfigurer:
                 out.info('Performing update %s\n' % (update))
 
                 # TESTING start
-                if(settings.FC_BOUNCE_UPDATE): # pragma: no cover
+                if(settings.FC_BOUNCE_UPDATE):  # pragma: no cover
                     out.testing('Bouncing update %s, result: %s\n' % (
                         update, settings.FC_BOUNCE_UPDATE))
                     update.complete(success=True, message=settings.FC_BOUNCE_UPDATE)

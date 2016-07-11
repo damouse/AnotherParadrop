@@ -3,7 +3,6 @@
 # Authors: The Paradrop Team
 ###################################################################
 
-import traceback
 import os
 
 from paradrop.lib import settings
