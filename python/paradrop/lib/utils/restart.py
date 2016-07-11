@@ -15,7 +15,7 @@ from paradrop.backend.fc import chutestorage
 from paradrop.shared.pdutils import json2str, str2json, timeint, urlDecodeMe
 from paradrop.backend.pdconfd.client import waitSystemUp
 from paradrop.lib import chute, settings
-from paradrop.lib.config.network import reclaimNetworkResources
+from paradrop.config.network import reclaimNetworkResources
 import time
 
 FAILURE_WARNING = """

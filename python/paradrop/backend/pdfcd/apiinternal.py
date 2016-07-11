@@ -6,7 +6,7 @@ from twisted.internet import utils
 from twisted.internet.defer import inlineCallbacks, returnValue, Deferred
 
 from paradrop.lib import pdinstall
-from paradrop.lib.config import hostconfig
+from paradrop.config import hostconfig
 from paradrop.shared.output import out
 from paradrop.shared import names, nexus, cxbr
 

@@ -134,7 +134,7 @@ Proposed directory structure:
     + client
     + main
     + configobjects (all of them)
-- sysconfig
+- config
     + lib.config.configservice (?)
     + lib.config.devices
     + lib.config.dockerconfig
@@ -143,7 +143,6 @@ Proposed directory structure:
     + lib.utils.pdos
     + lib.utils.restart
     + lib.pdinstall
-- netconfig
     + lib.config.dhcp
     + lib.config.firewall
     + lib.config.hostconfig (?)
