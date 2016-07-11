@@ -8,7 +8,7 @@ def test_CommandList():
     """
     Test the CommandList class
     """
-    from paradrop.backend.pdconfd.config.command import CommandList
+    from .pdconfd.config.command import CommandList
 
     clist = CommandList()
     clist.append(20, "b")
@@ -19,13 +19,13 @@ def test_CommandList():
     assert commands == ["a", "b", "c"]
 
 
-@patch("paradrop.backend.pdconfd.config.command.out")
+@patch(".pdconfd.config.command.out")
 @patch("subprocess.Popen")
 def test_Command_execute(Popen, out):
     """
     Test the Command.execute method
     """
-    from paradrop.backend.pdconfd.config.command import Command
+    from .pdconfd.config.command import Command
 
     proc = MagicMock()
     proc.stdout = ["output"]
@@ -45,12 +45,12 @@ def test_Command_execute(Popen, out):
     assert out.info.called
 
 
-@patch("paradrop.backend.pdconfd.config.command.Command.execute")
+@patch(".pdconfd.config.command.Command.execute")
 def test_KillCommand(execute):
     """
     Test the KillCommand class
     """
-    from paradrop.backend.pdconfd.config.command import KillCommand
+    from .pdconfd.config.command import KillCommand
 
     # Test with a numeric pid.
     command = KillCommand(12345)
@@ -73,12 +73,12 @@ def test_KillCommand(execute):
     expected = ["kill", "54321"]
     command.execute()
     assert execute.called_once_with(expected)
-    
+
     execute.reset_mock()
 
     # Test with a non-existent pid file.
     command = KillCommand("")
     assert command.getPid() is None
-    
+
     command.execute()
     assert not execute.called

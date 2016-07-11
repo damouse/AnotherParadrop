@@ -5,7 +5,7 @@ def test_ConfigRedirect_commands_dnat():
     """
     Test DNAT command generation
     """
-    from paradrop.backend.pdconfd.config.firewall import ConfigRedirect
+    from .pdconfd.config.firewall import ConfigRedirect
 
     eth0 = MagicMock()
     eth0.config_ifname = "eth0"

@@ -2,13 +2,13 @@ from mock import Mock, patch
 from nose.tools import assert_raises
 
 
-@patch("paradrop.backend.exc.executionplan.abortPlans", return_value=True)
-@patch("paradrop.backend.exc.executionplan.executePlans", return_value=True)
+@patch(".exc.executionplan.abortPlans", return_value=True)
+@patch(".exc.executionplan.executePlans", return_value=True)
 def test_update_object(executePlans, abortPlans):
     """
     Test the UpdateObject class
     """
-    from paradrop.backend.fc.updateObject import UpdateObject
+    from .fc.updateObject import UpdateObject
 
     obj = {
         'name': 'Test',
@@ -39,12 +39,12 @@ def test_update_object(executePlans, abortPlans):
     update.execute()
 
 
-@patch("paradrop.backend.fc.chutestorage.ChuteStorage.getChute")
+@patch(".fc.chutestorage.ChuteStorage.getChute")
 def test_update_chute(getChute):
     """
     Test the UpdateChute class
     """
-    from paradrop.backend.fc.updateObject import UpdateChute
+    from .fc.updateObject import UpdateChute
     from paradrop.lib import chute
 
     obj = {
@@ -84,7 +84,7 @@ def test_update_object_parse():
     """
     Test the updateobject parse function.
     """
-    from paradrop.backend.fc.updateObject import UpdateChute, parse
+    from .fc.updateObject import UpdateChute, parse
 
     obj = {
         'name': 'Test',

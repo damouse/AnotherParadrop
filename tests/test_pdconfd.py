@@ -4,10 +4,10 @@ import tempfile
 from mock import MagicMock, Mock, patch
 from nose.tools import raises
 
-from paradrop.backend.pdconfd.config.command import Command
-from paradrop.backend.pdconfd.config.manager import ConfigManager
-from paradrop.backend.pdconfd.config.network import ConfigInterface
-from paradrop.backend.pdconfd.config.wireless import ConfigWifiDevice, ConfigWifiIface
+from .pdconfd.config.command import Command
+from .pdconfd.config.manager import ConfigManager
+from .pdconfd.config.network import ConfigInterface
+from .pdconfd.config.wireless import ConfigWifiDevice, ConfigWifiIface
 from paradrop.lib.utils import pdos
 
 CONFIG_FILE = "/tmp/test-config"
@@ -330,8 +330,8 @@ def test_config_manager():
     """
     Test the pdconf configuration manager
     """
-    from paradrop.backend.pdconfd.config.base import ConfigObject
-    from paradrop.backend.pdconfd.config.manager import findConfigFiles
+    from .pdconfd.config.base import ConfigObject
+    from .pdconfd.config.manager import findConfigFiles
 
     files = findConfigFiles()
     assert isinstance(files, list)
@@ -357,7 +357,7 @@ def test_config_manager():
     config = Mock()
     config.getTypeAndName = Mock(return_value=("interface", "wan"))
     config.optionsMatch = Mock(return_value=True)
-    
+
     assert manager.findMatchingConfig(config, byName=False) is not None
     assert manager.findMatchingConfig(config, byName=True) is not None
 
@@ -373,7 +373,7 @@ def test_config_manager():
     config = Mock()
     config.getTypeAndName = Mock(return_value=("interface", "wan2"))
     config.optionsMatch = Mock(return_value=True)
-    
+
     assert manager.findMatchingConfig(config, byName=False) is not None
     assert manager.findMatchingConfig(config, byName=True) is not None
 

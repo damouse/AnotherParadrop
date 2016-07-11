@@ -1,16 +1,17 @@
-from paradrop.backend.fc import updateObject 
+from .fc import updateObject
 from mock import patch, MagicMock
 
-@patch('paradrop.backend.fc.updateObject.chutestorage')
-@patch('paradrop.backend.fc.updateObject.out')
-@patch('paradrop.backend.fc.updateObject.exc')
+
+@patch('.fc.updateObject.chutestorage')
+@patch('.fc.updateObject.out')
+@patch('.fc.updateObject.exc')
 def test_updateObject(mExc, mOut, mStore):
 
     func = MagicMock()
     store = MagicMock()
     mStore.ChuteStorage.return_value = store
-    update = dict(updateClass='CHUTE', updateType='create', name='test', 
-            tok=111111, pkg=None, func=func)
+    update = dict(updateClass='CHUTE', updateType='create', name='test',
+                  tok=111111, pkg=None, func=func)
     update = updateObject.parse(update)
     mExc.executionplan.generatePlans.return_value = False
     mExc.executionplan.executePlans.return_value = False

@@ -5,7 +5,7 @@ def test_ConfigObject():
     """
     Test the ConfigObject class
     """
-    from paradrop.backend.pdconfd.config.base import ConfigObject
+    from .pdconfd.config.base import ConfigObject
 
     config = ConfigObject()
     config.typename = "type"

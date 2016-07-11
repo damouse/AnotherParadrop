@@ -3,9 +3,10 @@ from mock import Mock, patch
 
 import sys
 
-@patch("paradrop.backend.pdconfd.main.run_pdconfd")
-@patch("paradrop.backend.pdconfd.main.run_thread")
-@patch("paradrop.backend.pdfcd.server.setup")
+
+@patch(".pdconfd.main.run_pdconfd")
+@patch(".pdconfd.main.run_thread")
+@patch(".pdfcd.server.setup")
 def test_paradrop_main(setup, run_thread, run_pdconfd):
     """
     Test paradrop main function

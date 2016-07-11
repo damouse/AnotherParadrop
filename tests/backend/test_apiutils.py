@@ -5,7 +5,7 @@ def test_getIP():
     """
     Test backend.pdfcd.apiutils.getIP
     """
-    from paradrop.backend.pdfcd.apiutils import getIP
+    from .pdfcd.apiutils import getIP
 
     request = MagicMock()
 

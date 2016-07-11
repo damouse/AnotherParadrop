@@ -63,6 +63,7 @@ def mockListDir(path):
     else:
         return os.listdir(path)
 
+
 def mockReadFile(filename):
     """
     Generate fake output for files
@@ -108,7 +109,7 @@ def fake_rules_list():
     return rules
 
 
-@patch("paradrop.backend.pdconfd.client.reloadAll", mockStatusString)
+@patch(".pdconfd.client.reloadAll", mockStatusString)
 def test_configservice():
     """
     Test paradrop.lib.config.configservice
@@ -286,7 +287,7 @@ def test_config_firewall():
     settings.UCI_CONFIG_DIR = tempfile.mkdtemp()
     firewall.setOSFirewallRules(update)
     pdos.remove(settings.UCI_CONFIG_DIR)
- 
+
     # Try a bad rule that has both from/to outside the chute.
     update.new.firewall = fake_rules_list()
     update.new.firewall.append({

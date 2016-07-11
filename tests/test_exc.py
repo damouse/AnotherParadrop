@@ -6,8 +6,8 @@ from .pdmock import MockChute, MockUpdate, do_nothing, make_dummy
 
 
 def test_executionplan():
-    from paradrop.backend.exc import executionplan as excplan
-    from paradrop.backend.exc import struct
+    from .exc import executionplan as excplan
+    from .exc import struct
 
     update = Mock()
 
@@ -56,7 +56,7 @@ def test_executionplan():
 
 
 def test_plangraph():
-    from paradrop.backend.exc.plangraph import PlanMap
+    from .exc.plangraph import PlanMap
 
     class Output(object):
         pass
@@ -216,7 +216,7 @@ def test_state():
     """
     Test plan generation for state module
     """
-    from paradrop.backend.exc import state
+    from .exc import state
     from paradrop.lib import chute, settings
 
     # Set this to exercise debug mode code

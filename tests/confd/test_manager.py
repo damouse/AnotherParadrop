@@ -8,13 +8,13 @@ from mock import patch
 CONFIG_DIR = "tests/paradrop/backend/pdconfd/config/config.d"
 
 
-@patch("paradrop.backend.pdconfd.config.manager.getSystemConfigDir")
-@patch("paradrop.backend.pdconfd.config.manager.os")
+@patch(".pdconfd.config.manager.getSystemConfigDir")
+@patch(".pdconfd.config.manager.os")
 def test_findConfigFiles(os, getSystemConfigDir):
     """
     Test the findConfigFiles function
     """
-    from paradrop.backend.pdconfd.config.manager import findConfigFiles
+    from .pdconfd.config.manager import findConfigFiles
 
     os.path.isfile.return_value = True
     result = findConfigFiles(search="foo")
@@ -56,7 +56,7 @@ def test_bad_config():
     """
     Test how pdconf manager handles a bad configuration section
     """
-    from paradrop.backend.pdconfd.config.manager import ConfigManager
+    from .pdconfd.config.manager import ConfigManager
 
     manager = ConfigManager(writeDir="/tmp")
 
@@ -68,7 +68,7 @@ def test_change_channel():
     """
     Test how pdconf manager handles changing a WiFi card's channel
     """
-    from paradrop.backend.pdconfd.config.manager import ConfigManager
+    from .pdconfd.config.manager import ConfigManager
 
     # We want to use the same path for the config file at every step of the
     # test case, as this allows the manager to detect when a section is
@@ -81,7 +81,7 @@ def test_change_channel():
     source = os.path.join(CONFIG_DIR, "change_channel_1")
     shutil.copyfile(source, confFile)
     manager.loadConfig(search=confFile, execute=False)
-    
+
     for cmd in manager.previousCommands:
         print(cmd)
 
@@ -113,12 +113,12 @@ def test_change_channel():
     shutil.rmtree(temp)
 
 
-@patch("paradrop.backend.pdconfd.config.command.Command.execute")
+@patch(".pdconfd.config.command.Command.execute")
 def test_manager_execute(execute):
     """
     Test the manager execute method
     """
-    from paradrop.backend.pdconfd.config.manager import ConfigManager
+    from .pdconfd.config.manager import ConfigManager
 
     manager = ConfigManager(writeDir="/tmp")
 
