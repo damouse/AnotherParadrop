@@ -231,8 +231,6 @@ class NexusBase(object):
         pdid = self.info.pdid if self.provisioned() else 'UNPROVISIONED'
         output.log.usage('%s (%s: %s) coming up' % (self.info.pdid, self.meta.type, self.meta.mode))
 
-        # Start trying to connect to cxbr fabric
-
     def onStop(self):
         self.save()
 

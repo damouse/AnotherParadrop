@@ -4,7 +4,6 @@
 ###################################################################
 
 '''
-pdfcd.server.
 Contains the classes required to establish a RESTful API server using Twisted.
 '''
 import threading
@@ -13,21 +12,58 @@ from twisted.web import static
 from twisted.web.server import Site
 from twisted.internet import reactor
 
-from paradrop.shared import log
+from paradrop.shared import log, settings
 from paradrop.shared.pdutils import timeflt, json2str
-from paradrop.shared import settings
-from paradrop.chute import dockerapi
 from paradrop import chute
 
 # Import local refs to pdfcd utilities
-from . import apibridge
-from . import apiutils
-from . import apichute
-from . import pdapi
+from . import apibridge, apiutils, apichute, pdapi
 
 # temp
 from paradrop.backend.apiinternal import Base
 from paradrop.backend import apiinternal
+
+
+def setup(args=None):
+    """
+    This is the main setup function to establish the TCP listening logic for
+    the API server. This code also takes into account development or unit test mode.
+    """
+
+    # Setup API server
+    api = ParadropAPIServer(reactor)
+    api.putChild('internal', Base(apiinternal, allowNone=True))
+    site = Site(api, timeout=None)
+
+    # Setup local root of the website
+    root = static.File("/var/lib/apps/paradrop/www")
+    website = Site(root)
+    portalPort = 80
+
+    # Development mode
+    if(args and args.development):
+        thePort = settings.PDFCD_PORT + 10000
+        site.displayTracebacks = True
+    elif (args and args.local):
+        portalPort = 8080
+        thePort = settings.PDFCD_PORT + 10000
+    elif(args and args.unittest):
+        thePort = settings.PDFCD_PORT + 20000
+        site.displayTracebacks = True
+    else:
+        thePort = settings.PDFCD_PORT
+        site.displayTracebacks = False
+        initializeSystem()
+
+    # Setup the port we listen on
+    reactor.listenTCP(thePort, site)
+    reactor.listenTCP(portalPort, website)
+
+    # Start the reactor, but only listen for signals if running on the main thread
+    if threading.current_thread().name == 'MainThread':
+        reactor.run()
+    else:
+        reactor.run(installSignalHandlers=0)
 
 
 class AccessInfo(object):
@@ -261,50 +297,4 @@ def initializeSystem():
     """
     Perform some initialization steps such as writing important configuration.
     """
-    dockerapi.writeDockerConfig()
-
-
-###############################################################################
-# Main function
-###############################################################################
-
-def setup(args=None):
-    """
-    This is the main setup function to establish the TCP listening logic for
-    the API server. This code also takes into account development or unit test mode.
-    """
-
-    # Setup API server
-    api = ParadropAPIServer(reactor)
-    api.putChild('internal', Base(apiinternal, allowNone=True))
-    site = Site(api, timeout=None)
-
-    # Setup local root of the website
-    root = static.File("/var/lib/apps/paradrop/www")
-    website = Site(root)
-    portalPort = 80
-
-    # Development mode
-    if(args and args.development):
-        thePort = settings.PDFCD_PORT + 10000
-        site.displayTracebacks = True
-    elif (args and args.local):
-        portalPort = 8080
-        thePort = settings.PDFCD_PORT + 10000
-    elif(args and args.unittest):
-        thePort = settings.PDFCD_PORT + 20000
-        site.displayTracebacks = True
-    else:
-        thePort = settings.PDFCD_PORT
-        site.displayTracebacks = False
-        initializeSystem()
-
-    # Setup the port we listen on
-    reactor.listenTCP(thePort, site)
-    reactor.listenTCP(portalPort, website)
-
-    # Start the reactor, but only listen for signals if running on the main thread
-    if threading.current_thread().name == 'MainThread':
-        reactor.run()
-    else:
-        reactor.run(installSignalHandlers=0)
+    chute.dockerapi.writeDockerConfig()

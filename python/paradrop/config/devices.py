@@ -12,10 +12,10 @@ so they only need to be added when missing.
 
 import re
 
-from paradrop.config import uci
-from paradrop.shared import pdos
-from paradrop.shared import settings
-from paradrop.config import uciutils
+from paradrop.shared import pdos, settings
+
+from . import uci, uciutils
+
 
 SYS_DIR = "/sys/class/net"
 EXCLUDE_IFACES = set(["lo"])

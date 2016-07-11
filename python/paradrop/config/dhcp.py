@@ -1,7 +1,6 @@
-from paradrop.config import uciutils
-from paradrop.config import uci
-from paradrop.shared import log
-from paradrop.shared import pdutils
+
+from paradrop.config import uciutils, uci
+from paradrop.shared import log, pdutils
 
 
 # Should dnsmasq be used to cache DNS lookup results or should clients send
