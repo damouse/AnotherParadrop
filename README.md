@@ -141,6 +141,20 @@ See [this link](https://blog.slock.it/let-s-play-with-snappy-ethereum-8165881985
 
 We may be able to let snaps update themselves.See `snapd-control` [here](https://developer.ubuntu.com/en/snappy/guides/interfaces/).
 
+### Running Tests
+
+Paradrop uses `nose` to test the python code. From the root directory: 
+
+```
+nosetests
+```
+
+Make sure you have nose installed: 
+
+```
+pip install nose
+```
+
 # Scratch
 
 Random notes follow.
