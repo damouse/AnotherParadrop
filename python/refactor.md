@@ -34,7 +34,11 @@ Updated: fc.updateObject
 pdrest -> pdapi
 Updated: (pdfcd.) server, apichute`
 
+#### lib.utils: 
 
+pdosq -> pdos
+Functions: pdosq.makedirs -> pdos.makedirs_quiet
+Updated: lib.utils.uci, pdconfd.config.wireless, manager
 
 #### Proposed
 
