@@ -5,8 +5,8 @@ Does not implement any behavior itself.
 
 import argparse
 
-from paradrop.shared import nexus
-from paradrop.shared import settings
+from paradrop.shared import nexus, settings
+from paradrop.shared import out
 
 
 def main(args_string=None):
@@ -34,6 +34,8 @@ def main(args_string=None):
     else:
         args_string = args_string if args_string == "" else args_string.split(" ")
         args = p.parse_args(args_string)
+
+    out.testing("yo")
 
     # Temp- this should go to nexus (the settings portion of it, at least)
     # Change the confd directories so we can run locally

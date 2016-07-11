@@ -40,7 +40,7 @@ Updated: lib.utils.uci, pdconfd.config.wireless, manager
 
 storage -> backend.fc.chutestorage
 
-## Directory Updates
+## Directory Migrations
 
 `pdtools`, `pdtools.lib` -> `paradrop.shared`
 
@@ -187,28 +187,6 @@ Orphaned:
 - apibridge
 - apichute
 
-#### Proposed
-
-- Merge backend.exc and backend.fc
-- backend.exc + backend.fc > chutes
-- pdconfd > networkconfig
-    + Package not dependant on any other paradrop files except for `manager` 
-- pdfcd.apiutils > lib.utils.network
-- lib.config: wifi, osconfig, dockerconfig, configservice
-    + Are all of these used exclusively by pdconfd?
-- lib.utils
-    + dockerapi doesnt belong here
-    + pdosq needs a new home
-    + Restart: needs a new home
-- shared
-    + remove cxbr, names
-- pdfcd
-    + pdfcd.server.initializeSystem is only used in one place and in one test
-
-Redundant Settings/Storage:
-- backend.fc.chuteshorage
-
-Would it really be so bad to replace the million log, settings, and chute file systems and manipulators with a database inside the snap? 
 
 
 
