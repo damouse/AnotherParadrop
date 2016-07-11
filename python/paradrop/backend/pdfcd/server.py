@@ -7,14 +7,16 @@
 pdfcd.server.
 Contains the classes required to establish a RESTful API server using Twisted.
 '''
+import threading
+
 from twisted.web import static
 from twisted.web.server import Site
 from twisted.internet import reactor
 
-from pdtools.lib.output import out
-from pdtools.lib import names
+from paradrop.pdtools.lib.output import out
+from paradrop.pdtools.lib import names
 
-from pdtools.lib.pdutils import timeflt, str2json, json2str
+from paradrop.pdtools.lib.pdutils import timeflt, str2json, json2str
 from paradrop.lib.api import pdapi
 from paradrop.lib.api import pdrest
 from paradrop.lib import settings
@@ -306,5 +308,8 @@ def setup(args=None):
     reactor.listenTCP(thePort, site)
     reactor.listenTCP(portalPort, website)
 
-    # Never return from here
-    reactor.run(installSignalHandlers=0)
+    # Start the reactor, but only listen for signals if running on the main thread
+    if threading.current_thread().name == 'MainThread':
+        reactor.run()
+    else:
+        reactor.run(installSignalHandlers=0)

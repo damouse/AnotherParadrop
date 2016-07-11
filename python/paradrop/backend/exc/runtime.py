@@ -3,7 +3,7 @@
 # Authors: The Paradrop Team
 ###################################################################
 
-from pdtools.lib.output import out
+from paradrop.pdtools.lib.output import out
 from paradrop.backend.exc import plangraph
 
 from paradrop.lib import config

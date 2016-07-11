@@ -28,8 +28,8 @@ from twisted.internet import task
 from twisted.internet import reactor
 from twisted.internet.defer import inlineCallbacks
 
-from pdtools.lib import cxbr, nexus
-from pdtools.coms import routers, general, server
+from paradrop.pdtools.lib import cxbr, nexus
+from paradrop.pdtools.coms import routers, general, server
 
 SERVER_HOST = 'paradrop.io'
 # SERVER_HOST = 'localhost'

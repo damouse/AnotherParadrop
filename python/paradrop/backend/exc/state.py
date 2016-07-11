@@ -3,10 +3,10 @@
 # Authors: The Paradrop Team
 ###################################################################
 
-from pdtools.lib.output import out
+from paradrop.pdtools.lib.output import out
 from paradrop.backend.exc import plangraph
 from paradrop.lib import chute, settings
-from pdtools.lib.pdutils import jsonPretty
+from paradrop.pdtools.lib.pdutils import jsonPretty
 
 from paradrop.lib.utils import dockerapi as virt
 

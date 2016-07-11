@@ -10,8 +10,8 @@ from twisted.web.resource import NoResource
 from zope.interface.advice import addClassAdvisor
 from twisted.web.server import NOT_DONE_YET
 
-from pdtools.lib.output import out
-from pdtools.lib.pdutils import str2json, explode
+from paradrop.pdtools.lib.output import out
+from paradrop.pdtools.lib.pdutils import str2json, explode
 from paradrop.lib.api import pdapi
 from paradrop.lib import settings
 
@@ -89,7 +89,8 @@ class APIResource(Resource):
         self._registry.append((method, re.compile(regex), callback))
 
     def unregister(self, method=None, regex=None, callback=None):
-        if regex is not None: regex = re.compile(regex)
+        if regex is not None:
+            regex = re.compile(regex)
         for m, r, cb in self._registry[:]:
             if not method or (method and m == method):
                 if not regex or (regex and r == regex):

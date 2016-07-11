@@ -4,7 +4,7 @@ import os
 import subprocess
 import threading
 
-from pdtools.lib.output import out
+from paradrop.pdtools.lib.output import out
 from paradrop.lib import settings
 from paradrop.lib.utils import pdosq
 from paradrop.lib.utils.uci import UCIConfig, getSystemConfigDir
@@ -227,7 +227,7 @@ class ConfigManager(object):
         updatedConfigs -= undoConfigs
 
         undoWork = ConfigObject.prioritizeConfigs(updatedConfigs | undoConfigs,
-                reverse=True)
+                                                  reverse=True)
         heapq.heapify(undoWork)
 
         while undoWork:
@@ -341,7 +341,7 @@ class ConfigManager(object):
 
     def unload(self, execute=True):
         commands = CommandList()
-        
+
         undoWork = ConfigObject.prioritizeConfigs(self.currentConfig.values())
         heapq.heapify(undoWork)
 

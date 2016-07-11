@@ -1,10 +1,11 @@
 import ipaddress
 import itertools
 
-from pdtools.lib.output import out
+from paradrop.pdtools.lib.output import out
 
 
 class ResourcePool(object):
+
     def __init__(self, values, numValues):
         """
         Initialize resource pool.
@@ -49,7 +50,7 @@ class ResourcePool(object):
 
     def release(self, item):
         out.info("Trying to release {} from pool {}\n".format(str(item),
-                 self.__class__.__name__))
+                                                              self.__class__.__name__))
         if item in self.used:
             self.used.remove(item)
             self.recentlyReleased.append(item)
@@ -63,7 +64,7 @@ class ResourcePool(object):
         If strict is True, raises an exception if the item is already used.
         """
         out.info("Trying to reserve {} from pool {}\n".format(str(item),
-                 self.__class__.__name__))
+                                                              self.__class__.__name__))
         if item in self.used:
             if strict:
                 raise Exception("Trying to reserve a used item")
@@ -72,6 +73,7 @@ class ResourcePool(object):
 
 
 class NetworkPool(ResourcePool):
+
     def __init__(self, network, subnetSize=24):
         """
         network should be a string with network size in slash notation or as a
@@ -93,6 +95,7 @@ class NetworkPool(ResourcePool):
 
 
 class NumericPool(ResourcePool):
+
     def __init__(self, digits=4):
         self.digits = digits
 

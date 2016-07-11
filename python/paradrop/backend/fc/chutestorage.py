@@ -8,8 +8,8 @@ import json
 import copy
 import base64
 
-from pdtools.lib.output import out
-from pdtools.lib import pdutils
+from paradrop.pdtools.lib.output import out
+from paradrop.pdtools.lib import pdutils
 from paradrop.lib.utils import pdos
 from paradrop.lib import settings
 

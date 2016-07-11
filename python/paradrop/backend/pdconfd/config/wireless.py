@@ -5,7 +5,7 @@ import string
 import subprocess
 from pprint import pprint
 
-from pdtools.lib.output import out
+from paradrop.pdtools.lib.output import out
 from paradrop.lib.utils import pdosq
 
 from .base import ConfigObject
@@ -55,7 +55,7 @@ class ConfigWifiIface(ConfigObject):
 
             # We only need to set the channel in "sta" mode.  In "ap" mode,
             # hostapd will take care of it.
-            #cmd = ["iw", "dev", wifiDevice.name, "set", "channel",
+            # cmd = ["iw", "dev", wifiDevice.name, "set", "channel",
             #       str(wifiDevice.channel)]
 
             #commands.append(Command(cmd, self))
@@ -121,7 +121,7 @@ class ConfigWifiIface(ConfigObject):
             outputFile.write("#" * 80 + "\n")
             # 802.11ac not working, need to find out why
             outputFile.write("hw_mode=g\n")
-            #outputFile.write("ieee80211ac=1\n")
+            # outputFile.write("ieee80211ac=1\n")
 
             # Write essential options.
             outputFile.write("interface={}\n".format(self._ifname))
@@ -152,7 +152,7 @@ class ConfigWifiIface(ConfigObject):
         commands = list()
 
         commands.append((-self.PRIO_START_DAEMON,
-            KillCommand(self.pidFile, self)))
+                         KillCommand(self.pidFile, self)))
 
         # Delete our virtual interface.
         if self.isVirtual:
@@ -201,6 +201,6 @@ class ConfigWifiIface(ConfigObject):
         if self.mode == "ap":
             # Bring down hostapd
             commands.append((-self.PRIO_START_DAEMON,
-                KillCommand(self.pidFile, self)))
+                             KillCommand(self.pidFile, self)))
 
         return commands

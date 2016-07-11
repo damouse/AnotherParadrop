@@ -1,6 +1,6 @@
 import ipaddress
 
-from pdtools.lib.output import out
+from paradrop.pdtools.lib.output import out
 
 from .base import ConfigObject
 from .command import Command, KillCommand
@@ -116,7 +116,7 @@ class ConfigDnsmasq(ConfigObject):
     def revert(self, allConfigs):
         commands = list()
 
-        commands.append((-self.PRIO_START_DAEMON, 
-            KillCommand(self.pidFile, self)))
+        commands.append((-self.PRIO_START_DAEMON,
+                         KillCommand(self.pidFile, self)))
 
         return commands

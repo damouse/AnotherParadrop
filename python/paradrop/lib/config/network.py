@@ -5,8 +5,8 @@ from paradrop.lib import settings
 from paradrop.lib.config import configservice, uciutils
 from paradrop.lib.config.pool import NetworkPool, NumericPool
 from paradrop.lib.utils import addresses, uci
-from pdtools.lib.output import out
-from pdtools.lib import pdutils
+from paradrop.pdtools.lib.output import out
+from paradrop.pdtools.lib import pdutils
 
 
 MAX_INTERFACE_NAME_LEN = 15
@@ -86,7 +86,7 @@ def getNetworkConfigWifi(update, name, cfg, iface):
     # Generate the internal IP address with prefix length (x.x.x.x/y) for
     # convenience of other code that expect that format (e.g. pipework).
     iface['ipaddrWithPrefix'] = "{}/{}".format(
-            iface['internalIpaddr'], subnet.prefixlen)
+        iface['internalIpaddr'], subnet.prefixlen)
 
     # Generate initial portion (prefix) of interface name.
     #

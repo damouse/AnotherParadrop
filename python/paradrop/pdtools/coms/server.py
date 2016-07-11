@@ -14,11 +14,11 @@ from autobahn.twisted.wamp import ApplicationSession, ApplicationRunner
 from twisted.internet.defer import inlineCallbacks, returnValue, Deferred
 from twisted.internet import reactor
 
-from pdtools.coms import general
-from pdtools.coms.client import RpcClient
-from pdtools.lib import nexus
-from pdtools.lib.output import out
-from pdtools.lib.exceptions import *
+from paradrop.pdtools.coms import general
+from paradrop.pdtools.coms.client import RpcClient
+from paradrop.pdtools.lib import nexus
+from paradrop.pdtools.lib.output import out
+from paradrop.pdtools.lib.exceptions import *
 
 
 @inlineCallbacks

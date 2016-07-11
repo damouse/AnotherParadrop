@@ -7,7 +7,7 @@ from twisted.internet.defer import inlineCallbacks, returnValue, Deferred
 from autobahn.wamp.types import RegisterOptions, SubscribeOptions, CallOptions, PublishOptions
 
 
-from pdtools.lib.output import out
+from paradrop.pdtools.lib.output import out
 
 
 class BaseSession(ApplicationSession):

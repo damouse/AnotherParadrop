@@ -1,7 +1,7 @@
 from paradrop.lib.config import configservice, uciutils
 from paradrop.lib.utils import uci
-from pdtools.lib.output import out
-from pdtools.lib import pdutils
+from paradrop.pdtools.lib.output import out
+from paradrop.pdtools.lib import pdutils
 
 
 # Should dnsmasq be used to cache DNS lookup results or should clients send
@@ -66,7 +66,7 @@ def getVirtDHCPSettings(update):
         # This option tells clients that the router is the interface inside the
         # chute not the one in the host.
         uciutils.setList(options, 'dhcp_option', ["option:router,{}".format(
-                                                    iface['internalIpaddr'])])
+            iface['internalIpaddr'])])
 
         # Optional: developer can pass in a list of DNS nameservers to use
         # instead of the system default.
@@ -75,7 +75,7 @@ def getVirtDHCPSettings(update):
         # directly.
         if not DNSMASQ_CACHE_ENABLED and 'dns' in dhcp:
             uciutils.appendListItem(options, 'dhcp_option',
-                    ",".join(["option:dns-server"] + dhcp['dns']))
+                                    ",".join(["option:dns-server"] + dhcp['dns']))
 
         dhcpSettings.append((config, options))
 

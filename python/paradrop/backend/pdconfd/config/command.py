@@ -1,9 +1,10 @@
 import subprocess
 
-from pdtools.lib.output import out
+from paradrop.pdtools.lib.output import out
 
 
 class CommandList(list):
+
     def __contains__(self, s):
         """
         Test if the list contains a given string.
@@ -32,6 +33,7 @@ class CommandList(list):
 
 
 class Command(object):
+
     def __init__(self, command, parent=None):
         """
         Construct command object.
@@ -67,7 +69,7 @@ class Command(object):
     def execute(self):
         try:
             proc = subprocess.Popen(self.command, stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE)
+                                    stderr=subprocess.PIPE)
             self.pid = proc.pid
             for line in proc.stdout:
                 out.verbose("{}: {}".format(self.command[0], line))
@@ -97,7 +99,8 @@ class KillCommand(Command):
     """
     Special command object for killing a process
     """
-    def __init__(self, pid, parent=None): 
+
+    def __init__(self, pid, parent=None):
         """
         Create a kill command
 

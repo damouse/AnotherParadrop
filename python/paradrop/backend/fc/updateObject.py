@@ -10,7 +10,7 @@ import time
 
 from paradrop.backend import exc
 from paradrop.backend.fc import chutestorage
-from pdtools.lib.output import out
+from paradrop.pdtools.lib.output import out
 from paradrop.lib import settings
 from paradrop.lib import chute
 
@@ -180,7 +180,7 @@ class UpdateChute(UpdateObject):
         # old config without overwriting new update info
         if self.updateType == "start" or self.updateType == "restart":
             missingKeys = set(self.old.__dict__.keys()) - \
-                          set(self.new.__dict__.keys())
+                set(self.new.__dict__.keys())
             for k in missingKeys:
                 setattr(self.new, k, getattr(self.old, k))
 

@@ -1,9 +1,10 @@
 
-from pdtools.lib.output import out
-from pdtools.lib.pdutils import json2str, str2json, timeint, urlDecodeMe
+from paradrop.pdtools.lib.output import out
+from paradrop.pdtools.lib.pdutils import json2str, str2json, timeint, urlDecodeMe
 
 from paradrop.lib.api.pdrest import APIDecorator
 from paradrop.lib.api import pdapi
+
 
 class ChuteAPI:
 

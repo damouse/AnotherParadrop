@@ -12,10 +12,10 @@ from os.path import expanduser
 from twisted.internet import defer
 from twisted.internet.defer import inlineCallbacks, returnValue, Deferred
 
-from pdtools.coms import general
-from pdtools.coms.client import RpcClient
-from pdtools.lib import pdutils, riffle, cxbr, nexus
-from pdtools.lib.output import out
+from paradrop.pdtools.coms import general
+from paradrop.pdtools.coms.client import RpcClient
+from paradrop.pdtools.lib import pdutils, cxbr, nexus
+from paradrop.pdtools.lib.output import out
 
 
 @defer.inlineCallbacks
