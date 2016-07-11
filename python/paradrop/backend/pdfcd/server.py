@@ -17,7 +17,7 @@ from paradrop.shared.output import out
 from paradrop.shared import names
 
 from paradrop.shared.pdutils import timeflt, str2json, json2str
-from paradrop.lib.api import pdapi
+from . import pdapi
 
 from paradrop.lib import settings
 from paradrop.lib.utils import dockerapi

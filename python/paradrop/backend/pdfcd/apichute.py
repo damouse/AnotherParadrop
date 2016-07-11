@@ -2,8 +2,8 @@
 from paradrop.shared.output import out
 from paradrop.shared.pdutils import json2str, str2json, timeint, urlDecodeMe
 
-from paradrop.lib.api.pdapi import APIDecorator
-from paradrop.lib.api import pdapi
+# from paradrop.lib.api.pdapi import APIDecorator
+from .pdapi import APIDecorator
 
 
 class ChuteAPI:
