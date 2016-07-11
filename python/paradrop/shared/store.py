@@ -59,13 +59,13 @@ class Storage(object):
 
         # Sanity check contents of info and throw it out if bad
         if not validateInfo(self.baseConfig):
-            out.warn('Saved configuration data invalid, destroying it.')
+            log.warn('Saved configuration data invalid, destroying it.')
             os.remove(INFO_PATH)
             createDefaultInfo(INFO_PATH)
             self.baseConfig = loadYaml(INFO_PATH)
 
     def close(self):
-        ''' Close and write out. This is automatic if autoSave is on'''
+        ''' Close and write log. This is automatic if autoSave is on'''
         pass
 
     def saveConfig(self, key, value):

@@ -21,6 +21,6 @@ def reloadAll(update):
     for section in status:
         if section['comment'] == update.name:
             if not section['success']:
-                out.err("Error installing configuration section {} {}".format(
+                log.err("Error installing configuration section {} {}".format(
                         section['type'], section['name']))
                 raise Exception("Error preparing host environment for chute")

@@ -59,7 +59,7 @@ def getWifiKeySettings(cfg, iface):
     if 'encryption' in cfg:
         iface['encryption'] = cfg['encryption']
         if cfg['encryption'] != "none" and 'key' not in cfg:
-            out.warn("Key field must be defined "
+            log.warn("Key field must be defined "
                      "when encryption is enabled.")
             raise Exception("No key field defined for WiFi encryption")
 
@@ -100,7 +100,7 @@ def getNetworkConfigWifi(update, name, cfg, iface):
     iface['externalIntf'] = "{}{:04x}".format(
         iface['extIntfPrefix'], iface['extIntfNumber'])
     if len(iface['externalIntf']) > MAX_INTERFACE_NAME_LEN:
-        out.warn("Interface name ({}) is too long\n".
+        log.warn("Interface name ({}) is too long\n".
                  format(iface['externalIntf']))
         raise Exception("Interface name is too long")
 
@@ -109,7 +109,7 @@ def getNetworkConfigWifi(update, name, cfg, iface):
         # Check for required fields.
         res = pdutils.check(cfg, dict, ['ssid'])
         if res:
-            out.warn('WiFi network interface definition {}\n'.format(res))
+            log.warn('WiFi network interface definition {}\n'.format(res))
             raise Exception("Interface definition missing field(s)")
 
         iface['ssid'] = cfg['ssid']
@@ -120,7 +120,7 @@ def getNetworkConfigWifi(update, name, cfg, iface):
         # Give a warning if the dhcp block is missing, since it is likely
         # that developers will want a DHCP server to go with their AP.
         if 'dhcp' not in cfg:
-            out.warn("No dhcp block found for interface {}; "
+            log.warn("No dhcp block found for interface {}; "
                      "will not run a DHCP server".format(name))
 
 
@@ -167,7 +167,7 @@ def getNetworkConfig(update):
         # Check for required fields.
         res = pdutils.check(cfg, dict, ['intfName', 'type'])
         if res:
-            out.warn('Network interface definition {}\n'.format(res))
+            log.warn('Network interface definition {}\n'.format(res))
             raise Exception("Interface definition missing field(s)")
 
         iface = {
@@ -191,7 +191,7 @@ def getNetworkConfig(update):
             device = devIters[cfg['type']].next()
             iface['device'] = device['name']
         except (KeyError, StopIteration):
-            out.warn("Request for {} device cannot be fulfilled".
+            log.warn("Request for {} device cannot be fulfilled".
                      format(cfg['type']))
             raise Exception("Missing device(s) requested by chute")
 
@@ -293,7 +293,7 @@ def setOSNetworkConfig(update):
 
 
 def getVirtNetworkConfig(update):
-    out.warn('TODO implement me\n')
+    log.warn('TODO implement me\n')
     # old code under lib.internal.chs.chutelxc same function name
     # Takes any network specific config and sets up the cache:virtNetworkConfig
     # this would be the place to put anything into HostConfig or the dockerfile

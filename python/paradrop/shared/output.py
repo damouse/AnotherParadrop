@@ -183,7 +183,7 @@ class BaseOutput(object):
     and returning it as a "log structure" (which is a dict.)
 
     For example:
-        out.info("Text", anObject)
+        log.info("Text", anObject)
 
     requires a custom object to figure out what to do with anObject where the default case will simply
     parse the string with an appropriate color.
@@ -203,7 +203,7 @@ class BaseOutput(object):
 
     def __call__(self, args, logPrefixLevel=3, **extra):
         '''
-        Called as an attribute on out. This method takes the passed params and builds a log dict,
+        Called as an attribute on log. This method takes the passed params and builds a log dict,
         returning it.
 
         Subclasses can customize args to include whatever they'd like, adding content
@@ -235,7 +235,7 @@ class BaseOutput(object):
 
 class TwistedOutput(BaseOutput):
 
-    # There's a host of things we simply don't care about. This is bad form
+    # There's a host of things we simply don't care ablog. This is bad form
     # and not great for performance. Alternatives welcome.
     blacklist = [
         'Starting factory',
@@ -312,7 +312,7 @@ class TwistedException(BaseOutput):
 class ExceptionOutput(BaseOutput):
 
     '''
-    Handle vanilla exceptions passed directly to us using out.exception
+    Handle vanilla exceptions passed directly to us using log.exception
     '''
 
     def __call__(self, exception, random):
@@ -353,7 +353,7 @@ class Output():
 
     The way this Output class is setup is that you pass it a series
     of kwargs like (stuff=OutputClass()). Then at any point in your
-    program you can call "paradrop.out.stuff('This is a string\n')".
+    program you can call "paradrop.log.stuff('This is a string\n')".
 
     This way we can easily support different levels of verbosity without
     the need to use some kind of bitmask or anything else. On-the-fly output
@@ -362,7 +362,7 @@ class Output():
 
     This is done by the __getattr__ function below, basically in __init__ we set
     any attributes you pass as args, and anything else not defined gets sent to __getattr__
-    so that it doesn't error out.
+    so that it doesn't error log.
     '''
 
     def __init__(self, **kwargs):
@@ -389,7 +389,7 @@ class Output():
 
     def __getattr__(self, name):
         """Catch attribute access attempts that were not defined in __init__
-            by default throw them out."""
+            by default throw them log."""
 
         # raise NotImplementedError("You must create " + name + " to log with it")
         pass
@@ -451,7 +451,7 @@ class Output():
         Ask the printing thread to flush and end, then return.
         '''
 
-        out.info('Asking file logger to close')
+        log.info('Asking file logger to close')
         self.queue.join()
 
         # Because the print thread can't tell when it goes down as currently designed
@@ -521,7 +521,7 @@ class Output():
         '''
 
         if not self.logpath:
-            out.warn('Asked for log files, but this instance of the output class '
+            log.warn('Asked for log files, but this instance of the output class '
                      'is not currently configured for file logging. '
                      'Call startLogging with a directory first! ')
             return
@@ -573,7 +573,7 @@ class Output():
         self.__dict__['printLogs'] = newStatus
 
 
-out = Output(
+log = Output(
     header=BaseOutput(LOG_TYPES[Level.HEADER]),
     testing=BaseOutput(LOG_TYPES[Level.VERBOSE]),
     verbose=BaseOutput(LOG_TYPES[Level.VERBOSE]),

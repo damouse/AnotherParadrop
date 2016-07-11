@@ -84,11 +84,11 @@ class UpdateObject(object):
             message = "Completed {} operation on chute {}: {}".format(
                 self.updateType, self.new.name,
                 "success" if kwargs['success'] else "failure")
-            out.usage(message, chute=self.new.name, updateType=self.updateType,
+            log.usage(message, chute=self.new.name, updateType=self.updateType,
                       createdTime=self.createdTime, startTime=self.startTime,
                       endTime=self.endTime, **kwargs)
         except Exception as e:
-            out.exception(e, True)
+            log.exception(e, True)
 
         # Call the function we were provided
         self.func(self)
@@ -109,7 +109,7 @@ class UpdateObject(object):
 
         # Generate the plans we need to setup the chute
         if(chuteexecutionplan.generatePlans(self)):
-            out.warn('Failed to generate plans\n')
+            log.warn('Failed to generate plans\n')
             self.complete(success=False, message=self.failure)
             return
 
@@ -127,7 +127,7 @@ class UpdateObject(object):
                 # Getting here means the abort system thinks it wasn't able to get the system
                 # back into the state it was in prior to this update.
                 ###################################################################################
-                out.err('TODO: What do we do when we fail during abort?\n')
+                log.err('TODO: What do we do when we fail during abort?\n')
                 pass
 
             # Report the failure back to the user

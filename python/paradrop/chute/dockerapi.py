@@ -39,7 +39,7 @@ def writeDockerConfig():
     # change.
     path = "/var/lib/apps/docker"
     if not os.path.exists(path):
-        out.warn('No directory "{}" found'.format(path))
+        log.warn('No directory "{}" found'.format(path))
         return False
 
     written = False
@@ -53,10 +53,10 @@ def writeDockerConfig():
                 output.write(DOCKER_CONF)
             written = True
         except Exception as e:
-            out.warn('Error writing to {}: {}'.format(finalPath, str(e)))
+            log.warn('Error writing to {}: {}'.format(finalPath, str(e)))
 
     if not written:
-        out.warn('Could not write docker configuration.')
+        log.warn('Could not write docker configuration.')
     return written
 
 
@@ -68,7 +68,7 @@ def startChute(update):
     :type update: obj
     :returns: None
     """
-    out.info('Attempting to start new Chute %s \n' % (update.name))
+    log.info('Attempting to start new Chute %s \n' % (update.name))
 
     repo = update.name + ":latest"
     dockerfile = update.dockerfile
@@ -106,7 +106,7 @@ def startChute(update):
             image=repo, name=name, host_config=host_config
         )
         c.start(container.get('Id'))
-        out.info("Successfully started chute with Id: %s\n" % (str(container.get('Id'))))
+        log.info("Successfully started chute with Id: %s\n" % (str(container.get('Id'))))
     except Exception as e:
         failAndCleanUpDocker(validImages, validContainers)
     
@@ -121,7 +121,7 @@ def removeChute(update):
     :type update: obj
     :returns: None
     """
-    out.info('Attempting to remove chute %s\n' % (update.name))
+    log.info('Attempting to remove chute %s\n' % (update.name))
     c = docker.Client(base_url='unix://var/run/docker.sock', version='auto')
     repo = update.name + ":latest"
     name = update.name
@@ -141,7 +141,7 @@ def stopChute(update):
     :type update: obj
     :returns: None
     """
-    out.info('Attempting to stop chute %s\n' % (update.name))
+    log.info('Attempting to stop chute %s\n' % (update.name))
     c = docker.Client(base_url='unix://var/run/docker.sock', version='auto')
     c.stop(container=update.name)
 
@@ -153,7 +153,7 @@ def restartChute(update):
     :type update: obj
     :returns: None
     """
-    out.info('Attempting to restart chute %s\n' % (update.name))
+    log.info('Attempting to restart chute %s\n' % (update.name))
     c = docker.Client(base_url='unix://var/run/docker.sock', version='auto')
     c.start(container=update.name)
 
@@ -176,14 +176,14 @@ def failAndCleanUpDocker(validImages, validContainers):
     currContainers = c.containers(quiet=True, all=True)
     for cntr in currContainers:
         if not cntr in validContainers:
-            out.info('Removing Invalid container with id: %s' % str(cntr.get('Id')))
+            log.info('Removing Invalid container with id: %s' % str(cntr.get('Id')))
             c.remove_container(container=cntr.get('Id'))
 
     #Clean up images from failed build
     currImages = c.images(quiet=True, all=False)
     for img in currImages:
         if not img in validImages:
-            out.info('Removing Invalid image with id: %s' % str(img))
+            log.info('Removing Invalid image with id: %s' % str(img))
             c.remove_image(image=img)
     #Throw exception so abort plan is called and user is notified
     raise Exception('Building or starting of docker image failed check your Dockerfile for errors.')
@@ -252,15 +252,15 @@ def setup_net_interfaces(update):
 
         cmd = ['/apps/paradrop/current/bin/pipework', externalIntf, '-i',
                internalIntf, update.name,  IP]
-        out.info("Calling: {}\n".format(" ".join(cmd)))
+        log.info("Calling: {}\n".format(" ".join(cmd)))
         try:
             proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE, env=env)
             for line in proc.stdout:
-                out.info("pipework: {}\n".format(line.strip()))
+                log.info("pipework: {}\n".format(line.strip()))
             for line in proc.stderr:
-                out.warn("pipework: {}\n".format(line.strip()))
+                log.warn("pipework: {}\n".format(line.strip()))
         except OSError as e:
-            out.warn('Command "{}" failed\n'.format(" ".join(cmd)))
-            out.exception(e, True)
+            log.warn('Command "{}" failed\n'.format(" ".join(cmd)))
+            log.exception(e, True)
             raise e

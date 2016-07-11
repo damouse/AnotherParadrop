@@ -20,7 +20,7 @@ class Name:
             Returns:
                 True: abort the plan generation process
         """
-        out.verbose("%r\n" % (update))
+        log.verbose("%r\n" % (update))
 
         # print any warnings from previous update if they exist
         if hasattr(update, 'pkg') and update.old != None and update.old.warning != None:
@@ -41,7 +41,7 @@ class Traffic:
             Returns:
                 True: abort the plan generation process
         """
-        out.header("%r\n" % (update))
+        log.header("%r\n" % (update))
 
         # Make sure we need to create this chute (does it already exist)
         # TODO
@@ -71,7 +71,7 @@ class Struct:
             Returns:
                 True: abort the plan generation process
         """
-        out.verbose("%r\n" % (update))
+        log.verbose("%r\n" % (update))
 
         # Detect system devices and set up basic configuration for them (WAN
         # interface, wireless devices).  These steps do not need to be reverted on
@@ -81,7 +81,7 @@ class Struct:
         # config.network.getNetworkConfig or just about anything else fails.
         #
         # reloadAll is added as an abort command here so that it runs when any of
-        # the set* plans fail and back out.
+        # the set* plans fail and back log.
         update.plans.addPlans(plangraph.STRUCT_GET_SYSTEM_DEVICES,
                               (config.devices.getSystemDevices, ),
                               (config.network.abortNetworkConfig, ))
@@ -128,7 +128,7 @@ class Runtime:
             Returns:
                 True: abort the plan generation process
         """
-        out.verbose("%r\n" % (update))
+        log.verbose("%r\n" % (update))
 
         # Generate virt start script, stored in cache (key: 'virtPreamble')
         update.plans.addPlans(plangraph.RUNTIME_GET_VIRT_PREAMBLE, (config.dockerconfig.getVirtPreamble, ))
@@ -159,11 +159,11 @@ class State:
             Returns:
                 True: abort the plan generation process
         """
-        out.verbose("%r\n" % (update))
+        log.verbose("%r\n" % (update))
 
         # If this chute is new (no old version)
         if(update.old is None):
-            out.verbose('new chute\n')
+            log.verbose('new chute\n')
 
             # If it's a stop, start, delete, or restart command go ahead and fail right now since we don't have a record of it
             if update.updateType in ['stop', 'start', 'delete', 'restart']:
@@ -213,7 +213,7 @@ class Resource:
             Returns:
                 True: abort the plan generation process
         """
-        out.header("%r\n" % (update))
+        log.header("%r\n" % (update))
 
         # Make sure we need to create this chute (does it already exist)
         # TODO
@@ -252,14 +252,14 @@ class Files:
             Returns:
                 True: abort the plan generation process
         """
-        out.header("%r\n" % (update))
+        log.header("%r\n" % (update))
 
         # Make sure we need to create this chute (does it already exist)
         # TODO
 
         #   new = newChute
         #   old = chuteStor.getChute(newChute.guid)
-        #   out.header("Generating Files Plan: %r\n" % (new))
+        #   log.header("Generating Files Plan: %r\n" % (new))
         #
         #   tok = new.getCache('updateToken')
         #   if(tok and tok == 'STARTINGUP'):

@@ -29,7 +29,7 @@ def generatePlans(update):
 
     Returns: True in error, as in we should stop with this update plan
     """
-    out.header('Generating %r\n' % (update))
+    log.header('Generating %r\n' % (update))
 
     # Iterate through the list provided for this update type
     for mod in update.updateModuleList:
@@ -48,7 +48,7 @@ def aggregatePlans(update):
         Returns:
             A new PlanMap that should be executed
     """
-    out.header('Aggregating plans\n')
+    log.header('Aggregating plans\n')
     # For now we just order the plans and return a new list
     update.plans.sort()
 
@@ -62,7 +62,7 @@ def executePlans(update):
             True in error : abortPlans function should be called
             False otherwise : everything is OK
     """
-    out.header('Executing plans %r\n' % (update))
+    log.header('Executing plans %r\n' % (update))
     # Finding the functions to call is actually done by a 'iterator' like function in the plangraph module
     while(True):
         # This function either returns None or a tuple just like generate added to it
@@ -77,7 +77,7 @@ def executePlans(update):
 
         # We are in a try-except block so if func isn't callable that will catch it
         try:
-            out.verbose('Calling %s\n' % (func))
+            log.verbose('Calling %s\n' % (func))
             #
             # Call the function from the execution plan
             #
@@ -86,7 +86,7 @@ def executePlans(update):
             skipme = func(*((update, ) + args))
 
         except Exception as e:
-            out.exception(e, True)  # , plans=str(update.plans)) # Removed because breaks new out.exception call
+            log.exception(e, True)  # , plans=str(update.plans)) # Removed because breaks new log.exception call
             update.responses.append({'exception': str(e), 'traceback': traceback.format_exc()})
             update.failure = str(e)
             return True
@@ -100,7 +100,7 @@ def executePlans(update):
                 skipme = [skipme]
 
             for skip in skipme:
-                out.warn('Identified a skipped function: %r\n' % (skip))
+                log.warn('Identified a skipped function: %r\n' % (skip))
                 update.plans.registerSkip(skip)
 
     # Now we are done
@@ -116,7 +116,7 @@ def abortPlans(update):
             True in error : This is really bad
             False otherwise : we were able to restore system state back to before the executeplans function was called
     """
-    out.header('Aborting plans %r\n' % (update.plans))
+    log.header('Aborting plans %r\n' % (update.plans))
     sameError = False
     while(True):
         # This function either returns None or a tuple just like generate added to it
@@ -142,7 +142,7 @@ def abortPlans(update):
             if(sameError):
                 return True
             update.responses.append({'exception': str(e), 'traceback': traceback.format_exc()})
-            out.fatal('An abort function raised an exception!!! %r: %s\n%s\n' % (update.plans, str(e), traceback.format_exc()))
+            log.fatal('An abort function raised an exception!!! %r: %s\n%s\n' % (update.plans, str(e), traceback.format_exc()))
             sameError = True
 
     # Getting here we assume the system state has been restored using our abort plan

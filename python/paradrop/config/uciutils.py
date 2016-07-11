@@ -53,7 +53,7 @@ def setConfig(chute, old, cacheKeys, filepath):
             newconfigs += t
 
     if(len(newconfigs) == 0):
-        out.info('no settings to add %r\n' % (chute))
+        log.info('no settings to add %r\n' % (chute))
         # We are no longer returning because we need to remove the old configs if necessary
         # return False
 

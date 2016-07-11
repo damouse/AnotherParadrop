@@ -1,1 +1,1 @@
-from .output import out
+from .output import log

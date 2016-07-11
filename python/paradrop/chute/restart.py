@@ -71,7 +71,7 @@ def reloadChutes():
         if iface.get('success') is False:
             failedChuteName = iface.get('comment')
             if failedChuteName == settings.RESERVED_CHUTE:
-                out.warn('Failed to load a system config section')
+                log.warn('Failed to load a system config section')
             elif failedChuteName in okChutes:
                 # This was a chute that we are supposed to restart, but one of
                 # its config sections failed to load.
@@ -84,7 +84,7 @@ def reloadChutes():
                 # manually modified the config files.  Anyway, we cannot
                 # attempt to stop this chute because the object does not exist,
                 # but we can give a warning message.
-                out.warn('Failed to load config section for '
+                log.warn('Failed to load config section for '
                          'unrecognized chute: {}'.format(failedChuteName))
 
     # First stop all chutes that failed to bring up interfaces according to

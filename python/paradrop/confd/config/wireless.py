@@ -143,7 +143,7 @@ class ConfigWifiIface(ConfigObject):
                 else:
                     outputFile.write("wpa_passphrase={}\n".format(self.key))
             else:
-                out.warn("Encryption type {} not supported (supported: "
+                log.warn("Encryption type {} not supported (supported: "
                          "none|psk2)".format(self.encryption))
                 raise Exception("Encryption type not supported")
         return outputPath

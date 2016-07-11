@@ -34,7 +34,7 @@ def getVirtDHCPSettings(update):
         # Check for required fields.
         res = pdutils.check(dhcp, dict, ['lease', 'start', 'limit'])
         if(res):
-            out.warn('DHCP server definition {}\n'.format(res))
+            log.warn('DHCP server definition {}\n'.format(res))
             raise Exception("DHCP server definition missing field(s)")
 
         # NOTE: Having one dnsmasq section for each interface deviates from how

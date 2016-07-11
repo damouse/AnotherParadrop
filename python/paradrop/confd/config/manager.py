@@ -88,7 +88,7 @@ class ConfigManager(object):
         files = set(files)
         for config in self.currentConfig.values():
             if config.source in files:
-                out.add(config)
+                log.add(config)
         return out
 
     def getPreviousCommands(self):
@@ -268,7 +268,7 @@ class ConfigManager(object):
         usedHeaders = dict()
 
         for fn in files:
-            out.info("Reading file {}\n".format(fn))
+            log.info("Reading file {}\n".format(fn))
 
             uci = UCIConfig(fn)
             config = uci.readConfig()
@@ -288,20 +288,20 @@ class ConfigManager(object):
                 try:
                     cls = configTypeMap[section['type']]
                 except:
-                    out.warn("Unsupported section type {} in {}\n".format(
+                    log.warn("Unsupported section type {} in {}\n".format(
                         section['type'], fn))
                     continue
 
                 try:
                     obj = cls.build(self, fn, name, options, comment)
                 except:
-                    out.warn("Error building object from section {}:{} in "
+                    log.warn("Error building object from section {}:{} in "
                              "{}\n".format(section['type'], name, fn))
                     continue
 
                 key = obj.getTypeAndName()
                 if key in usedHeaders:
-                    out.warn("Section {}:{} from {} overrides section in "
+                    log.warn("Section {}:{} from {} overrides section in "
                              "{}\n".format(section['type'], name, fn,
                                            usedHeaders[key]))
                 usedHeaders[key] = fn

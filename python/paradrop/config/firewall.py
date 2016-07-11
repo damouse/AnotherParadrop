@@ -95,7 +95,7 @@ def getDeveloperFirewallRules(update):
                     # IP address.
                     iface = findMatchingInterface(to_parts[0], interfaces)
                     if iface is None:
-                        out.warn("No interface found with name {}\n".format(to_parts[0]))
+                        log.warn("No interface found with name {}\n".format(to_parts[0]))
                         raise Exception("Interface not found")
 
                     options['dest_ip'] = iface['externalIpaddr']
@@ -107,12 +107,12 @@ def getDeveloperFirewallRules(update):
                     options['target'] = "SNAT"
 
                     # TODO: Implement
-                    out.warn("SNAT rules not supported yet")
+                    log.warn("SNAT rules not supported yet")
                     raise Exception("SNAT rules not implemented")
 
                 # Could be forwarding between chute interfaces?
                 else:
-                    out.warn("Other rules not supported yet")
+                    log.warn("Other rules not supported yet")
                     raise Exception("Other rules not implemented")
 
                 rules.append((config, options))

@@ -31,7 +31,7 @@ class ChuteAPI:
                On failure: FAILURE object
         """
 
-        out.info('Creating chute...')
+        log.info('Creating chute...')
         # For now fake out a create chute message
         update = dict(updateClass='CHUTE', updateType='create',
                       tok=timeint(), pkg=apiPkg, func=self.rest.complete)
@@ -54,7 +54,7 @@ class ChuteAPI:
                On failure: FAILURE object
         """
 
-        out.info('Deleting chute...')
+        log.info('Deleting chute...')
 
         # For now fake out a create chute message
         update = dict(updateClass='CHUTE', updateType='delete', name=apiPkg.inputArgs.get('name'),
@@ -77,7 +77,7 @@ class ChuteAPI:
                On failure: FAILURE object
         """
 
-        out.info('Starting chute...')
+        log.info('Starting chute...')
 
         # For now fake out a create chute message
         update = dict(updateClass='CHUTE', updateType='start', name=apiPkg.inputArgs.get('name'),
@@ -100,7 +100,7 @@ class ChuteAPI:
                On failure: FAILURE object
         """
 
-        out.info('Stopping chute...')
+        log.info('Stopping chute...')
 
         # For now fake out a create chute message
         update = dict(updateClass='CHUTE', updateType='stop', name=apiPkg.inputArgs.get('name'),

@@ -46,14 +46,14 @@ class PDStorage(object):
 
         if(pdos.exists(self.filename)):
             deleteFile = False
-            out.info('Loading from disk\n')
+            log.info('Loading from disk\n')
             data = ""
             try:
                 pyld = pickle.load(pdos.open(self.filename, 'rb'))
                 self.setAttr(self.importAttr(pyld))
                 return True
             except Exception as e:
-                out.err('Error loading from disk: %s\n' % (str(e)))
+                log.err('Error loading from disk: %s\n' % (str(e)))
                 deleteFile = True
 
             # Delete the file
@@ -61,13 +61,13 @@ class PDStorage(object):
                 try:
                     pdos.unlink(self.filename)
                 except Exception as e:
-                    out.err('Error unlinking %s\n' % (self.filename))
+                    log.err('Error unlinking %s\n' % (self.filename))
 
         return False
 
     def saveToDisk(self):
         """Saves the data to disk."""
-        out.info('Saving to disk (%s)\n' % (self.filename))
+        log.info('Saving to disk (%s)\n' % (self.filename))
 
         # Make sure they want to save
         if(not self.attrSaveable()):
@@ -82,7 +82,7 @@ class PDStorage(object):
             pdos.syncFS()
 
         except Exception as e:
-            out.err('Error writing to disk %s\n' % (str(e)))
+            log.err('Error writing to disk %s\n' % (str(e)))
 
     def attrSaveable(self):
         """THIS SHOULD BE OVERRIDEN BY THE IMPLEMENTER."""
@@ -116,7 +116,7 @@ class ChuteStorage(PDStorage):
 
         # Has it been loaded?
         if(len(ChuteStorage.chuteList) == 0):
-            out.verbose('Loading chutes from disk: %s\n' % (filename))
+            log.verbose('Loading chutes from disk: %s\n' % (filename))
             self.loadFromDisk()
 
     def setAttr(self, attr):

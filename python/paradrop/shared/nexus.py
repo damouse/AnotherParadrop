@@ -218,7 +218,7 @@ class NexusBase(object):
         # initialize output. If filepath is set, logs to file.
         # If stealStdio is set intercepts all stderr and stdout and interprets it internally
         # If printToConsole is set (defaults True) all final output is rendered to stdout
-        output.out.startLogging(filePath=self.path.log, stealStdio=stealStdio, printToConsole=printToConsole)
+        output.log.startLogging(filePath=self.path.log, stealStdio=stealStdio, printToConsole=printToConsole)
 
         # register onStop for the shutdown call
         reactor.addSystemEventTrigger('before', 'shutdown', self.onStop)
@@ -229,16 +229,16 @@ class NexusBase(object):
 
     def onStart(self):
         pdid = self.info.pdid if self.provisioned() else 'UNPROVISIONED'
-        output.out.usage('%s (%s: %s) coming up' % (self.info.pdid, self.meta.type, self.meta.mode))
+        output.log.usage('%s (%s: %s) coming up' % (self.info.pdid, self.meta.type, self.meta.mode))
 
         # Start trying to connect to cxbr fabric
 
     def onStop(self):
         self.save()
 
-        output.out.usage('%s (%s) going down' % (self.info.pdid, self.meta.type))
+        output.log.usage('%s (%s) going down' % (self.info.pdid, self.meta.type))
         smokesignal.clear_all()
-        output.out.endLogging()
+        output.log.endLogging()
 
     @inlineCallbacks
     def connect(self, sessionClass, debug=False):
@@ -258,7 +258,7 @@ class NexusBase(object):
         That session object is assigned to self.session.
         '''
         if not self.provisioned():
-            output.out.warn('Router has no keys or identity. Waiting to connect to to server.')
+            output.log.warn('Router has no keys or identity. Waiting to connect to to server.')
         else:
             reactor.callLater(.1, self.connect)
 
@@ -480,7 +480,7 @@ def resolveInfo(nexus, path):
 
     # Sanity check contents of info and throw it out if bad
     if not validateInfo(contents):
-        output.out.err('Saved configuration data invalid, destroying it.')
+        output.log.err('Saved configuration data invalid, destroying it.')
         os.remove(path)
         createDefaultInfo(path)
         contents = loadYaml(path)
@@ -504,7 +504,7 @@ def overrideSettingsList(nexusClass, settings):
     # for k, v in settings.iteritems():
         if getattr(nexusClass, k, None) is not None:
             setattr(nexusClass, k, v)
-            output.out.info('Overriding setting %s with value %s from passed settings' % (k, v))
+            output.log.info('Overriding setting %s with value %s from passed settings' % (k, v))
         else:
             raise KeyError('You have set a setting that does not exist! %s not found!' % k)
 
@@ -513,7 +513,7 @@ def overrideSettingsEnv(nexusClass):
     for v in dir(nexusClass):
         replace = os.environ.get(v, None)
         if replace is not None:
-            output.out.info('Overriding setting %s with value %s from envionment variable' % (v, replace))
+            output.log.info('Overriding setting %s with value %s from envionment variable' % (v, replace))
             setattr(nexusClass, v, replace)
 
 
@@ -544,7 +544,7 @@ def validateInfo(contents):
 
     for k in INFO_REQUIRES:
         if k not in contents:
-            output.out.err('Contents is missing: ' + str(k))
+            output.log.err('Contents is missing: ' + str(k))
             return False
 
     return True

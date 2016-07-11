@@ -22,11 +22,11 @@ class BaseClientFactory(websocket.WampWebSocketClientFactory, ReconnectingClient
     maxDelay = 600
 
     def clientConnectionFailed(self, connector, reason):
-        out.info("Connection failed with reason: " + str(reason))
+        log.info("Connection failed with reason: " + str(reason))
         ReconnectingClientFactory.clientConnectionFailed(self, connector, reason)
 
     def clientConnectionLost(self, connector, reason):
-        out.info("Connection lost with reason: " + str(reason))
+        log.info("Connection lost with reason: " + str(reason))
         ReconnectingClientFactory.clientConnectionLost(self, connector, reason)
 
 
@@ -95,7 +95,7 @@ class BaseSession(ApplicationSession):
 
     @inlineCallbacks
     def onJoin(self, details):
-        out.info(str(self.__class__.__name__) + ' crossbar session connected')
+        log.info(str(self.__class__.__name__) + ' crossbar session connected')
         yield
 
         # Reset exponential backoff timer after a successful connection.
@@ -162,44 +162,44 @@ class BaseSession(ApplicationSession):
         # kwargs['options'] = PublishOptions(disclose_me=True)
         args = (self.pdid,) + args
         topic = _prepend(pdid, topic)
-        # out.info('cxbr: (%s) publish (%s)' % (self.pdid, topic,))
+        # log.info('cxbr: (%s) publish (%s)' % (self.pdid, topic,))
         return ApplicationSession.publish(self, topic, *args, **kwargs)
 
     def subscribe(self, handler, pdid, topic=None, options=None):
         topic = _prepend(pdid, topic)
-        out.info('cxbr: (%s) subscribe (%s)' % (self.pdid, topic,))
+        log.info('cxbr: (%s) subscribe (%s)' % (self.pdid, topic,))
         return ApplicationSession.subscribe(self, handler, topic=topic, options=options)
 
     def call(self, pdid, procedure, *args, **kwargs):
         # kwargs['options'] = CallOptions(disclose_me=True)
         args = (self.pdid,) + args
         procedure = _prepend(pdid, procedure)
-        # out.info('cxbr: (%s) calling (%s)' % (self.pdid, procedure,))
+        # log.info('cxbr: (%s) calling (%s)' % (self.pdid, procedure,))
         return ApplicationSession.call(self, procedure, *args, **kwargs)
 
     def register(self, endpoint, procedure=None, options=None):
         # options = RegisterOptions(details_arg='session')
         procedure = _prepend(self.pdid, procedure)
-        out.info('cxbr: (%s) register (%s)' % (self.pdid, procedure,))
+        log.info('cxbr: (%s) register (%s)' % (self.pdid, procedure,))
         return ApplicationSession.register(self, endpoint, procedure=procedure, options=options)
 
     ###################################################
     # Access to the original methods, without convenience modifiers
     ###################################################
     def stockPublish(self, pdid, topic, *args, **kwargs):
-        out.info('cxbr: (%s) publish (%s)' % (self.pdid, topic,))
+        log.info('cxbr: (%s) publish (%s)' % (self.pdid, topic,))
         return ApplicationSession.publish(self, topic, *args, **kwargs)
 
     def stockSubscribe(self, handler, topic=None, options=None):
-        out.info('cxbr: (%s) subscribe (%s)' % (self.pdid, topic,))
+        log.info('cxbr: (%s) subscribe (%s)' % (self.pdid, topic,))
         return ApplicationSession.subscribe(self, handler, topic=topic, options=options)
 
     def stockCall(self, pdid, procedure, *args, **kwargs):
-        out.info('cxbr: (%s) calling (%s)' % (self.pdid, procedure,))
+        log.info('cxbr: (%s) calling (%s)' % (self.pdid, procedure,))
         return ApplicationSession.call(self, procedure, *args, **kwargs)
 
     def stockRegister(self, endpoint, procedure=None, options=None):
-        out.info('cxbr: (%s) registering (%s)' % (self.pdid, procedure,))
+        log.info('cxbr: (%s) registering (%s)' % (self.pdid, procedure,))
         return ApplicationSession.register(self, endpoint, procedure=procedure, options=options)
 
 

@@ -48,9 +48,9 @@ def oscall(cmd, get=False):
         return (output, proc.returncode, errors)
     else:
         if(output and output != ""):
-            out.verbose('"%s" stdout: "%s"\n' % (cmd, output.rstrip()))
+            log.verbose('"%s" stdout: "%s"\n' % (cmd, output.rstrip()))
         if(errors and errors != ""):
-            out.verbose('"%s" stderr: "%s"\n' % (cmd, errors.rstrip()))
+            log.verbose('"%s" stderr: "%s"\n' % (cmd, errors.rstrip()))
         return None
 
 
@@ -139,7 +139,7 @@ def writeFile(filename, line, mode="a"):
         elif(type(line) is str):
             data = "%s\n" % line
         else:
-            out.err("Bad line provided for %s\n" % filename)
+            log.err("Bad line provided for %s\n" % filename)
             return
         fd = open(filename, mode)
         fd.write(data)
@@ -147,7 +147,7 @@ def writeFile(filename, line, mode="a"):
         fd.close()
 
     except Exception as e:
-        out.err('Unable to write file: %s\n' % (str(e)))
+        log.err('Unable to write file: %s\n' % (str(e)))
 
 
 def write(filename, data, mode="w"):
@@ -159,7 +159,7 @@ def write(filename, data, mode="w"):
         fd.flush()
         fd.close()
     except Exception as e:
-        out.err('Unable to write to file: %s\n' % str(e))
+        log.err('Unable to write to file: %s\n' % str(e))
 
 
 def readFile(filename, array=True, delimiter="\n"):

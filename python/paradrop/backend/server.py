@@ -128,12 +128,12 @@ class ParadropAPIServer(pdapi.APIResource):
             for ipnet in self.WHITELIST_IP:
                 net = apiutils.unpackIPAddrWithSlash(ipnet)
                 if(apiutils.addressInNetwork(ipaddr, net)):
-                    out.verbose('Request from white list: %s\n' % (ip))
+                    log.verbose('Request from white list: %s\n' % (ip))
                     return None
 
             if(key in failureDict):
                 if(failureDict[key].attempts >= settings.DBAPI_FAILURE_THRESH):
-                    out.err('Threshold met: %s %s!\n' % (ip, key))
+                    log.err('Threshold met: %s %s!\n' % (ip, key))
                     if(tictoc is None):
                         usage = None
                     else:
@@ -165,7 +165,7 @@ class ParadropAPIServer(pdapi.APIResource):
             # TODO self.usageTracker.addTrackInfo(ip, devid, request.path, self.usageTracker.SUCCESS, duration, request.content.getvalue())
         if(failureDict is not None):
             if(key in failureDict):
-                out.info('Clearing %s from failure list\n' % (key))
+                log.info('Clearing %s from failure list\n' % (key))
                 del failureDict[key]
 
     def failprocess(self, ip, request, logFailure, errorStmt, logUsage, errType):
@@ -214,7 +214,7 @@ class ParadropAPIServer(pdapi.APIResource):
                 failureDict[key] = AccessInfo(ip, headers, time)
 
             attempts = failureDict[key].attempts
-            out.warn('Failure access recorded: %s Attempts: %d\n' % (key, attempts))
+            log.warn('Failure access recorded: %s Attempts: %d\n' % (key, attempts))
 
             remaining = str(max(0, settings.DBAPI_FAILURE_THRESH - attempts))
             if(errorStmt):
@@ -229,7 +229,7 @@ class ParadropAPIServer(pdapi.APIResource):
         """
         request.setHeader('Access-Control-Allow-Origin', settings.PDFCD_HEADER_VALUE)
         ip = apiutils.getIP(request)
-        out.info('Test called (%s)\n' % (ip))
+        log.info('Test called (%s)\n' % (ip))
         request.setResponseCode(*pdapi.getResponse(pdapi.OK))
         return "SUCCESS\n"
 
@@ -243,7 +243,7 @@ class ParadropAPIServer(pdapi.APIResource):
         uri = request.uri
         method = request.method
         # Get data about who done it
-        out.err("Default caught API call (%s => %s:%s)\n" % (ip, method, uri))
+        log.err("Default caught API call (%s => %s:%s)\n" % (ip, method, uri))
 
         # TODO: What is this?
         tictoc = None

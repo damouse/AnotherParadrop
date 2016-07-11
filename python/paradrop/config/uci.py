@@ -320,7 +320,7 @@ class UCIConfig:
                 break
         else:
             # Getting here means we didn't break so no match
-            out.verbose('No match to delete, config: %r\n' % (config))
+            log.verbose('No match to delete, config: %r\n' % (config))
             return
 
         del(self.config[i])
@@ -349,7 +349,7 @@ class UCIConfig:
                 pdos.move(backupPath, self.filepath)
         else:
             # This might be ok if they didn't actually make any changes
-            out.warn('Cannot restore, %s missing backup (might be OK if no changes made)\n' % (self.myname))
+            log.warn('Cannot restore, %s missing backup (might be OK if no changes made)\n' % (self.myname))
 
     def getChuteConfigs(self, internalid):
         chuteConfigs = []
@@ -413,7 +413,7 @@ class UCIConfig:
 
         # Now write to disk
         try:
-            out.info('Saving %s to disk\n' % (self.filepath))
+            log.info('Saving %s to disk\n' % (self.filepath))
             fd = pdos.open(self.filepath, 'w')
             fd.write(output)
 
@@ -422,8 +422,8 @@ class UCIConfig:
             os.fsync(fd.fileno())
             fd.close()
         except Exception as e:
-            out.err('Unable to save new config %s, %s\n' % (self.filepath, str(e)))
-            out.err('Config may be corrupted, backup exists at /tmp/%s\n' % (self.myname))
+            log.err('Unable to save new config %s, %s\n' % (self.filepath, str(e)))
+            log.err('Config may be corrupted, backup exists at /tmp/%s\n' % (self.myname))
 
     def readConfig(self):
         """Reads in the config file."""
@@ -442,7 +442,7 @@ class UCIConfig:
                 lines.append(line)
             fd.close()
         except Exception as e:
-            out.err('Error reading file %s: %s\n' % (self.filepath, str(e)))
+            log.err('Error reading file %s: %s\n' % (self.filepath, str(e)))
             raise e
 
         cfg = None

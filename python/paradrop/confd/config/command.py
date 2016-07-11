@@ -72,14 +72,14 @@ class Command(object):
                                     stderr=subprocess.PIPE)
             self.pid = proc.pid
             for line in proc.stdout:
-                out.verbose("{}: {}".format(self.command[0], line))
+                log.verbose("{}: {}".format(self.command[0], line))
             for line in proc.stderr:
-                out.verbose("{}: {}".format(self.command[0], line))
+                log.verbose("{}: {}".format(self.command[0], line))
             self.result = proc.wait()
-            out.info('Command "{}" returned {}\n'.format(
+            log.info('Command "{}" returned {}\n'.format(
                      " ".join(self.command), self.result))
         except Exception as e:
-            out.info('Command "{}" raised exception {}\n'.format(
+            log.info('Command "{}" raised exception {}\n'.format(
                      " ".join(self.command), e))
             self.result = e
 
@@ -132,7 +132,7 @@ class KillCommand(Command):
                     return int(inputFile.read().strip())
             except:
                 # No pid file --- maybe it was not running?
-                out.warn("File not found: {}\n".format(self.pid))
+                log.warn("File not found: {}\n".format(self.pid))
                 return None
         else:
             return self.pid

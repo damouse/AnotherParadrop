@@ -99,7 +99,7 @@ class RouterSession(cxbr.BaseSession):
         :returns: list of logs
         '''
 
-        return out.getLogsSince(start, purge=False)
+        return log.getLogsSince(start, purge=False)
 
     def ping(self, pdid):
         print 'Router ping'
@@ -126,19 +126,19 @@ class RouterSession(cxbr.BaseSession):
         return "Wrote new configuration"
 
     def createChute(self, pdid, config):
-        out.info('Creating chute...')
+        log.info('Creating chute...')
         return self.bridge.createChute(config)
 
     def deleteChute(self, pdid, name):
-        out.info('Deleting chute...')
+        log.info('Deleting chute...')
         return self.bridge.deleteChute(name)
 
     def startChute(self, pdid, name):
-        out.info('Starting chute...')
+        log.info('Starting chute...')
         return self.bridge.startChute(name)
 
     def stopChute(self, pdid, name):
-        out.info('Stopping chute...')
+        log.info('Stopping chute...')
         return self.bridge.stopChute(name)
 
 
@@ -194,7 +194,7 @@ class Base(xmlrpc.XMLRPC):
 
 def castFailure(failure):
     ''' Converts an exception (or general failure) into an xmlrpc fault for transmission. '''
-    out.info("Failed API call (TODO: categorize errors)")
+    log.info("Failed API call (TODO: categorize errors)")
 
     raise xmlrpc.Fault(123, failure.getErrorMessage())
 
@@ -209,7 +209,7 @@ def apiWrapper(target):
 
 
 def castSuccess(res):
-    out.info("Completed API call (TODO: add details)")
+    log.info("Completed API call (TODO: add details)")
 
     # screen out Objectids on mongo returns. The remote objects have no
     # need for them, and they confuse xmlrpc
