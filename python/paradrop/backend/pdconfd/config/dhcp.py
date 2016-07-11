@@ -1,6 +1,6 @@
 import ipaddress
 
-from paradrop.pdtools.lib.output import out
+from paradrop.shared.output import out
 
 from .base import ConfigObject
 from .command import Command, KillCommand

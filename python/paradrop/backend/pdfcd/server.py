@@ -13,10 +13,10 @@ from twisted.web import static
 from twisted.web.server import Site
 from twisted.internet import reactor
 
-from paradrop.pdtools.lib.output import out
-from paradrop.pdtools.lib import names
+from paradrop.shared.output import out
+from paradrop.shared import names
 
-from paradrop.pdtools.lib.pdutils import timeflt, str2json, json2str
+from paradrop.shared.pdutils import timeflt, str2json, json2str
 from paradrop.lib.api import pdapi
 
 from paradrop.lib import settings

@@ -9,8 +9,8 @@ import copy
 import base64
 import pickle
 
-from paradrop.pdtools.lib.output import out
-from paradrop.pdtools.lib import pdutils
+from paradrop.shared.output import out
+from paradrop.shared import pdutils
 from paradrop.lib.utils import pdos
 from paradrop.lib import settings
 

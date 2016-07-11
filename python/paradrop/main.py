@@ -4,38 +4,10 @@ Does not implement any behavior itself.
 '''
 
 import argparse
-import signal
 
-import smokesignal
-from twisted.internet import reactor, defer
-from autobahn.twisted.wamp import ApplicationRunner
-
-from paradrop.pdtools.lib import output, nexus, names, cxbr
+from paradrop.shared import output, nexus
 from paradrop.lib import settings
 from paradrop.backend.pdfcd import apiinternal
-
-
-class Nexus(nexus.NexusBase):
-
-    def __init__(self, mode, settings=[]):
-        # get a Mode.production, Mode.test, etc from the passed string
-        mode = eval('nexus.Mode.%s' % mode)
-
-        # Want to change logging functionality? See optional args on the base class and pass them here
-        super(Nexus, self).__init__(nexus.Type.router, mode, settings=settings, stealStdio=True, printToConsole=True)
-
-    def onStart(self):
-        super(Nexus, self).onStart()
-
-        # onStart is called when the reactor starts, not when the connection is made.
-        # Check for provisioning keys and attempt to connect
-        if not self.provisioned():
-            output.out.warn('Router has no keys or identity. Waiting to connect to to server.')
-        else:
-            return self.connect(apiinternal.RouterSession)
-
-    def onStop(self):
-        super(Nexus, self).onStop()
 
 
 def main(args_string=None):
@@ -76,7 +48,7 @@ def main(args_string=None):
     # Globally assign the nexus object so anyone else can access it.
     # Sorry, programming gods. If it makes you feel better this class
     # replaces about half a dozen singletons
-    nexus.core = Nexus(args.mode, settings=args.settings)
+    nexus.core = nexus.NexusBase(args.mode, settings=args.settings, stealStdio=True, printToConsole=True)
 
     if args.config:
         from paradrop.backend import pdconfd

@@ -5,8 +5,8 @@ from paradrop.lib import settings
 from paradrop.lib.config import configservice, uciutils
 from paradrop.lib.config.pool import NetworkPool, NumericPool
 from paradrop.lib.utils import addresses, uci
-from paradrop.pdtools.lib.output import out
-from paradrop.pdtools.lib import pdutils
+from paradrop.shared.output import out
+from paradrop.shared import pdutils
 
 
 MAX_INTERFACE_NAME_LEN = 15

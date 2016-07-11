@@ -5,7 +5,7 @@
 
 from twisted.internet.defer import Deferred
 
-from paradrop.pdtools.lib.pdutils import timeint
+from paradrop.shared.pdutils import timeint
 
 
 class BridgeRequest(object):

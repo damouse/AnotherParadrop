@@ -18,7 +18,7 @@
 
 import traceback
 
-from paradrop.pdtools.lib.output import out
+from paradrop.shared.output import out
 from paradrop.backend.exc import plangraph
 
 

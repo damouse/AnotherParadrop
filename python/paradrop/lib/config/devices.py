@@ -15,7 +15,7 @@ import os
 import re
 
 from paradrop.lib.utils import pdos, uci
-from paradrop.pdtools.lib.output import out
+from paradrop.shared.output import out
 from paradrop.lib import settings
 from paradrop.lib.config import uciutils
 

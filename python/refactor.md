@@ -40,6 +40,12 @@ storage -> backend.fc.chutestorage
 
 ## Directory Updates
 
+`pdtools` and `pdtools.lib` moved to `paradrop.shared`
+
+
+
+## Directory Update Notes
+
 Notes on the original structure:
 
 - backend
@@ -152,9 +158,9 @@ Proposed directory structure:
 - shared
     + pdfcd.apiutils
     + lib.settings
-    + pdtools.lib.store
-    + pdtools.lib.output
-    + pdtools.lib.nexus
+    + shared.store
+    + shared.output
+    + shared.nexus
     + backend.fc.chutestorage
 
 Orphaned: 
@@ -175,7 +181,7 @@ Orphaned:
     + dockerapi doesnt belong here
     + pdosq needs a new home
     + Restart: needs a new home
-- pdtools.lib
+- shared
     + remove cxbr, names
 - pdfcd
     + pdfcd.server.initializeSystem is only used in one place and in one test

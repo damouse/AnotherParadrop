@@ -7,7 +7,7 @@ import time
 
 from paradrop.backend import exc
 from paradrop.backend.fc import chutestorage
-from paradrop.pdtools.lib.output import out
+from paradrop.shared.output import out
 from paradrop.lib import settings, chute
 
 

@@ -11,7 +11,7 @@ import shutil
 from distutils import dir_util
 
 # We have to import this for the decorator
-from paradrop.pdtools.lib.output import out
+from paradrop.shared.output import out
 
 # protect the original open function
 __open = open

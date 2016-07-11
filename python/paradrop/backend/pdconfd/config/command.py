@@ -1,6 +1,6 @@
 import subprocess
 
-from paradrop.pdtools.lib.output import out
+from paradrop.shared.output import out
 
 
 class CommandList(list):

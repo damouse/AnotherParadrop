@@ -41,7 +41,7 @@ Note that Groups, Organizations, and Chute Versions were previously pd.namespace
 they do not offer enough flexibility-- these are now metatdata fields (but this could change)
 '''
 
-from paradrop.pdtools.lib.exceptions import *
+from paradrop.shared.exceptions import *
 
 from enum import Enum
 import re

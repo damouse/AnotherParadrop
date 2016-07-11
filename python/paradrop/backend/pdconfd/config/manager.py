@@ -4,7 +4,7 @@ import os
 import subprocess
 import threading
 
-from paradrop.pdtools.lib.output import out
+from paradrop.shared.output import out
 from paradrop.lib import settings
 from paradrop.lib.utils import pdos
 from paradrop.lib.utils.uci import UCIConfig, getSystemConfigDir

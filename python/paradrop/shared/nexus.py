@@ -6,7 +6,7 @@ See docstring for NexusBase class for information on settings.
 
 SETTINGS QUICK REFERENCE:
     # assuming the following import
-    from paradrop.pdtools.lib import nexus
+    from paradrop.shared import nexus
 
     nexus.core.path.root
     nexus.core.path.log
@@ -35,7 +35,7 @@ import smokesignal
 from twisted.internet import reactor
 from twisted.internet.defer import inlineCallbacks, returnValue
 
-from paradrop.pdtools.lib import output, cxbr
+from paradrop.shared import output, cxbr
 
 # Global access. Assign this wherever you instantiate the Nexus object:
 #       nexus.core = MyNexusSubclass()
@@ -66,11 +66,11 @@ class NexusBase(object):
     shown as a comment to the right of each declaration.
 
     To dump all values:
-        from paradrop.pdtools.lib import nexus
+        from paradrop.shared import nexus
         print nexus.core
 
     To dump a subset of values:
-        from paradrop.pdtools.lib import nexus
+        from paradrop.shared import nexus
         print nexus.core.net
         print nexus.core.path
 
@@ -98,7 +98,7 @@ class NexusBase(object):
             (magic omitted)
 
         Finally access the resulting values:
-            from paradrop.pdtools.lib import nexus
+            from paradrop.shared import nexus
             print nexus.core.net.port
             = > '3456'
 
@@ -186,7 +186,7 @@ class NexusBase(object):
     # One of the enum values above this class
     PDID = None                                         # nexus.core.info.pdid
 
-    def __init__(self, nexusType, mode=Mode.development, settings=[], stealStdio=True, printToConsole=True):
+    def __init__(self, mode=Mode.development, settings=[], stealStdio=True, printToConsole=True):
         '''
         The one big thing this function leaves out is reactor.start(). Call this externally
         *after * initializing a nexus object.
@@ -204,7 +204,7 @@ class NexusBase(object):
         overrideSettingsEnv(self.__class__)
 
         # Resolve all the final attribute values
-        resolveMeta(self, nexusType, mode)
+        resolveMeta(self, Type.router, mode)
         resolvePaths(self)
         resolveNetwork(self, self.meta.mode)
         resolveConfig(self, self.meta.mode)

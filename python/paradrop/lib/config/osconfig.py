@@ -8,7 +8,7 @@
 """
 
 from paradrop.lib.config.uciutils import restoreConfigFile
-from paradrop.pdtools.lib.output import out
+from paradrop.shared.output import out
 
 
 def revertConfig(update, theType):

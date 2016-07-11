@@ -1,7 +1,7 @@
 import traceback
 
 from paradrop.lib.utils import uci
-from paradrop.pdtools.lib.output import out
+from paradrop.shared.output import out
 
 
 def appendListItem(options, name, value):
