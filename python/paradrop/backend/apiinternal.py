@@ -101,24 +101,6 @@ class RouterSession(cxbr.BaseSession):
 
         return out.getLogsSince(start, purge=False)
 
-    # Does not allow the shutdown call to go out before the system goes down
-    # @inlineCallbacks
-    # def onClose(self, a):
-    #     print 'Asked to close!'
-    #     yield self.call('pd._disconnected', self.pdid)
-
-    # @inlineCallbacks
-    # def onLeave(self, details):
-    #     print 'On Leave'
-    # yield self.call('pd._disconnected', self.pdid)
-    #     cxbr.BaseSession.onLeave(self, details)
-
-    # def onDisconnect(self):
-    #     out.info("Crossbar session detaching")
-
-    # self.call('pd._disconnected', self.pdid)
-    #     smokesignal.disconnect(self.logs)
-
     def ping(self, pdid):
         print 'Router ping'
         return 'Router ping receipt'
