@@ -27,12 +27,7 @@ def main(args_string=None):
     p.add_argument('--unittest', help="Run the server in unittest mode", action='store_true')
     p.add_argument('--verbose', '-v', help='Enable verbose', action='store_true')
 
-    # Some very strange formatting going on here when passing in (from go :())
-    if args_string is None:
-        args = p.parse_args()
-    else:
-        args_string = args_string if args_string == "" else args_string.split(" ")
-        args = p.parse_args(args_string)
+    args = p.parse_args()
 
     # Temp- this should go to nexus (the settings portion of it, at least)
     # Change the confd directories so we can run locally
