@@ -5,7 +5,7 @@ way to interpret the results through a set of basic actionable functions.
 
 import time
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 from paradrop.shared import settings
 
 from . import chute, chutestorage, plans

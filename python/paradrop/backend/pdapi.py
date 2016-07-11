@@ -11,7 +11,7 @@ from twisted.web.resource import Resource, NoResource
 from zope.interface.advice import addClassAdvisor
 from twisted.web.server import NOT_DONE_YET
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 from paradrop.shared.pdutils import str2json, explode
 from paradrop.shared import settings
 

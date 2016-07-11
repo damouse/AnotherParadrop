@@ -18,7 +18,7 @@
 
 import traceback
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 
 
 def generatePlans(update):

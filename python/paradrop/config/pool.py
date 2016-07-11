@@ -1,7 +1,7 @@
 import ipaddress
 import itertools
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 
 
 class ResourcePool(object):

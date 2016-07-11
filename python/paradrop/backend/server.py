@@ -13,7 +13,7 @@ from twisted.web import static
 from twisted.web.server import Site
 from twisted.internet import reactor
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 from paradrop.shared.pdutils import timeflt, json2str
 from paradrop.shared import settings
 from paradrop.chute import dockerapi

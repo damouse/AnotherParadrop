@@ -7,7 +7,7 @@ import os
 
 from paradrop.shared import settings
 from paradrop.shared import pdos
-from paradrop.shared.output import out
+from paradrop.shared import log
 
 
 def getSystemConfigDir():

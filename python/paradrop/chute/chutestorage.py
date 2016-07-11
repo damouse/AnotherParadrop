@@ -7,7 +7,7 @@ import sys
 import copy
 import pickle
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 from paradrop.shared import pdos
 from paradrop.shared import settings
 

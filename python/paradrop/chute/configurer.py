@@ -6,7 +6,7 @@
 import time
 import threading
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 from paradrop.shared import settings
 
 from . import restart, updateObject

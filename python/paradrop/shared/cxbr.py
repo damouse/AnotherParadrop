@@ -11,7 +11,7 @@ from twisted.internet.protocol import ReconnectingClientFactory
 from twisted.internet.ssl import ClientContextFactory
 
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 
 
 # pylint: disable=inconsistent-mro

@@ -10,7 +10,7 @@ Checks with pdconfd to make sure it was able to properly bring up all interfaces
 starting chutes.
 '''
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 from paradrop.chute import chutestorage
 from paradrop.shared.pdutils import str2json, timeint
 from paradrop.confd.client import waitSystemUp

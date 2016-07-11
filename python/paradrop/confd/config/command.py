@@ -1,6 +1,6 @@
 import subprocess
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 
 
 class CommandList(list):

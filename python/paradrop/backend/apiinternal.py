@@ -6,7 +6,7 @@ from twisted.web import xmlrpc
 from twisted.internet.defer import inlineCallbacks, returnValue
 
 from paradrop.config import hostconfig
-from paradrop.shared.output import out
+from paradrop.shared import log
 from paradrop.shared import nexus, cxbr
 
 from . import apibridge

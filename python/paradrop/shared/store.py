@@ -12,7 +12,7 @@ import os
 import yaml
 
 from os.path import expanduser
-from paradrop.shared.output import out
+from paradrop.shared import log
 
 # Check and see if we're on snappy or not. If not, then stick the logs in the local
 # directory. We will be provisioned as a developer instance anyway, so the info doesn't matter yet,

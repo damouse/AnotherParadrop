@@ -23,7 +23,7 @@ import smokesignal
 
 from enum import Enum
 from twisted.python.logfile import DailyLogFile
-from twisted.python import log
+from twisted.python import log as txLog
 
 from paradrop.shared import pdutils
 
@@ -183,7 +183,7 @@ class BaseOutput(object):
     and returning it as a "log structure" (which is a dict.)
 
     For example:
-        log.info("Text", anObject)
+        txLog.info("Text", anObject)
 
     requires a custom object to figure out what to do with anObject where the default case will simply
     parse the string with an appropriate color.
@@ -203,7 +203,7 @@ class BaseOutput(object):
 
     def __call__(self, args, logPrefixLevel=3, **extra):
         '''
-        Called as an attribute on log. This method takes the passed params and builds a log dict,
+        Called as an attribute on txLog. This method takes the passed params and builds a log dict,
         returning it.
 
         Subclasses can customize args to include whatever they'd like, adding content
@@ -235,7 +235,7 @@ class BaseOutput(object):
 
 class TwistedOutput(BaseOutput):
 
-    # There's a host of things we simply don't care ablog. This is bad form
+    # There's a host of things we simply don't care abtxLog. This is bad form
     # and not great for performance. Alternatives welcome.
     blacklist = [
         'Starting factory',
@@ -312,7 +312,7 @@ class TwistedException(BaseOutput):
 class ExceptionOutput(BaseOutput):
 
     '''
-    Handle vanilla exceptions passed directly to us using log.exception
+    Handle vanilla exceptions passed directly to us using txLog.exception
     '''
 
     def __call__(self, exception, random):
@@ -353,7 +353,7 @@ class Output():
 
     The way this Output class is setup is that you pass it a series
     of kwargs like (stuff=OutputClass()). Then at any point in your
-    program you can call "paradrop.log.stuff('This is a string\n')".
+    program you can call "paradrop.txLog.stuff('This is a string\n')".
 
     This way we can easily support different levels of verbosity without
     the need to use some kind of bitmask or anything else. On-the-fly output
@@ -362,7 +362,7 @@ class Output():
 
     This is done by the __getattr__ function below, basically in __init__ we set
     any attributes you pass as args, and anything else not defined gets sent to __getattr__
-    so that it doesn't error log.
+    so that it doesn't error txLog.
     '''
 
     def __init__(self, **kwargs):
@@ -389,7 +389,7 @@ class Output():
 
     def __getattr__(self, name):
         """Catch attribute access attempts that were not defined in __init__
-            by default throw them log."""
+            by default throw them txLog."""
 
         # raise NotImplementedError("You must create " + name + " to log with it")
         pass
@@ -443,15 +443,15 @@ class Output():
 
         # Override twisted logging (allows us to cleanly catch all exceptions)
         # This must come after the setattr calls so we get the wrapped object
-        log.startLoggingWithObserver(self.twisted, setStdout=False)
-        log.startLoggingWithObserver(self.twistedErr, setStdout=False)
+        txLog.startLoggingWithObserver(self.twisted, setStdout=False)
+        txLog.startLoggingWithObserver(self.twistedErr, setStdout=False)
 
     def endLogging(self):
         '''
         Ask the printing thread to flush and end, then return.
         '''
 
-        log.info('Asking file logger to close')
+        txLog.info('Asking file logger to close')
         self.queue.join()
 
         # Because the print thread can't tell when it goes down as currently designed
@@ -521,9 +521,9 @@ class Output():
         '''
 
         if not self.logpath:
-            log.warn('Asked for log files, but this instance of the output class '
-                     'is not currently configured for file logging. '
-                     'Call startLogging with a directory first! ')
+            txLog.warn('Asked for log files, but this instance of the output class '
+                       'is not currently configured for file logging. '
+                       'Call startLogging with a directory first! ')
             return
 
         ret = []

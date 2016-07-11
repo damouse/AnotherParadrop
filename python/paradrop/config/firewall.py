@@ -2,7 +2,7 @@ import fnmatch
 
 from paradrop.config import uciutils
 from paradrop.config import uci
-from paradrop.shared.output import out
+from paradrop.shared import log
 
 
 def findMatchingInterface(iface_name, interfaces):

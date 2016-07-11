@@ -1,5 +1,5 @@
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 from io import BytesIO
 
 """

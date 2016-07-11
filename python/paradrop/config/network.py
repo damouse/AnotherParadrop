@@ -4,7 +4,7 @@ from paradrop.shared import settings
 from paradrop.config import uciutils
 from paradrop.config.pool import NetworkPool, NumericPool
 from paradrop.config import uci
-from paradrop.shared.output import out
+from paradrop.shared import log
 from paradrop.shared import pdutils
 
 

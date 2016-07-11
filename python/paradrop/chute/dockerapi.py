@@ -7,7 +7,7 @@
 Functions associated with deploying and cleaning up docker containers.
 """
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 import docker
 import json
 import os

@@ -1,5 +1,5 @@
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 from paradrop.shared.pdutils import timeint
 
 # from paradrop.lib.api.pdapi import APIDecorator

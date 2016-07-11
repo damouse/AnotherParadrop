@@ -11,7 +11,7 @@ import shutil
 from distutils import dir_util
 
 # We have to import this for the decorator
-from paradrop.shared.output import out
+from paradrop.shared import log
 
 # protect the original open function
 __open = open

@@ -3,7 +3,7 @@
 # Authors: The Paradrop Team
 ###################################################################
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 from . import plangraph, chute
 from paradrop import config
 from paradrop.shared import settings

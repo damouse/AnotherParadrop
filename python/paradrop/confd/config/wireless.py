@@ -5,7 +5,7 @@ import string
 import subprocess
 from pprint import pprint
 
-from paradrop.shared.output import out
+from paradrop.shared import log
 from paradrop.shared import pdos
 
 from .base import ConfigObject

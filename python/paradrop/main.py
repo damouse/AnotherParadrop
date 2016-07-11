@@ -5,8 +5,7 @@ Does not implement any behavior itself.
 
 import argparse
 
-from paradrop.shared import nexus, settings
-from paradrop.shared import out
+from paradrop.shared import nexus, settings, log
 
 
 def main(args_string=None):

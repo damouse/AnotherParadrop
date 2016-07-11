@@ -1,6 +1,6 @@
 
 from paradrop.config import uci
-from paradrop.shared.output import out
+from paradrop.shared import log
 
 
 def appendListItem(options, name, value):
