@@ -11,7 +11,6 @@ setup(
         'txdbus',
         'wget',
         'pyyaml',
-        'pdtools',
         'mock',
         'flask',
         'smokesignal',
