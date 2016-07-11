@@ -7,7 +7,7 @@ from paradrop.shared.output import out
 
 from paradrop.backend.exc import plangraph
 
-from paradrop.lib import config
+from paradrop import config
 
 from paradrop.shared.output import out
 from paradrop.backend.exc import plangraph

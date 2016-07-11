@@ -40,9 +40,9 @@ storage -> backend.fc.chutestorage
 
 ## Directory Updates
 
-`pdtools` and `pdtools.lib` moved to `paradrop.shared`
+`pdtools`, `pdtools.lib` -> `paradrop.shared`
 
-
+`lib.config` -> `config`
 
 ## Directory Update Notes
 
