@@ -5,7 +5,6 @@ import socket
 from twisted.web import xmlrpc
 from twisted.internet.defer import inlineCallbacks, returnValue
 
-from paradrop.lib import pdinstall
 from paradrop.config import hostconfig
 from paradrop.shared.output import out
 from paradrop.shared import nexus, cxbr
@@ -13,6 +12,8 @@ from paradrop.shared import nexus, cxbr
 from . import apibridge
 
 SOCKET_ADDRESS = "/var/run/pdinstall.sock"
+
+# Former contents of pdinstall
 
 
 def sendCommand(command, data):
@@ -124,7 +125,7 @@ class RouterSession(cxbr.BaseSession):
 
     def update(self, pdid, data):
         print("Sending command {} to pdinstall".format(data['command']))
-        success = pdinstall.sendCommand(data['command'], data)
+        success = sendCommand(data['command'], data)
 
         # NOTE: If successful, this process will probably be going down soon.
         if success:
