@@ -8,9 +8,8 @@ import threading
 
 from paradrop.shared.output import out
 from paradrop.lib import settings
-from paradrop.lib.utils.restart import reloadChutes
 
-from . import updateObject
+from . import restart, updateObject
 
 
 class PDConfigurer:
@@ -85,7 +84,7 @@ class PDConfigurer:
         """
 
         # add any chutes that should already be running to the front of the update queue before processing any updates
-        startQueue = reloadChutes()
+        startQueue = restart.reloadChutes()
         self.updateLock.acquire()
         # insert the data into the front of our update queue so that all old chutes restart befor new ones are processed
         for updateObj in startQueue:

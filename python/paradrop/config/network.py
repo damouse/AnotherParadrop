@@ -3,7 +3,7 @@ import itertools
 from paradrop.lib import settings
 from paradrop.config import uciutils
 from paradrop.config.pool import NetworkPool, NumericPool
-from paradrop.lib.utils import uci
+from paradrop.config import uci
 from paradrop.shared.output import out
 from paradrop.shared import pdutils
 

@@ -12,7 +12,8 @@ so they only need to be added when missing.
 
 import re
 
-from paradrop.lib.utils import pdos, uci
+from paradrop.config import uci
+from paradrop.shared import pdos
 from paradrop.lib import settings
 from paradrop.config import uciutils
 

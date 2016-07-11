@@ -6,7 +6,7 @@
 import os
 
 from paradrop.lib import settings
-from paradrop.lib.utils import pdos
+from paradrop.shared import pdos
 from paradrop.shared.output import out
 
 

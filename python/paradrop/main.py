@@ -11,6 +11,7 @@ from paradrop.lib import settings
 
 def main(args_string=None):
     p = argparse.ArgumentParser(prog='Paradrop', description='Paradrop API server running on client')
+
     p.add_argument('-s', '--settings', help='Overwrite settings, format is "KEY:VALUE"',
                    action='append', type=str, default=[])
     p.add_argument('--config', help='Run as the configuration daemon',
@@ -47,7 +48,7 @@ def main(args_string=None):
     # Globally assign the nexus object so anyone else can access it.
     # Sorry, programming gods. If it makes you feel better this class
     # replaces about half a dozen singletons
-    nexus.core = nexus.NexusBase(args.mode, settings=args.settings, stealStdio=True, printToConsole=True)
+    nexus.core = nexus.NexusBase(args.mode, settings=args.settings, stealStdio=False, printToConsole=True)
 
     if args.config:
         from paradrop import confd

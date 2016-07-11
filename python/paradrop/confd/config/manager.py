@@ -1,24 +1,18 @@
 import heapq
 import json
 import os
-import subprocess
 import threading
 
 from paradrop.shared.output import out
-from paradrop.lib import settings
-from paradrop.lib.utils import pdos
-from paradrop.lib.utils.uci import UCIConfig, getSystemConfigDir
+from paradrop.shared import pdos
+from paradrop.config.uci import UCIConfig, getSystemConfigDir
 
 # Import all of the modules defining section types, so that all subclasses of
 # ConfigObject are known.
-from . import dhcp
-from . import firewall
-from . import network
-from . import wireless
+from . import dhcp, firewall, network, wireless
 
 from .base import ConfigObject
 from .command import CommandList
-
 
 # Map of type names to the classes that handle them.
 configTypeMap = dict()

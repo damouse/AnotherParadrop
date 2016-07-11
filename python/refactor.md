@@ -34,6 +34,8 @@ pdosq -> pdos
 Functions: pdosq.makedirs -> pdos.makedirs_quiet
 Updated: lib.utils.uci, pdconfd.config.wireless, manager
 
+`lib.utils.pdinstall` -> `backend.apiinternal`
+
 #### lib.utils
 
 storage -> backend.fc.chutestorage
@@ -47,6 +49,20 @@ storage -> backend.fc.chutestorage
 `backend.pdconfd` -> `confd`
 
 `backend.exc`, `backend.fc` -> `chute`
+
+`backend.pdfcd` -> `backend`
+
+`lib.chute` -> `chute.chute`
+
+`lib.utils.dockerapi` -> `chute.dockerapi`
+
+`lib.utils.restart` -> `chute.restart`
+
+`lib.utils.uci` -> `config.uci`
+
+## Deleted
+
+`lib.utils.addresses`: unused
 
 ## Directory Update Notes
 
@@ -134,7 +150,7 @@ Proposed directory structure:
     + configurer
     + updateObject
     + lib.chute
-- configdaemon
+- confd
     + client
     + main
     + configobjects (all of them)

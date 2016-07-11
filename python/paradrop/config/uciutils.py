@@ -1,5 +1,5 @@
 
-from paradrop.lib.utils import uci
+from paradrop.config import uci
 from paradrop.shared.output import out
 
 

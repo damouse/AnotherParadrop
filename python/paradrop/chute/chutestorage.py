@@ -8,7 +8,7 @@ import copy
 import pickle
 
 from paradrop.shared.output import out
-from paradrop.lib.utils import pdos
+from paradrop.shared import pdos
 from paradrop.lib import settings
 
 

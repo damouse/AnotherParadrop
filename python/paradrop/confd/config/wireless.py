@@ -6,7 +6,7 @@ import subprocess
 from pprint import pprint
 
 from paradrop.shared.output import out
-from paradrop.lib.utils import pdos
+from paradrop.shared import pdos
 
 from .base import ConfigObject
 from .command import Command, KillCommand
