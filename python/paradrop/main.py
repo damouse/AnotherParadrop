@@ -51,17 +51,17 @@ def main(args_string=None):
     nexus.core = nexus.NexusBase(args.mode, settings=args.settings, stealStdio=True, printToConsole=True)
 
     if args.config:
-        from paradrop.backend import pdconfd
+        from paradrop import confd
 
         # Start the configuration daemon
-        pdconfd.main.run_pdconfd()
+        confd.main.run_pdconfd()
 
     else:
-        from paradrop.backend import pdconfd
+        from paradrop import confd
         from paradrop.backend import pdfcd
 
         # Start the configuration service as a thread
-        pdconfd.main.run_thread()
+        confd.main.run_thread()
 
         # Now setup the RESTful API server for Paradrop
         pdfcd.server.setup(args)

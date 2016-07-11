@@ -6,7 +6,7 @@
 """
 import json
 
-from paradrop.backend.pdconfd import client
+from paradrop.confd import client
 from paradrop.lib.utils import uci
 from paradrop.shared.output import out
 
