@@ -14,5 +14,7 @@ func main() {
 
 	module, _ := gosnake.Import("paradrop")
 
-	module.Call("main", args)
+	if _, e := module.Call("main", args); e != nil {
+		panic(e)
+	}
 }
