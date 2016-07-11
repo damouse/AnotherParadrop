@@ -13,13 +13,7 @@ Date:   Fri Jul 8 13:20:51 2016 -0500
 
 ```
 
-## Directories
-
-- `pdtools` is now under paradrop/pdtools. References in whole project updated
-
-## Files
-
-Each entry here lists the name of the pacakges changed, the changes, and any side-effect updates.
+## File Merges
 
 #### backend.exc: 
 
@@ -39,6 +33,12 @@ Updated: (pdfcd.) server, apichute`
 pdosq -> pdos
 Functions: pdosq.makedirs -> pdos.makedirs_quiet
 Updated: lib.utils.uci, pdconfd.config.wireless, manager
+
+## Directory Updates
+
+`pdtools` moved to paradrop.pdtools
+
+Deleted pdtools.coms 
 
 #### Proposed
 
