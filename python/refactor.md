@@ -34,6 +34,10 @@ pdosq -> pdos
 Functions: pdosq.makedirs -> pdos.makedirs_quiet
 Updated: lib.utils.uci, pdconfd.config.wireless, manager
 
+#### lib.utils
+
+storage -> backend.fc.chutestorage
+
 ## Directory Updates
 
 `pdtools` moved to paradrop.pdtools
@@ -53,6 +57,77 @@ Deleted pdtools.coms
     + dockerapi doesnt belong here
     + pdosq needs a new home
     + Restart: needs a new home
+- pdtools.lib
+    + remove cxbr, names
 
 Redundant Settings/Storage:
 - backend.fc.chuteshorage
+
+#### Existing Structure Notes
+
+- backend
+    + exec: chute updating and plans
+        * executionplan: make and run plans that update chutes
+        * plangraph:  Plan and PlanMap objects
+        * plans: actual steps
+    + fc
+        * chutestorage: ChuteStorage(pd.lib.utils.storage)
+            - Nothing else implements storage
+        * 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,11 +3,6 @@
 # Authors: The Paradrop Team
 ###################################################################
 
-import traceback
-from paradrop.pdtools.lib.output import out
-
-from paradrop.backend.exc import plangraph
-
 '''
     This module contains the methods required to generate and act upon
     execution plans.
@@ -19,6 +14,12 @@ from paradrop.backend.exc import plangraph
     All plans that are generated are function pointers, as in no actual
     operations are performed during the generation process.
 '''
+
+
+import traceback
+
+from paradrop.pdtools.lib.output import out
+from paradrop.backend.exc import plangraph
 
 
 def generatePlans(update):
@@ -86,7 +87,7 @@ def executePlans(update):
             skipme = func(*((update, ) + args))
 
         except Exception as e:
-            out.exception(e, True) #, plans=str(update.plans)) # Removed because breaks new out.exception call
+            out.exception(e, True)  # , plans=str(update.plans)) # Removed because breaks new out.exception call
             update.responses.append({'exception': str(e), 'traceback': traceback.format_exc()})
             update.failure = str(e)
             return True
