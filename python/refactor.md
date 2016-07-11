@@ -34,8 +34,9 @@ pdosq -> pdos
 Functions: pdosq.makedirs -> pdos.makedirs_quiet
 Updated: lib.utils.uci, pdconfd.config.wireless, manager
 
-#### lib.utils.storage -> backend.fc.chutestorage
+#### lib.utils
 
+storage -> backend.fc.chutestorage
 
 ## Directory Updates
 
@@ -109,6 +110,57 @@ Notes on the original structure:
         * pdutils: random utility functions
         * store: yet another persistence implementation
 
+Proposed directory structure: 
+
+- backend
+    + pdfcd.server
+    + pdfcd.internal (is this still needed?)
+    + lib.api
+- chute
+    + executionplan
+    + plangraph
+    + plans
+    + chutestorage (temp)
+    + configurer
+    + updateObject
+    + lib.chute
+- configdaemon
+    + client
+    + main
+    + configobjects (all of them)
+- sysconfig
+    + lib.config.configservice (?)
+    + lib.config.devices
+    + lib.config.dockerconfig
+    + lib.config.osconfig
+    + lib.utils.dockerapi
+    + lib.utils.pdos
+    + lib.utils.restart
+    + lib.pdinstall
+- netconfig
+    + lib.config.dhcp
+    + lib.config.firewall
+    + lib.config.hostconfig (?)
+    + lib.config.network
+    + lib.config.pool
+    + lib.config.uciutils
+    + lib.config.wifi
+    + lib.utils.uci
+- localserver
+    + lib.utils.addresses
+    + pdfcd.apuchute
+- shared
+    + pdfcd.apiutils
+    + lib.settings
+    + pdtools.lib.store
+    + pdtools.lib.output
+    + pdtools.lib.nexus
+    + backend.fc.chutestorage
+
+Orphaned: 
+
+- apibridge
+- apichute
 
 #### Proposed
 
