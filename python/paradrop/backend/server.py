@@ -26,8 +26,8 @@ from . import apichute
 from . import pdapi
 
 # temp
-from paradrop.backend.pdfcd.apiinternal import Base
-from paradrop.backend.pdfcd import apiinternal
+from paradrop.backend.apiinternal import Base
+from paradrop.backend import apiinternal
 
 
 class AccessInfo(object):
