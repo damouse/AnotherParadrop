@@ -4,16 +4,9 @@
 ###################################################################
 
 from paradrop.shared.output import out
-
 from paradrop.backend.exc import plangraph
-
 from paradrop import config
-
-from paradrop.shared.output import out
-from paradrop.backend.exc import plangraph
 from paradrop.lib import chute, settings
-from paradrop.shared.pdutils import jsonPretty
-
 from paradrop.lib.utils import dockerapi as virt
 
 

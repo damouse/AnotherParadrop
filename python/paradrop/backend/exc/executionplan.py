@@ -19,7 +19,6 @@
 import traceback
 
 from paradrop.shared.output import out
-from paradrop.backend.exc import plangraph
 
 
 def generatePlans(update):

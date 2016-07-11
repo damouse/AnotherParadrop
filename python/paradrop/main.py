@@ -5,9 +5,8 @@ Does not implement any behavior itself.
 
 import argparse
 
-from paradrop.shared import output, nexus
+from paradrop.shared import nexus
 from paradrop.lib import settings
-from paradrop.backend.pdfcd import apiinternal
 
 
 def main(args_string=None):

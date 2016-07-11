@@ -44,6 +44,8 @@ storage -> backend.fc.chutestorage
 
 `lib.config` -> `config`
 
+`backend.pdconfd` -> `confd`
+
 ## Directory Update Notes
 
 Notes on the original structure:
