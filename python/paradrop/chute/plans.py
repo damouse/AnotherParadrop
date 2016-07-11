@@ -4,7 +4,7 @@
 ###################################################################
 
 from paradrop.shared.output import out
-from paradrop.backend.exc import plangraph
+from paradrop.chute import plangraph
 from paradrop import config
 from paradrop.lib import chute, settings
 from paradrop.lib.utils import dockerapi as virt

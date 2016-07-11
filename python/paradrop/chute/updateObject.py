@@ -5,8 +5,8 @@ way to interpret the results through a set of basic actionable functions.
 
 import time
 
-from paradrop.backend import exc
-from paradrop.backend.fc import chutestorage
+from . import plans
+from paradrop.chute import chutestorage
 from paradrop.shared.output import out
 from paradrop.lib import settings, chute
 
@@ -42,7 +42,7 @@ class UpdateObject(object):
         self.failure = None
 
         # Each update gets its own plan map
-        self.plans = exc.plangraph.PlanMap(self.name)
+        self.plans = chuteplangraph.PlanMap(self.name)
         # Grab a reference to our storage system
         self.chuteStor = chutestorage.ChuteStorage()
         # Explicitly define a reference to the new data object
@@ -108,18 +108,18 @@ class UpdateObject(object):
         self.startTime = time.time()
 
         # Generate the plans we need to setup the chute
-        if(exc.executionplan.generatePlans(self)):
+        if(chuteexecutionplan.generatePlans(self)):
             out.warn('Failed to generate plans\n')
             self.complete(success=False, message=self.failure)
             return
 
         # Aggregate those plans
-        exc.executionplan.aggregatePlans(self)
+        chuteexecutionplan.aggregatePlans(self)
 
         # Execute on those plans
-        if(exc.executionplan.executePlans(self)):
+        if(chuteexecutionplan.executePlans(self)):
             # Getting here means we need to abort what we did
-            res = exc.executionplan.abortPlans(self)
+            res = chuteexecutionplan.abortPlans(self)
 
             # Did aborting also fail? This is bad!
             if(res):
@@ -159,12 +159,12 @@ class UpdateChute(UpdateObject):
     """
     # List of all modules that need to be called during execution planning
     updateModuleList = [
-        exc.plans.Name(),
-        exc.plans.State(),
-        exc.plans.Struct(),
-        exc.plans.Resource(),
-        exc.plans.Traffic(),
-        exc.plans.Runtime()
+        plans.Name(),
+        plans.State(),
+        plans.Struct(),
+        plans.Resource(),
+        plans.Traffic(),
+        plans.Runtime()
     ]
 
     def __init__(self, obj):

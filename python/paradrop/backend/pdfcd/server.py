@@ -17,7 +17,7 @@ from paradrop.shared.output import out
 from paradrop.shared.pdutils import timeflt, json2str
 from paradrop.lib import settings
 from paradrop.lib.utils import dockerapi
-from paradrop.backend import fc
+from paradrop import chute
 
 # Import local refs to pdfcd utilities
 from . import apibridge
@@ -62,7 +62,7 @@ class ParadropAPIServer(pdapi.APIResource):
         self.reactor = lclreactor
 
         # Establish the configurer which is the launch point for all chute related endeavors
-        self.configurer = fc.configurer.PDConfigurer(None, lclreactor)
+        self.configurer = chute.configurer.PDConfigurer(None, lclreactor)
 
         # Pass the configurer off to the API bridge so that WAMP calls can use it.
         apibridge.APIBridge.setConfigurer(self.configurer)

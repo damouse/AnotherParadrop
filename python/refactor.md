@@ -46,12 +46,14 @@ storage -> backend.fc.chutestorage
 
 `backend.pdconfd` -> `confd`
 
+`backend.exc`, `backend.fc` -> `chute`
+
 ## Directory Update Notes
 
 Notes on the original structure:
 
 - backend
-    + exec: chute updating and plans
+    + exc: chute updating and plans
         * executionplan: make and run plans that update chutes
         * plangraph:  Plan and PlanMap objects
         * plans: actual steps

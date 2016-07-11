@@ -11,7 +11,7 @@ starting chutes.
 '''
 
 from paradrop.shared.output import out
-from paradrop.backend.fc import chutestorage
+from paradrop.chute import chutestorage
 from paradrop.shared.pdutils import str2json, timeint
 from paradrop.confd.client import waitSystemUp
 from paradrop.lib import settings
