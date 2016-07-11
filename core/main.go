@@ -12,7 +12,7 @@ import (
 func main() {
 	args := strings.Join(os.Args[1:], " ")
 
-	pymodule := gosnake.NewBinding()
-	pymodule.Import("paradrop")
-	pymodule.Call("paradrop", "main", args)
+	module, _ := gosnake.Import("paradrop")
+
+	module.Call("main", args)
 }

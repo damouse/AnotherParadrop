@@ -56,8 +56,12 @@ def main(args_string=None):
     p.add_argument('--unittest', help="Run the server in unittest mode", action='store_true')
     p.add_argument('--verbose', '-v', help='Enable verbose', action='store_true')
 
-    # If called from go, accept the args_string. If not, then let parse_args grab it
-    args = p.parse_args() if args_string is None else p.parse_args(args_string.split(" "))
+    # Some very strange formatting going on here when passing in (from go :())
+    if args_string is None:
+        args = p.parse_args()
+    else:
+        args_string = args_string if args_string == "" else args_string.split(" ")
+        args = p.parse_args(args_string)
 
     # TESTING
     args.local = True
