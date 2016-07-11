@@ -4,8 +4,10 @@
 ###################################################################
 
 import os
+import errno
 import subprocess
 import shutil
+
 from distutils import dir_util
 
 # We have to import this for the decorator
@@ -62,7 +64,7 @@ def getFileType(f):
     r = oscall('file "%s"' % f, True)
     if(r is not None and isinstance(r, tuple)):
         return r[0]
-    else: # pragma: no cover
+    else:  # pragma: no cover
         return None
 
 
@@ -186,3 +188,26 @@ def readFile(filename, array=True, delimiter="\n"):
         return lines
     else:
         return delimiter.join(lines)
+
+"""
+Quiet pdos module.
+Implements utility OS operations without relying on the output module.
+Therefore, this module can be used by output without circular dependency.
+"""
+
+
+def makedirs_quiet(p):
+    """
+    Recursive directory creation (like mkdir -p).
+    Returns True if the path is successfully created, False if it existed
+    already, and raises an OSError on other error conditions.
+    """
+    try:
+        os.makedirs(p)
+        return True
+    except OSError as e:
+        # EEXIST is fine (directory already existed).  Anything else would be
+        # problematic.
+        if e.errno != errno.EEXIST:
+            raise e
+    return False

@@ -6,7 +6,7 @@ import threading
 
 from paradrop.pdtools.lib.output import out
 from paradrop.lib import settings
-from paradrop.lib.utils import pdosq
+from paradrop.lib.utils import pdos
 from paradrop.lib.utils.uci import UCIConfig, getSystemConfigDir
 
 # Import all of the modules defining section types, so that all subclasses of
@@ -66,7 +66,7 @@ class ConfigManager(object):
         self.writeDir = writeDir
 
         # Make sure directory exists.
-        pdosq.makedirs(writeDir)
+        pdos.makedirs_quiet(writeDir)
 
         self.previousCommands = list()
         self.currentConfig = dict()
