@@ -63,9 +63,6 @@ def main(args_string=None):
         args_string = args_string if args_string == "" else args_string.split(" ")
         args = p.parse_args(args_string)
 
-    # TESTING
-    args.local = True
-
     # Temp- this should go to nexus (the settings portion of it, at least)
     # Change the confd directories so we can run locally
     if args.local:

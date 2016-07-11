@@ -1,7 +1,5 @@
 package main
 
-// Simple starter script to kick off the go core
-
 import (
 	"os"
 	"strings"
@@ -10,6 +8,8 @@ import (
 )
 
 func main() {
+	// Import the paradrop module and call main on it
+
 	args := strings.Join(os.Args[1:], " ")
 
 	module, _ := gosnake.Import("paradrop")
