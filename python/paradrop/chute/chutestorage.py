@@ -9,7 +9,7 @@ import pickle
 
 from paradrop.shared.output import out
 from paradrop.shared import pdos
-from paradrop.lib import settings
+from paradrop.shared import settings
 
 
 class PDStorage(object):

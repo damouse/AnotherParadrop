@@ -13,7 +13,7 @@ from twisted.web.server import NOT_DONE_YET
 
 from paradrop.shared.output import out
 from paradrop.shared.pdutils import str2json, explode
-from paradrop.lib import settings
+from paradrop.shared import settings
 
 
 def method_factory_factory(method):

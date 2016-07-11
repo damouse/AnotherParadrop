@@ -15,7 +15,7 @@ from twisted.internet import reactor
 
 from paradrop.shared.output import out
 from paradrop.shared.pdutils import timeflt, json2str
-from paradrop.lib import settings
+from paradrop.shared import settings
 from paradrop.chute import dockerapi
 from paradrop import chute
 

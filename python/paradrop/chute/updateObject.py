@@ -5,10 +5,10 @@ way to interpret the results through a set of basic actionable functions.
 
 import time
 
-from . import plans
-from paradrop.chute import chutestorage
 from paradrop.shared.output import out
-from paradrop.lib import settings, chute
+from paradrop.shared import settings
+
+from . import chute, chutestorage, plans
 
 
 UPDATE_SPECIFIC_ARGS = ["pkg", "func"]

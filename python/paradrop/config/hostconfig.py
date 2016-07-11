@@ -16,7 +16,7 @@ settings.
 import itertools
 import yaml
 
-from paradrop.lib import settings
+from paradrop.shared import settings
 from paradrop.config import devices as config_devices
 
 

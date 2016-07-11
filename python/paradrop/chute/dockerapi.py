@@ -13,7 +13,7 @@ import json
 import os
 import subprocess
 
-from paradrop.lib import settings
+from paradrop.shared import settings
 
 
 DOCKER_CONF = """

@@ -14,7 +14,7 @@ import re
 
 from paradrop.config import uci
 from paradrop.shared import pdos
-from paradrop.lib import settings
+from paradrop.shared import settings
 from paradrop.config import uciutils
 
 SYS_DIR = "/sys/class/net"

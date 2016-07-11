@@ -6,7 +6,7 @@ Does not implement any behavior itself.
 import argparse
 
 from paradrop.shared import nexus
-from paradrop.lib import settings
+from paradrop.shared import settings
 
 
 def main(args_string=None):
