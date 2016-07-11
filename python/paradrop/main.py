@@ -5,7 +5,7 @@ Does not implement any behavior itself.
 
 import argparse
 
-from paradrop.shared import nexus, settings, log
+from paradrop.shared import nexus, settings
 
 
 def main(args_string=None):
@@ -34,8 +34,6 @@ def main(args_string=None):
         args_string = args_string if args_string == "" else args_string.split(" ")
         args = p.parse_args(args_string)
 
-    log.testing("yo")
-
     # Temp- this should go to nexus (the settings portion of it, at least)
     # Change the confd directories so we can run locally
     if args.local:
@@ -43,25 +41,24 @@ def main(args_string=None):
         settings.UCI_CONFIG_DIR = "/tmp/config.d"
         settings.HOST_CONFIG_PATH = "/tmp/hostconfig.yaml"
 
-    # Check for settings to overwrite (MOVE TO NEXUS)
+    # Check for settings to overwrite
     settings.updateSettings(args.settings)
 
-    # Globally assign the nexus object so anyone else can access it.
-    # Sorry, programming gods. If it makes you feel better this class
-    # replaces about half a dozen singletons
+    # Globally assign the nexus object singleton
     nexus.core = nexus.NexusBase(args.mode, settings=args.settings, stealStdio=False, printToConsole=True)
 
     if args.config:
-        from paradrop import confd
+        from paradrop.confd import main
 
         # Start the configuration daemon
-        confd.main.run_pdconfd()
+        main.run_pdconfd()
 
     else:
-        from paradrop import confd, backend
+        from paradrop.confd import main
+        from paradrop import backend
 
         # Start the configuration service as a thread
-        confd.main.run_thread()
+        main.run_thread()
 
         # Now setup the RESTful API server for Paradrop
         backend.server.setup(args)

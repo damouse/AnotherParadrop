@@ -137,6 +137,7 @@ def updateSettings(slist=[]):
 
     # Adjust default paths if we are running under Snappy
     dataPath = os.environ.get("SNAP_APP_DATA_PATH", None)
+
     if dataPath is not None:
         mod.FC_CHUTESTORAGE_SAVE_PATH = os.path.join(dataPath, "chutes")
         mod.UCI_CONFIG_DIR = os.path.join(dataPath, "config.d")
