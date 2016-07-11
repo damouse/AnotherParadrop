@@ -3,7 +3,7 @@ import time
 import shutil
 import json
 
-from pdtools.lib import output
+from paradrop.shared import output
 
 PATH = os.getcwd() + '/TESTLOGS/'
 sourceLogs = None

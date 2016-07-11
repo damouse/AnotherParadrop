@@ -4,7 +4,7 @@ import shutil
 
 from nose.tools import assert_raises
 
-from pdtools.lib import nexus
+from paradrop.shared import nexus
 
 
 root = os.getcwd() + '/TESTS/'
@@ -21,9 +21,7 @@ def setup():
 
 def teardown():
     nexus.core = None
-
     shutil.rmtree(root)
-
     assert not os.path.exists(root)
 
 ###############################################################################
@@ -32,7 +30,7 @@ def teardown():
 
 
 def testMetaAssignment():
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.production)
+    nex = TestingNexus(nexus.Mode.production)
 
     assert nex.meta.type == nexus.Type.router
     assert nex.meta.mode == nexus.Mode.production
@@ -41,13 +39,13 @@ def testMetaAssignment():
 
 def testModeString():
     ''' Mode can either be enum or string '''
-    nex = TestingNexus(nexus.Type.router, 'production')
+    nex = TestingNexus('production')
 
     assert nex.meta.mode == nexus.Mode.production
 
 
 def testPathCreation():
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.production)
+    nex = TestingNexus(nexus.Mode.production)
 
     assert nex.path.root == root
     assert nex.path.log == root + nexus.NexusBase.PATH_LOG
@@ -58,9 +56,9 @@ def testPathCreation():
 
 
 def testNetworkResolution():
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.production)
-
+    nex = TestingNexus(nexus.Mode.production)
     repl = nexus.NexusBase.HOST_WS_PRODUCTION.replace('PORT', nex.net.port)
+
     assert nex.net.host == repl
     assert nex.net.port == nexus.NexusBase.PORT_WS_PRODUCTION
     assert nex.net.webHost == nexus.NexusBase.HOST_HTTP_PRODUCTION
@@ -68,12 +66,12 @@ def testNetworkResolution():
 
 
 def testConfigLoadingEmpty():
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.production)
+    nex = TestingNexus(nexus.Mode.production)
     assert nex.info.pdid == None
 
 
 def testConfdProduction():
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.production)
+    nex = TestingNexus(nexus.Mode.production)
 
     assert nex.path.pdconfdWrite == nexus.NexusBase.PDCONFD_WRITE_DIR
     assert nex.path.uciConfig == nexus.NexusBase.UCI_CONFIG_DIR
@@ -81,7 +79,7 @@ def testConfdProduction():
 
 
 def testConfdProduction():
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.local)
+    nex = TestingNexus(nexus.Mode.local)
 
     assert nex.path.pdconfdWrite == nexus.NexusBase.PDCONFD_WRITE_DIR_LOCAL
     assert nex.path.uciConfig == nexus.NexusBase.UCI_CONFIG_DIR_LOCAL
@@ -89,7 +87,7 @@ def testConfdProduction():
 
 
 def testConfig():
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.production)
+    nex = TestingNexus(nexus.Mode.production)
 
     assert nex.conf.networkPool == nexus.NexusBase.DYNAMIC_NETWORK_POOL
     assert nex.conf.pdconfdEnabled == nexus.NexusBase.PDCONFD_ENABLED
@@ -102,7 +100,7 @@ def testConfigLoadingExisting():
     contents = dict(pdid='pd.damouse.aardvark', version=1)
     nexus.writeYaml(contents, root + nexus.NexusBase.PATH_CONFIG)
 
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.production)
+    nex = TestingNexus(nexus.Mode.production)
     assert nex.info.pdid == 'pd.damouse.aardvark'
 
 
@@ -150,7 +148,7 @@ def testSaveCallbackTriggered():
 
 
 def testSaveUpdatesYaml():
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.production)
+    nex = TestingNexus(nexus.Mode.production)
     nex.info.a = 1
 
     dic = nexus.loadYaml(root + nexus.NexusBase.PATH_CONFIG)
@@ -158,7 +156,7 @@ def testSaveUpdatesYaml():
 
 
 def testWrappersLocked():
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.production)
+    nex = TestingNexus(nexus.Mode.production)
 
     def s(wrapper):
         wrapper.a = 2
@@ -175,7 +173,7 @@ def testWrappersLocked():
 def testOverrideWithList():
     replace = ['PORT_WS_PRODUCTION:5555']
 
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.production, settings=replace)
+    nex = TestingNexus(nexus.Mode.production, settings=replace)
     print nex
     assert nex.net.port == '5555'
 
@@ -183,7 +181,7 @@ def testOverrideWithList():
 def testOverrideWithEnv():
     os.environ["PORT_WS_DEVELOPMENT"] = "5555"
 
-    nex = TestingNexus(nexus.Type.router, nexus.Mode.development)
+    nex = TestingNexus(nexus.Mode.development)
     print nex
     assert nex.net.port == '5555'
 
@@ -193,5 +191,5 @@ def testOverrideWithSubclass():
     class Over(nexus.NexusBase):
         PORT_WS_PRODUCTION = '1111'
 
-    nex = Over(nexus.Type.router, nexus.Mode.production)
+    nex = Over(nexus.Mode.production)
     assert nex.net.port == '1111'
