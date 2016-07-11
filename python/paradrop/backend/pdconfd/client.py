@@ -25,8 +25,6 @@ class Blocking(object):
     Uses threading.Event to implement blocking on a twisted deferred object.
 
     The wait method will wait for its completion and return its result.
-
-    Dear Lance. I hope you stub your toe.
     """
 
     def __init__(self, deferred):

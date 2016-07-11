@@ -7,8 +7,8 @@ from twisted.internet.defer import inlineCallbacks, returnValue, Deferred
 
 from paradrop.lib import pdinstall
 from paradrop.lib.config import hostconfig
-from pdtools.lib.output import out
-from pdtools.lib import names, nexus, cxbr
+from paradrop.pdtools.lib.output import out
+from paradrop.pdtools.lib import names, nexus, cxbr
 
 from . import apibridge
 
@@ -105,7 +105,7 @@ class RouterSession(cxbr.BaseSession):
 
     def getConfig(self, pdid):
         config = hostconfig.prepareHostConfig()
-        result = json.dumps(config, separators=(',',':'))
+        result = json.dumps(config, separators=(',', ':'))
         return result
 
     def setConfig(self, pdid, config):

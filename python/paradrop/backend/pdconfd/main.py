@@ -14,14 +14,15 @@ Operation:
 Reference:
 http://excid3.com/blog/an-actually-decent-python-dbus-tutorial/
 """
+
 import atexit
 import sys
 
 from twisted.internet import reactor, defer
 from txdbus import client, objects, error
 from txdbus.interface import DBusInterface, Method
-from paradrop.lib import settings
 
+from paradrop.lib import settings
 from .config.manager import ConfigManager
 
 service_name = "com.paradrop.config"

@@ -70,10 +70,22 @@ Redundant Settings/Storage:
         * executionplan: make and run plans that update chutes
         * plangraph:  Plan and PlanMap objects
         * plans: actual steps
-    + fc
+    + fc: chute configuration, interface into exec
         * chutestorage: ChuteStorage(pd.lib.utils.storage)
             - Nothing else implements storage
-        * 
+        * configurer: in charge of chute config changes
+            - Only used by backend.pdfcd.server
+        * updateObject: UpdateObject and UpdateChute. top level exc api object
+            - Used by fc.configurer
+    + pdconfd
+        * config: doesnt need lots of changes
+            - base: ConfigObject base class. Used all over pdconfd
+            - command: Command, CommandList, KillCommand
+            - dhcp: ConfigDHCP, ConfigDnsmaq. Dont look used (?)
+            - firewall: ConfigRedirect, ConfigZone
+            - manager: loads all config subclasses
+            - network
+            - wireless
 
 
 

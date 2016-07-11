@@ -5,7 +5,7 @@
 
 from twisted.internet.defer import Deferred
 
-from pdtools.lib.pdutils import timeint
+from paradrop.pdtools.lib.pdutils import timeint
 
 
 class BridgeRequest(object):
@@ -13,6 +13,7 @@ class BridgeRequest(object):
     This class mimics the request object used by the HTTP API code.  It has two
     required methods, write and finish.
     """
+
     def write(self, s):
         print(s)
 
@@ -25,11 +26,13 @@ class BridgePackage(object):
     This class mimics the apipkg variable that the HTTP API code uses.  It has
     a request object with certain methods that the code requires to be defined.
     """
+
     def __init__(self):
         self.request = BridgeRequest()
 
 
 class UpdateCallback(object):
+
     def __init__(self, d):
         self.d = d
 
@@ -70,10 +73,10 @@ class APIBridge(object):
         d = Deferred()
 
         update = dict(updateClass='CHUTE',
-                updateType=updateType,
-                tok=timeint(),
-                pkg=BridgePackage(),
-                func=UpdateCallback(d))
+                      updateType=updateType,
+                      tok=timeint(),
+                      pkg=BridgePackage(),
+                      func=UpdateCallback(d))
         update.update(**options)
         APIBridge.configurer.updateList(**update)
 

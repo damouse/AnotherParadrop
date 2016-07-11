@@ -1,18 +1,15 @@
-
 '''
-updateObject module.
-
-This holds onto the UpdateObject class.
 It allows us to easily abstract away different update types and provide a uniform
 way to interpret the results through a set of basic actionable functions.
 '''
+
 import time
 
 from paradrop.backend import exc
 from paradrop.backend.fc import chutestorage
-from pdtools.lib.output import out
-from paradrop.lib import settings
-from paradrop.lib import chute
+from paradrop.pdtools.lib.output import out
+from paradrop.lib import settings, chute
+
 
 UPDATE_SPECIFIC_ARGS = ["pkg", "func"]
 

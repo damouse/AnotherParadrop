@@ -13,7 +13,7 @@ from twisted.internet.protocol import ReconnectingClientFactory
 from twisted.internet.ssl import ClientContextFactory
 
 
-from pdtools.lib.output import out
+from paradrop.pdtools.lib.output import out
 
 
 # pylint: disable=inconsistent-mro
@@ -33,6 +33,7 @@ class BaseClientFactory(websocket.WampWebSocketClientFactory, ReconnectingClient
 
 
 class BaseSessionFactory(wamp.ApplicationSessionFactory):
+
     def __init__(self, config, deferred=None):
         super(BaseSessionFactory, self).__init__(config)
         self.dee = deferred
@@ -53,7 +54,7 @@ class BaseSession(ApplicationSession):
 
     @classmethod
     def start(klass, address, pdid, realm='crossbardemo', start_reactor=False,
-            debug=False, extra=None, reconnect=True):
+              debug=False, extra=None, reconnect=True):
         '''
         Creates a new instance of this session and attaches it to the router
         at the given address and realm. The pdid is set manually now since we trust
@@ -67,7 +68,7 @@ class BaseSession(ApplicationSession):
         '''
         dee = Deferred()
 
-        component_config = ComponentConfig(realm=u''+realm, extra=u''+pdid)
+        component_config = ComponentConfig(realm=u'' + realm, extra=u'' + pdid)
         session_factory = BaseSessionFactory(config=component_config, deferred=dee)
         session_factory.session = klass
 
