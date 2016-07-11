@@ -162,12 +162,12 @@ class UpdateChute(UpdateObject):
     """
     # List of all modules that need to be called during execution planning
     updateModuleList = [
-        exc.name,
-        exc.state,
-        exc.struct,
-        exc.resource,
-        exc.traffic,
-        exc.runtime
+        exc.plans.Name(),
+        exc.plans.State(),
+        exc.plans.Struct(),
+        exc.plans.Resource(),
+        exc.plans.Traffic(),
+        exc.plans.Runtime()
     ]
 
     def __init__(self, obj):
@@ -186,7 +186,7 @@ class UpdateChute(UpdateObject):
         # old config without overwriting new update info
         if self.updateType == "start" or self.updateType == "restart":
             missingKeys = set(self.old.__dict__.keys()) - \
-                          set(self.new.__dict__.keys())
+                set(self.new.__dict__.keys())
             for k in missingKeys:
                 setattr(self.new, k, getattr(self.old, k))
 
