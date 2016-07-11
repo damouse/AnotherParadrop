@@ -13,10 +13,10 @@ from twisted.web import static
 from twisted.web.server import Site
 from twisted.internet import reactor
 
-from paradrop.pdtools.lib.output import out
-from paradrop.pdtools.lib import names
+from pdtools.lib.output import out
+from pdtools.lib import names
 
-from paradrop.pdtools.lib.pdutils import timeflt, str2json, json2str
+from pdtools.lib.pdutils import timeflt, str2json, json2str
 from paradrop.lib.api import pdapi
 from paradrop.lib.api import pdrest
 from paradrop.lib import settings
@@ -26,6 +26,7 @@ from paradrop.backend import fc
 
 
 # Import local refs to pdfcd utilities
+from . import apibridge
 from . import apiutils
 from . import apichute
 
@@ -67,6 +68,9 @@ class ParadropAPIServer(pdrest.APIResource):
 
         # Establish the configurer which is the launch point for all chute related endeavors
         self.configurer = fc.configurer.PDConfigurer(None, lclreactor)
+
+        # Pass the configurer off to the API bridge so that WAMP calls can use it.
+        apibridge.APIBridge.setConfigurer(self.configurer)
 
         # Allow each module to register their API calls
         apichute.ChuteAPI(self)

@@ -1,10 +1,9 @@
 
-from paradrop.pdtools.lib.output import out
-from paradrop.pdtools.lib.pdutils import json2str, str2json, timeint, urlDecodeMe
+from pdtools.lib.output import out
+from pdtools.lib.pdutils import json2str, str2json, timeint, urlDecodeMe
 
 from paradrop.lib.api.pdrest import APIDecorator
 from paradrop.lib.api import pdapi
-
 
 class ChuteAPI:
 
@@ -55,8 +54,6 @@ class ChuteAPI:
         """
 
         out.info('Deleting chute...')
-
-        # TODO implement
 
         # For now fake out a create chute message
         update = dict(updateClass='CHUTE', updateType='delete', name=apiPkg.inputArgs.get('name'),
