@@ -8,7 +8,7 @@ from .pdconfd.config.command import Command
 from .pdconfd.config.manager import ConfigManager
 from .pdconfd.config.network import ConfigInterface
 from .pdconfd.config.wireless import ConfigWifiDevice, ConfigWifiIface
-from paradrop.lib.utils import pdos
+from paradrop.shared import pdos
 
 CONFIG_FILE = "/tmp/test-config"
 WRITE_DIR = "/tmp"

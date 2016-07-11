@@ -8,9 +8,8 @@ from nose.tools import assert_raises
 
 from .pdmock import MockChute, MockChuteStorage, writeTempFile
 
-from paradrop.lib.utils import pdos
-from paradrop.lib.utils import pdosq
-from paradrop.lib.utils.storage import PDStorage
+from paradrop.shared import pdos
+from paradrop.chute.chutestorage import PDStorage
 
 
 NETWORK_WAN_CONFIG = """
@@ -21,6 +20,7 @@ config interface wan #__PARADROP__
 
 
 class TestStorage(PDStorage):
+
     def __init__(self, filename):
         super(TestStorage, self).__init__(filename, None, None)
         self.data = None
@@ -39,7 +39,7 @@ def test_addresses():
     """
     Test IP address utility functions
     """
-    from paradrop.lib.utils import addresses
+    from paradrop.shared import addresses
 
     ipaddr = "192.168.1.1"
     assert addresses.isIpValid(ipaddr)
@@ -57,7 +57,7 @@ def test_addresses():
     assert not addresses.isIpAvailable("192.168.1.1", storage, "second")
     assert addresses.isIpAvailable("192.168.2.1", storage, "second")
     assert addresses.isIpAvailable("192.168.1.1", storage, "first")
-    
+
     assert not addresses.isWifiSSIDAvailable("Paradrop", storage, "second")
     assert addresses.isWifiSSIDAvailable("available", storage, "second")
     assert addresses.isWifiSSIDAvailable("Paradrop", storage, "first")
@@ -96,6 +96,7 @@ def test_addresses():
     assert addresses.getInternalIntfList(chute) == ["eth0"]
     assert addresses.getGatewayIntf(chute) == ("192.168.1.1", "eth0")
     assert addresses.getWANIntf(chute) == ifaces[0]
+
 
 def test_pdos():
     """
@@ -188,11 +189,11 @@ def test_pdosq():
     """
     # Test makedirs with an already-exists error, returns False.
     with patch('os.makedirs', side_effect=OSError(errno.EEXIST, "error")):
-        assert pdosq.makedirs("/") is False
+        assert pdos.makedirs_quiet("/") is False
 
     # Test makedirs with a permission error, passes on the Exception.
     with patch('os.makedirs', side_effect=OSError(errno.EPERM, "error")):
-        assert_raises(OSError, pdosq.makedirs, "/")
+        assert_raises(OSError, pdos.makedirs_quiet, "/")
 
 
 def test_storage():
@@ -210,7 +211,7 @@ def test_storage():
     # PDStorage needs to be subclassed; the base class always returns not
     # saveable.
     assert storage.attrSaveable() is False
-    
+
     storage = TestStorage(filename)
     data = {"key": "value"}
 
@@ -220,7 +221,7 @@ def test_storage():
     # The first attempt to read it will fail and try to delete the file.  We
     # will cause the unlink to fail on the first try and let it succeed on the
     # second try.
-    with patch("paradrop.lib.utils.pdos.unlink", side_effect=Exception("Boom!")): 
+    with patch("paradrop.shared.pdos.unlink", side_effect=Exception("Boom!")):
         storage.loadFromDisk()
         assert os.path.exists(filename)
     storage.loadFromDisk()
@@ -234,7 +235,7 @@ def test_storage():
     storage.setAttr(data)
 
     # Cause the save to fail on the first try, then let it succeed.
-    with patch("paradrop.lib.utils.pdos.open", side_effect=Exception("Boom!")):
+    with patch("paradrop.shared.pdos.open", side_effect=Exception("Boom!")):
         storage.saveToDisk()
         assert not os.path.exists(filename)
     storage.saveToDisk()
@@ -252,8 +253,8 @@ def test_uci():
     """
     Test UCI file utility module
     """
-    from paradrop.lib.utils import uci
-    from paradrop.lib import settings
+    from paradrop.config import uci
+    from paradrop.shared import settings
 
     # Test functions for finding path to UCI files
     settings.UCI_CONFIG_DIR = "/tmp/config.d"
@@ -324,9 +325,9 @@ def test_uci():
 
     # Test chuteConfigsMatch function
     assert not uci.chuteConfigsMatch(config.getChuteConfigs("__PARADROP__"),
-            config2.getChuteConfigs("none"))
+                                     config2.getChuteConfigs("none"))
     assert uci.chuteConfigsMatch(config.getChuteConfigs("__PARADROP__"),
-            config2.getChuteConfigs("__PARADROP__"))
+                                 config2.getChuteConfigs("__PARADROP__"))
 
     # Further test the equality operators
     config2.filepath = "NOMATCH"
@@ -348,7 +349,7 @@ def test_uci_getLineParts():
     """
     Test the UCI getLineParts utility function
     """
-    from paradrop.lib.utils import uci
+    from paradrop.config import uci
 
     line = "config interface wan"
     result = uci.getLineParts(line)

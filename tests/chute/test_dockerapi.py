@@ -1,4 +1,4 @@
-from paradrop.lib.utils import dockerapi
+from paradrop.shared import dockerapi
 from mock import patch, MagicMock
 
 HOST_CONFIG1 = {'RestartPolicy': {'MaximumRetryCount': 5, 'Name': 'on-failure'}, 'NetworkMode': 'bridge', 'LxcConf': [], 'CapAdd': ['NET_ADMIN']}
@@ -23,24 +23,26 @@ def fake_update():
     update.new = Object()
     return update
 
+
 def test_build_host_config():
     """
     Test that the build_host_config function does it's job.
     """
-    #Check that an empty host_config gives us certain default settings
+    # Check that an empty host_config gives us certain default settings
     u = fake_update()
     res = dockerapi.build_host_config(u)
     print '\nExpected: ', HOST_CONFIG1, '\nResult: ', res, '\n'
     assert res == HOST_CONFIG1
 
-    #Check that passing things through host_config works
+    # Check that passing things through host_config works
     u = MagicMock()
-    u.new.host_config = {'port_bindings': { 80:9000}, 'dns': ['0.0.0.0', '8.8.8.8']}
+    u.new.host_config = {'port_bindings': {80: 9000}, 'dns': ['0.0.0.0', '8.8.8.8']}
     res = dockerapi.build_host_config(u)
     print '\nExpected: ', HOST_CONFIG2, '\nResult: ', res, '\n'
     assert res == HOST_CONFIG2
 
-@patch('paradrop.lib.utils.dockerapi.out')
+
+@patch('paradrop.shared.dockerapi.out')
 @patch('docker.Client')
 def test_failAndCleanUpDocker(mockDocker, mockOutput):
     """
@@ -48,15 +50,15 @@ def test_failAndCleanUpDocker(mockDocker, mockOutput):
     """
     client = MagicMock()
     mockDocker.return_value = client
-    #call clean up with empty sets, matching sets, and different sets for valid and current images and test
-    for pair in [[[],[]], [[1, 2, 3], [1, 2, 3]], [[{'Id': 1}, {'Id': 2}, {'Id': 3}], [{'Id': 1}, {'Id': 2}, {'Id': 3}, {'Id': 4}, {'Id': 5}]]]:
-        #fake that docker is returning the second list in the pair as the current images and containers on the device
+    # call clean up with empty sets, matching sets, and different sets for valid and current images and test
+    for pair in [[[], []], [[1, 2, 3], [1, 2, 3]], [[{'Id': 1}, {'Id': 2}, {'Id': 3}], [{'Id': 1}, {'Id': 2}, {'Id': 3}, {'Id': 4}, {'Id': 5}]]]:
+        # fake that docker is returning the second list in the pair as the current images and containers on the device
         client.containers.return_value = pair[1]
         client.images.return_value = pair[1]
         try:
-            dockerapi.failAndCleanUpDocker(pair[0],pair[0])
+            dockerapi.failAndCleanUpDocker(pair[0], pair[0])
         except Exception as e:
-            #we should always see this exception
+            # we should always see this exception
             assert e.message == 'Building or starting of docker image failed check your Dockerfile for errors.'
         mockDocker.assert_called_with(base_url='unix://var/run/docker.sock', version='auto')
         client.containers.assert_called_once_with(quiet=True, all=True)
@@ -73,8 +75,9 @@ def test_failAndCleanUpDocker(mockDocker, mockOutput):
             assert client.remove_container.call_count == 2
         client.reset_mock()
 
-@patch('paradrop.lib.utils.dockerapi.setup_net_interfaces')
-@patch('paradrop.lib.utils.dockerapi.out')
+
+@patch('paradrop.shared.dockerapi.setup_net_interfaces')
+@patch('paradrop.shared.dockerapi.out')
 @patch('docker.Client')
 def test_restartChute(mockDocker, mockOutput, mockInterfaces):
     """
@@ -89,7 +92,8 @@ def test_restartChute(mockDocker, mockOutput, mockInterfaces):
     mockInterfaces.assert_called_once_with(update)
     client.start.assert_called_once_with(container=update.name)
 
-@patch('paradrop.lib.utils.dockerapi.out')
+
+@patch('paradrop.shared.dockerapi.out')
 @patch('docker.Client')
 def test_stopChute(mockDocker, mockOutput):
     """
@@ -103,7 +107,8 @@ def test_stopChute(mockDocker, mockOutput):
     mockDocker.assert_called_once_with(base_url='unix://var/run/docker.sock', version='auto')
     client.stop.assert_called_once_with(container=update.name)
 
-@patch('paradrop.lib.utils.dockerapi.out')
+
+@patch('paradrop.shared.dockerapi.out')
 @patch('docker.Client')
 def test_removeChute(mockDocker, mockOutput):
     """
@@ -127,16 +132,17 @@ def test_removeChute(mockDocker, mockOutput):
     client.remove_container.assert_called_once_with(container=update.name, force=True)
     assert update.complete.call_count == 1
 
-@patch('paradrop.lib.utils.dockerapi.failAndCleanUpDocker')
-@patch('paradrop.lib.utils.dockerapi.build_host_config')
-@patch('paradrop.lib.utils.dockerapi.setup_net_interfaces')
-@patch('paradrop.lib.utils.dockerapi.out')
+
+@patch('paradrop.shared.dockerapi.failAndCleanUpDocker')
+@patch('paradrop.shared.dockerapi.build_host_config')
+@patch('paradrop.shared.dockerapi.setup_net_interfaces')
+@patch('paradrop.shared.dockerapi.out')
 @patch('docker.Client')
 def test_startChute(mockDocker, mockOutput, mockInterfaces, mockConfig, mockFail):
     """
     Test that the startChute function does it's job.
     """
-    #Test successful start attempt
+    # Test successful start attempt
     mockConfig.return_value = 'ConfigDict'
     update = MagicMock()
     update.name = 'test'
@@ -144,7 +150,7 @@ def test_startChute(mockDocker, mockOutput, mockInterfaces, mockConfig, mockFail
     client = MagicMock()
     client.images.return_value = 'images'
     client.containers.return_value = 'containers'
-    client.build.return_value = ['{"stream": "test"}','{"value": {"test": "testing"}}','{"tests": "stuff"}']
+    client.build.return_value = ['{"stream": "test"}', '{"value": {"test": "testing"}}', '{"tests": "stuff"}']
     client.create_container.return_value = {'Id': 123}
     mockDocker.return_value = client
     dockerapi.startChute(update)
@@ -158,14 +164,14 @@ def test_startChute(mockDocker, mockOutput, mockInterfaces, mockConfig, mockFail
     assert update.pkg.request.write.call_count == 2
     mockInterfaces.assert_called_once_with(update)
 
-    #Test failed build
+    # Test failed build
     client.build.return_value = ['{"errorDetail": "Errors"}']
     dockerapi.startChute(update)
     mockFail.assert_called_once_with('images', 'containers')
 
-    #Test when create or start throws exceptions
+    # Test when create or start throws exceptions
     mockFail.reset_mock()
-    client.build.return_value = ['{"stream": "test"}','{"value": {"test": "testing"}}','{"tests": "stuff"}']
+    client.build.return_value = ['{"stream": "test"}', '{"value": {"test": "testing"}}', '{"tests": "stuff"}']
     client.create_container.side_effect = Exception('create container exception')
     dockerapi.startChute(update)
     mockFail.assert_called_once_with('images', 'containers')
@@ -174,50 +180,52 @@ def test_startChute(mockDocker, mockOutput, mockInterfaces, mockConfig, mockFail
     dockerapi.startChute(update)
     mockFail.assert_called_once_with('images', 'containers')
 
-@patch('paradrop.lib.utils.dockerapi.os')
-@patch('paradrop.lib.utils.dockerapi.subprocess')
-@patch('paradrop.lib.utils.dockerapi.out')
+
+@patch('paradrop.shared.dockerapi.os')
+@patch('paradrop.shared.dockerapi.subprocess')
+@patch('paradrop.shared.dockerapi.out')
 def test_setup_net_interfaces(mockOutput, mockSubproc, mockOS):
     """
     Test that the setup_net_interfaces function does it's job.
     """
-    #Test successful setup
+    # Test successful setup
     update = MagicMock()
     update.name = 'testing'
     update.new.getCache.return_value = [{'netType': 'wifi', 'ipaddrWithPrefix': '0.0.0.0/24', 'internalIntf': 'Inside', 'externalIntf': 'Outside'}, {'netType': 'lan'}]
-    mockOS.environ.get.return_value  = ""
+    mockOS.environ.get.return_value = ""
     proc = MagicMock()
     mockSubproc.Popen.return_value = proc
     mockSubproc.PIPE = 'piping'
     proc.stdout = ['test1', 'test2']
     proc.stderr = ['error']
     dockerapi.setup_net_interfaces(update)
-    mockSubproc.Popen.assert_called_once_with(['/apps/paradrop/current/bin/pipework', 'Outside', '-i', 'Inside', update.name, '0.0.0.0/24' ],
-            stdout=mockSubproc.PIPE, stderr=mockSubproc.PIPE, env={"PATH": ":/apps/bin"})
+    mockSubproc.Popen.assert_called_once_with(['/apps/paradrop/current/bin/pipework', 'Outside', '-i', 'Inside', update.name, '0.0.0.0/24'],
+                                              stdout=mockSubproc.PIPE, stderr=mockSubproc.PIPE, env={"PATH": ":/apps/bin"})
 
-    #Test subprocess throwing an exception
+    # Test subprocess throwing an exception
     mockSubproc.Popen.side_effect = OSError('BAD!')
     try:
         dockerapi.setup_net_interfaces(update)
     except OSError as e:
         assert e.message == 'BAD!'
 
+
 @patch('__builtin__.open')
-@patch('paradrop.lib.utils.dockerapi.os')
-@patch('paradrop.lib.utils.dockerapi.out')
+@patch('paradrop.shared.dockerapi.os')
+@patch('paradrop.shared.dockerapi.out')
 def test_writeDockerConfig(mockOutput, mockOS, mock_open):
     """
     Test that the writeDockerConfig function does it's job.
     """
     fd = MagicMock()
     mock_open.return_value = fd
-    #Test we get a warning and nothing else if path doesn't exist
+    # Test we get a warning and nothing else if path doesn't exist
     mockOS.path.exists.return_value = False
     dockerapi.writeDockerConfig()
     assert not mock_open.called
     assert len(mockOS.method_calls) == 1
 
-    #Test that it writes if we find path
+    # Test that it writes if we find path
     mockOS.path.exists.side_effect = [True, False, True]
     mockOS.listdir.return_value = ['/root', '/var']
     dockerapi.writeDockerConfig()
@@ -225,7 +233,7 @@ def test_writeDockerConfig(mockOutput, mockOS, mock_open):
     file_handle = mock_open.return_value.__enter__.return_value
     file_handle.write.assert_called_once_with(DOCKER_CONF)
 
-    #Test that we handle an excpetion when opening
+    # Test that we handle an excpetion when opening
     mockOS.path.exists.side_effect = None
     mockOS.path.exists.return_value = True
     mockOS.listdir.return_value = ['/root']

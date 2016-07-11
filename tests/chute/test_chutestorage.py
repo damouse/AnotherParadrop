@@ -1,11 +1,11 @@
 from .fc import chutestorage
 from mock import patch, MagicMock
 from paradrop.lib.chute import Chute
-from paradrop.lib import settings
+from paradrop.shared import settings
 
 
 @patch('.fc.chutestorage.pdos')
-@patch('paradrop.lib.utils.storage.PDStorage.saveToDisk')
+@patch('paradrop.shared.storage.PDStorage.saveToDisk')
 def test_chutestorage(mSave, mPdos):
 
     # Test setAttr & getAttr

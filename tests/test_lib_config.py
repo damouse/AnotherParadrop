@@ -7,8 +7,8 @@ from mock import MagicMock, Mock, patch
 
 from .pdmock import MockChute, MockUpdate
 
-from paradrop.lib import settings
-from paradrop.lib.utils import pdos
+from paradrop.shared import settings
+from paradrop.shared import pdos
 
 
 def fake_interface_list():
@@ -125,9 +125,9 @@ def test_configservice():
     assert_raises(Exception, configservice.reloadAll, update)
 
 
-@patch("paradrop.lib.utils.pdos.readFile", new=mockReadFile)
-@patch("paradrop.lib.utils.pdos.exists", new=mockExists)
-@patch("paradrop.lib.utils.pdos.listdir", new=mockListDir)
+@patch("paradrop.shared.pdos.readFile", new=mockReadFile)
+@patch("paradrop.shared.pdos.exists", new=mockExists)
+@patch("paradrop.shared.pdos.listdir", new=mockListDir)
 def test_config_devices():
     """
     Test paradrop.lib.config.devices

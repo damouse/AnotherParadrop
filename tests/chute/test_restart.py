@@ -1,4 +1,4 @@
-from paradrop.lib.utils import restart
+from paradrop.shared import restart
 from mock import patch, MagicMock
 
 
@@ -24,12 +24,12 @@ def test_updateStatus(mockStore):
     assert storage.saveChute.called
 
 
-@patch('paradrop.lib.utils.restart.timeint')
-@patch('paradrop.lib.utils.restart.out')
-@patch('paradrop.lib.utils.restart.time')
-@patch('paradrop.lib.utils.restart.waitSystemUp')
-@patch('paradrop.lib.utils.restart.reclaimNetworkResources')
-@patch('paradrop.lib.utils.restart.settings')
+@patch('paradrop.shared.restart.timeint')
+@patch('paradrop.shared.restart.out')
+@patch('paradrop.shared.restart.time')
+@patch('paradrop.shared.restart.waitSystemUp')
+@patch('paradrop.shared.restart.reclaimNetworkResources')
+@patch('paradrop.shared.restart.settings')
 @patch('.fc.chutestorage.ChuteStorage')
 def test_reloadChutes(mockStore, mockSettings, mResources, mWait, mTime, mOut, mTimeint):
     """

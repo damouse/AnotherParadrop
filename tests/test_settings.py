@@ -37,7 +37,7 @@ def test_update_settings():
     """
     Test updateSettings function
     """
-    from paradrop.lib import settings
+    from paradrop.shared import settings
 
     with patch.dict(os.environ, {'PDFCD_PORT': '-1'}):
         settings.updateSettings(["PD_TEST_VAR:stuff"])
