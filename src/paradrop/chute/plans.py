@@ -3,11 +3,11 @@
 # Authors: The Paradrop Team
 ###################################################################
 
-from paradrop.shared import log
-from . import plangraph, chute
 from paradrop import config
-from paradrop.shared import settings
+from paradrop.shared import settings, log
 from paradrop.chute import dockerapi as virt
+
+from . import plangraph, chute
 
 
 class Name:

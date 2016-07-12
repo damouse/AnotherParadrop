@@ -1,5 +1,7 @@
-from .exc import name
+
 from mock import patch, MagicMock
+
+from paradrop.chute import plans
 
 
 @patch('paradrop.chute.plans.log')
@@ -10,7 +12,7 @@ def test_generatePlansName(mockOutput):
     # Test that we get a warning if there is one
     update = MagicMock()
     update.old.warning = "TEST WARNING"
-    name.generatePlans(update)
+    plans.Name().generatePlans(update)
     update.pkg.request.write.assert_called_once_with(update.old.warning + "\n")
 
 # from paradrop.chute.plans import Traffic
