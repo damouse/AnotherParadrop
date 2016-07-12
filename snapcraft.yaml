@@ -6,12 +6,12 @@ confinement: devmode
 vendor: ParadropLabs <pd@paradrop.org>
 icon: ./icon.png
 
-frameworks:
-  - docker
+# frameworks:
+#   - docker
 
 services:
   paradrop:
-    start: pd
+    start: run
     description: "Paradrop Daemon"
     caps:
       - network-client
@@ -37,6 +37,6 @@ parts:
     plugin: copy
     files:
       src/pipework: pipework
-      stage/usr/bin/paradrop: pd
+      src/run: run
     after:
       - paradrop
