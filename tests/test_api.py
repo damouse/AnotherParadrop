@@ -3,11 +3,12 @@ import json
 from mock import Mock
 from nose.tools import assert_raises
 
-from paradrop.lib.api import pdrest
+from paradrop.backend import pdapi as pdrest
 from .pdmock import do_nothing
 
 
 class APIDecoratorUser(object):
+
     def __init__(self):
         self.rest = Mock()
         self.rest.postprocess = Mock()
@@ -63,13 +64,13 @@ def test_api_resource():
     resource.getChild("method", request)
 
     resource.unregister(regex="method")
-    
+
     # After unregister, the callback should be gone.
     result = resource._get_callback(request)
     assert result[0] is None
 
     resource.getChild("method", request)
-    
+
     resource.children = Mock(name="what")
     result = resource.getChild("method", request)
     resource.getChild("method", request)
@@ -128,5 +129,3 @@ def test_api_decorator():
     del content['name']
     request.content.read = Mock(return_value=json.dumps(content))
     user.runNotDoneYet(request)
-
-

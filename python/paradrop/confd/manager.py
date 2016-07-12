@@ -1,10 +1,10 @@
+
 import heapq
 import json
 import os
 import threading
 
-from paradrop.shared import log
-from paradrop.shared import pdos
+from paradrop.shared import pdos, log
 from paradrop.config.uci import UCIConfig, getSystemConfigDir
 
 # Import all of the modules defining section types, so that all subclasses of
@@ -88,7 +88,7 @@ class ConfigManager(object):
         files = set(files)
         for config in self.currentConfig.values():
             if config.source in files:
-                log.add(config)
+                out.add(config)
         return out
 
     def getPreviousCommands(self):

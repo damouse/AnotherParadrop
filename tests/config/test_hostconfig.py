@@ -6,9 +6,9 @@ from nose.tools import assert_raises
 
 def test_generateHostConfig():
     """
-    Test paradrop.lib.config.hostconfig.generateHostConfig
+    Test paradrop.config.hostconfig.generateHostConfig
     """
-    from paradrop.lib.config.hostconfig import generateHostConfig
+    from paradrop.config.hostconfig import generateHostConfig
 
     devices = dict()
     devices['wan'] = [{'name': 'eth0'}]
@@ -21,13 +21,13 @@ def test_generateHostConfig():
     assert config['wifi'][0]['interface'] == "wlan0"
 
 
-@patch("paradrop.lib.config.devices.detectSystemDevices")
-@patch("paradrop.lib.config.hostconfig.settings")
+@patch("paradrop.config.devices.detectSystemDevices")
+@patch("paradrop.config.hostconfig.settings")
 def test_prepareHostConfig(settings, detectSystemDevices):
     """
-    Test paradrop.lib.config.hostconfig.prepareHostConfig
+    Test paradrop.config.hostconfig.prepareHostConfig
     """
-    from paradrop.lib.config.hostconfig import prepareHostConfig
+    from paradrop.config.hostconfig import prepareHostConfig
 
     devices = {
         'wan': [{'name': 'eth0'}],
@@ -45,7 +45,7 @@ def test_prepareHostConfig(settings, detectSystemDevices):
     config = prepareHostConfig()
     assert config['test'] == 'value'
 
-    with patch("paradrop.lib.config.hostconfig.yaml") as yaml:
+    with patch("paradrop.config.hostconfig.yaml") as yaml:
         yaml.safe_load.side_effect = IOError()
         yaml.safe_dump.return_value = "{test: value}"
 
@@ -57,12 +57,12 @@ def test_prepareHostConfig(settings, detectSystemDevices):
         assert_raises(Exception, prepareHostConfig)
 
 
-@patch("paradrop.lib.config.hostconfig.prepareHostConfig")
+@patch("paradrop.config.hostconfig.prepareHostConfig")
 def test_getHostconfig(prepareHostConfig):
     """
-    Test paradrop.lib.config.hostconfig.getHostConfig
+    Test paradrop.config.hostconfig.getHostConfig
     """
-    from paradrop.lib.config.hostconfig import getHostConfig
+    from paradrop.config.hostconfig import getHostConfig
 
     update = MagicMock()
     getHostConfig(update)

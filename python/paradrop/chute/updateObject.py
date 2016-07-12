@@ -8,7 +8,7 @@ import time
 from paradrop.shared import log
 from paradrop.shared import settings
 
-from . import chute, chutestorage, plans
+from . import chute, chutestorage, plans, plangraph, executionplan
 
 
 UPDATE_SPECIFIC_ARGS = ["pkg", "func"]
@@ -42,7 +42,7 @@ class UpdateObject(object):
         self.failure = None
 
         # Each update gets its own plan map
-        self.plans = chuteplangraph.PlanMap(self.name)
+        self.plans = plangraph.PlanMap(self.name)
         # Grab a reference to our storage system
         self.chuteStor = chutestorage.ChuteStorage()
         # Explicitly define a reference to the new data object
@@ -108,18 +108,18 @@ class UpdateObject(object):
         self.startTime = time.time()
 
         # Generate the plans we need to setup the chute
-        if(chuteexecutionplan.generatePlans(self)):
+        if(executionplan.generatePlans(self)):
             log.warn('Failed to generate plans\n')
             self.complete(success=False, message=self.failure)
             return
 
         # Aggregate those plans
-        chuteexecutionplan.aggregatePlans(self)
+        executionplan.aggregatePlans(self)
 
         # Execute on those plans
-        if(chuteexecutionplan.executePlans(self)):
+        if(executionplan.executePlans(self)):
             # Getting here means we need to abort what we did
-            res = chuteexecutionplan.abortPlans(self)
+            res = executionplan.abortPlans(self)
 
             # Did aborting also fail? This is bad!
             if(res):

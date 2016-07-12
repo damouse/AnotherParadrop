@@ -1,36 +1,37 @@
-from .exc import traffic
-from mock import patch, MagicMock
-from paradrop.lib import config
-from .exc import plangraph
+# from paradrop.chute.plans import Traffic
+# from mock import patch, MagicMock
+# from paradrop.config import osconfig, configservice, firewall
+# from paradrop.chute import plangraph
 
 
-@patch('.exc.runtime.out')
-def test_generatePlans(mockOutput):
-    """
-    Test that the generatePlans function does it's job.
-    """
-    update = MagicMock()
-    update.plans.addPlans.side_effect = [Exception('e'), None, Exception('e'), None, None, None]
-    todoPlan = (config.configservice.reloadAll, )
-    abtPlan = [(config.osconfig.revertConfig, "dhcp"),
-               (config.osconfig.revertConfig, "firewall"),
-               (config.osconfig.revertConfig, "network"),
-               (config.osconfig.revertConfig, "wireless"),
-               (config.configservice.reloadAll, )]
+# @patch('paradrop.chute.plans.log')
+# def test_generatePlans(mockOutput):
+#     """
+#     Test that the generatePlans function does it's job.
+#     """
+#     update = MagicMock()
+#     update.plans.addPlans.side_effect = [Exception('e'), None, Exception('e'), None, None, None]
+#     todoPlan = (configservice.reloadAll, )
 
-    def c1():
-        update.plans.addPlans.assert_called_with(plangraph.TRAFFIC_GET_OS_FIREWALL, (config.firewall.getOSFirewallRules, ))
+#     abtPlan = [(osconfig.revertConfig, "dhcp"),
+#                (osconfig.revertConfig, "firewall"),
+#                (osconfig.revertConfig, "network"),
+#                (osconfig.revertConfig, "wireless"),
+#                (configservice.reloadAll, )]
 
-    def c2():
-        update.plans.addPlans.assert_called_with(plangraph.TRAFFIC_GET_DEVELOPER_FIREWALL, (config.firewall.getDeveloperFirewallRules, ))
+#     def c1():
+#         update.plans.addPlans.assert_called_with(plangraph.TRAFFIC_GET_OS_FIREWALL, (firewall.getOSFirewallRules, ))
 
-    def c3():
-        todoPlan = (config.firewall.setOSFirewallRules, )
-        abtPlan = (config.osconfig.revertConfig, "firewall")
-        update.plans.addPlans.assert_called_with(plangraph.TRAFFIC_SET_OS_FIREWALL, todoPlan, abtPlan)
-    for call in [c1, c2, c3]:
-        try:
-            traffic.generatePlans(update)
-        except Exception as e:
-            pass
-        call()
+#     def c2():
+#         update.plans.addPlans.assert_called_with(plangraph.TRAFFIC_GET_DEVELOPER_FIREWALL, (firewall.getDeveloperFirewallRules, ))
+
+#     def c3():
+#         todoPlan = (firewall.setOSFirewallRules, )
+#         abtPlan = (osconfig.revertConfig, "firewall")
+#         update.plans.addPlans.assert_called_with(plangraph.TRAFFIC_SET_OS_FIREWALL, todoPlan, abtPlan)
+#     for call in [c1, c2, c3]:
+#         try:
+#             Traffic().generatePlans(update)
+#         except Exception as e:
+#             pass
+#         call()

@@ -1,11 +1,11 @@
-from .pdconfd import client
+from paradrop.confd import client
 from txdbus import error
 from mock import MagicMock, patch
 
 
-@patch('.pdconfd.client.out')
-@patch('.pdconfd.client.defer')
-@patch('.pdconfd.client.client')
+@patch('paradrop.confd.client.log')
+@patch('paradrop.confd.client.defer')
+@patch('paradrop.confd.client.client')
 def test_client(mClient, mDefer, mOut):
     e = error.DBusException('Test')
     conn = MagicMock()
@@ -19,7 +19,7 @@ def test_client(mClient, mDefer, mOut):
     mOut.err.assert_called_once_with("D-Bus error: {}" .format(e))
 
 
-@patch('.pdconfd.client.threading')
+@patch('paradrop.confd.client.threading')
 def test_Blocking(mThread):
     deffered = MagicMock()
     mThread.Event.return_value = MagicMock()
@@ -43,9 +43,9 @@ def test_Blocking(mThread):
     mThread.Event.return_value.wait.assert_called_once_with()
 
 
-@patch('.pdconfd.client.callDeferredMethod')
-@patch('.pdconfd.client.Blocking')
-@patch('.pdconfd.client.ConfigService')
+@patch('paradrop.confd.client.callDeferredMethod')
+@patch('paradrop.confd.client.Blocking')
+@patch('paradrop.confd.client.ConfigService')
 def test_reloadAll(mConfig, mBlocking, mDeffered):
     mDeffered.return_value = 'test'
     mBlocking.return_value = MagicMock()
@@ -58,9 +58,9 @@ def test_reloadAll(mConfig, mBlocking, mDeffered):
     assert client.reloadAll() == 'new test'
 
 
-@patch('.pdconfd.client.callDeferredMethod')
-@patch('.pdconfd.client.Blocking')
-@patch('.pdconfd.client.ConfigService')
+@patch('paradrop.confd.client.callDeferredMethod')
+@patch('paradrop.confd.client.Blocking')
+@patch('paradrop.confd.client.ConfigService')
 def test_reload(mConfig, mBlocking, mDeffered):
     path = "path!"
     mDeffered.return_value = 'test'
@@ -75,9 +75,9 @@ def test_reload(mConfig, mBlocking, mDeffered):
     mConfig.configManager.loadConfig.assert_called_once_with(path)
 
 
-@patch('.pdconfd.client.callDeferredMethod')
-@patch('.pdconfd.client.Blocking')
-@patch('.pdconfd.client.ConfigService')
+@patch('paradrop.confd.client.callDeferredMethod')
+@patch('paradrop.confd.client.Blocking')
+@patch('paradrop.confd.client.ConfigService')
 def test_waitSystemUp(mConfig, mBlocking, mDeffered):
     mDeffered.return_value = 'test'
     mBlocking.return_value = MagicMock()

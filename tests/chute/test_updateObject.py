@@ -1,10 +1,10 @@
-from .fc import updateObject
+from paradrop.chute import updateObject
 from mock import patch, MagicMock
 
 
-@patch('.fc.updateObject.chutestorage')
-@patch('.fc.updateObject.out')
-@patch('.fc.updateObject.exc')
+@patch('paradrop.chute.updateObject.chutestorage')
+@patch('paradrop.chute.updateObject.out')
+@patch('paradrop.chute.updateObject.exc')
 def test_updateObject(mExc, mOut, mStore):
 
     func = MagicMock()

@@ -8,7 +8,7 @@ def test_CommandList():
     """
     Test the CommandList class
     """
-    from .pdconfd.config.command import CommandList
+    from paradrop.confd.command import CommandList
 
     clist = CommandList()
     clist.append(20, "b")
@@ -19,13 +19,13 @@ def test_CommandList():
     assert commands == ["a", "b", "c"]
 
 
-@patch(".pdconfd.config.command.out")
+@patch("paradrop.confd.command.log")
 @patch("subprocess.Popen")
 def test_Command_execute(Popen, out):
     """
     Test the Command.execute method
     """
-    from .pdconfd.config.command import Command
+    from paradrop.confd.command import Command
 
     proc = MagicMock()
     proc.stdout = ["output"]
@@ -45,12 +45,12 @@ def test_Command_execute(Popen, out):
     assert out.info.called
 
 
-@patch(".pdconfd.config.command.Command.execute")
+@patch("paradrop.confd.command.Command.execute")
 def test_KillCommand(execute):
     """
     Test the KillCommand class
     """
-    from .pdconfd.config.command import KillCommand
+    from paradrop.confd.command import KillCommand
 
     # Test with a numeric pid.
     command = KillCommand(12345)

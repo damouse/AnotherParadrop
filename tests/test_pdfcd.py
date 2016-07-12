@@ -7,7 +7,7 @@ def test_server_complete():
     """
     Test ParadropAPIServer complete method
     """
-    from .pdfcd.server import ParadropAPIServer
+    from paradrop.backend.server import ParadropAPIServer
 
     reactor = MagicMock()
     reactor.callFromThread = call
@@ -32,7 +32,7 @@ def test_server_preprocess():
     """
     Test ParadropAPIServer preprocess method
     """
-    from .pdfcd.server import ParadropAPIServer
+    from paradrop.backend.server import ParadropAPIServer
 
     reactor = MagicMock()
 
@@ -61,7 +61,7 @@ def test_server_postprocess():
     """
     Test ParadropAPIServer postprocess method
     """
-    from .pdfcd.server import ParadropAPIServer
+    from paradrop.backend.server import ParadropAPIServer
 
     reactor = MagicMock()
 
@@ -86,8 +86,8 @@ def test_server_failprocess():
     """
     Test ParadropAPIServer failprocess method
     """
-    from .pdfcd.server import ParadropAPIServer
-    from paradrop.lib.api import pdapi
+    from paradrop.backend.server import ParadropAPIServer
+    from paradrop.backend import pdapi
 
     reactor = MagicMock()
 
@@ -116,7 +116,7 @@ def test_server_get():
     """
     Test ParadropAPIServer GET_test method
     """
-    from .pdfcd.server import ParadropAPIServer
+    from paradrop.backend.server import ParadropAPIServer
 
     reactor = MagicMock()
     server = ParadropAPIServer(reactor)
@@ -128,7 +128,7 @@ def test_server_default():
     """
     Test ParadropAPIServer default method
     """
-    from .pdfcd.server import ParadropAPIServer
+    from paradrop.backend.server import ParadropAPIServer
 
     reactor = MagicMock()
     server = ParadropAPIServer(reactor)
@@ -149,7 +149,7 @@ def test_server_initialization():
     """
     Test pdfcd server initialization function
     """
-    from .pdfcd import server
+    from paradrop.backend import server
     server.initializeSystem()
 
 
@@ -159,8 +159,8 @@ def test_server_setup(mockRun, mockListenTCP):
     """
     Test pdfcd server setup function
     """
-    from .pdfcd import server
-    from .pdconfd.main import ConfigService
+    from paradrop.backend import server
+    from paradrop.confd.main import ConfigService
 
     manager = MagicMock()
     manager.waitSystemUp = make_dummy("[]")

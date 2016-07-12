@@ -2,7 +2,7 @@ def test_chute():
     """
     Test the Chute class
     """
-    from paradrop.lib import chute
+    from paradrop.chute import chute
 
     desc = {
         'name': 'Test',

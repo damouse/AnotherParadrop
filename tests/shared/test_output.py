@@ -37,16 +37,16 @@ def setup():
     global sourceLogs
     sourceLogs = days
 
-    output.out.startLogging(filePath=PATH, stealStdio=False, printToConsole=False)
+    output.log.startLogging(filePath=PATH, stealStdio=False, printToConsole=False)
 
 
-def teardown():
-    output.out.endLogging()
+def teardown_module():
+    output.log.endLogging()
     shutil.rmtree(PATH)
 
 
 def test_logsOrdered():
-    logs = output.out.getLogsSince(0)
+    logs = output.log.getLogsSince(0)
 
     last = None
 
@@ -58,14 +58,14 @@ def test_logsOrdered():
 def test_filterWorks():
     ''' Make sure we only get logs after the given time '''
     target = sourceLogs[1][1]['timestamp']
-    logs = output.out.getLogsSince(target)
+    logs = output.log.getLogsSince(target)
 
     for x in logs:
         assert x['timestamp'] > target
 
 
 def test_returnType():
-    logs = output.out.getLogsSince(0)
+    logs = output.log.getLogsSince(0)
 
     for x in logs:
         assert type(x) is dict
@@ -82,13 +82,3 @@ if __name__ == '__main__':
     finally:
         teardown()
         pass
-
-    # from pdtools.lib import pdutils
-
-    # dicts = [dict(a=1, b=2, c=3, d=4)] * 10000
-
-    # with pdutils.Timer('Our conversion') as t:
-    #     [pdutils.json2str(x) for x in dicts]
-
-    # with pdutils.Timer('Native') as t:
-    #     [json.dumps(x) for x in dicts]

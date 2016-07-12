@@ -1,7 +1,7 @@
 from mock import MagicMock
 from nose.tools import assert_raises
 
-from .pdfcd import apiinternal
+from paradrop.backend import apiinternal
 
 
 def test_RouterSession():

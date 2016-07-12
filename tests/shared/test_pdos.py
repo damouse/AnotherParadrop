@@ -1,5 +1,5 @@
 from paradrop.shared import pdos
-from paradrop.shared import pdosq
+from paradrop.shared import pdos
 from mock import patch
 
 
@@ -9,7 +9,7 @@ def test_pdos(mOs):
     mOs.listdir.assert_called_once_with('test')
 
 
-@patch('paradrop.shared.pdosq.os')
+@patch('paradrop.shared.pdos.os')
 def test_pdoqs(mOs):
-    assert pdosq.makedirs('test')
+    assert pdos.makedirs_quiet('test')
     mOs.makedirs.assert_called_once_with('test')

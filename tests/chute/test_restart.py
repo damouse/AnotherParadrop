@@ -35,8 +35,8 @@ def test_reloadChutes(mockStore, mockSettings, mResources, mWait, mTime, mOut, m
     """
     Test that the reloadChutes function does it's job.
     """
-    # Test that if pdconfd isn't enabled we return an empty list
-    mockSettings.PDCONFD_ENABLED = False
+    # Test that if confd isn't enabled we return an empty list
+    mockSettings.confd_ENABLED = False
     storage = MagicMock()
     mockStore.return_value = storage
 
@@ -47,9 +47,9 @@ def test_reloadChutes(mockStore, mockSettings, mResources, mWait, mTime, mOut, m
     assert ret == []
     assert not mockStore.called
 
-    # Test that if pdconfd is enabled we do our job
+    # Test that if confd is enabled we do our job
     mTimeint.return_value = 'Now'
-    mockSettings.PDCONFD_ENABLED = True
+    mockSettings.confd_ENABLED = True
     mockSettings.RESERVED_CHUTE = 'PDROP'
     ch1 = MagicMock()
     ch2 = MagicMock()

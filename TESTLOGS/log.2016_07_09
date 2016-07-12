@@ -1,3 +1,0 @@
-{"extra": {}, "owner": "UNSET", "timestamp": 1468104884.164134, "message": "Establishing API server, port: 14321", "package": "pdfcd", "type": "INFO", "line": 272, "module": "server", "pdid": "pd.damouse.example"}
-{"extra": {}, "owner": "UNSET", "timestamp": 1468108484.164148, "message": "Establishing API server, port: 14321", "package": "pdfcd", "type": "INFO", "line": 272, "module": "server", "pdid": "pd.damouse.example"}
-{"extra": {}, "owner": "UNSET", "timestamp": 1468112084.164153, "message": "Establishing API server, port: 14321", "package": "pdfcd", "type": "INFO", "line": 272, "module": "server", "pdid": "pd.damouse.example"}

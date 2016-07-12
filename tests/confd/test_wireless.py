@@ -5,7 +5,7 @@ def test_ConfigWifiIface_apply():
     """
     Test the ConfigWifiIface apply method
     """
-    from .pdconfd.config.wireless import ConfigWifiIface
+    from paradrop.confd.wireless import ConfigWifiIface
 
     wifiDevice = MagicMock()
     interface = MagicMock()

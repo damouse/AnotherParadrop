@@ -7,7 +7,7 @@ def test_parse_value():
     """
     Test parseValue function
     """
-    from paradrop.lib.settings import parseValue
+    from paradrop.shared.settings import parseValue
 
     assert parseValue("True") is True
     assert parseValue("true") is True

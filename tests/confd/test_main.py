@@ -5,7 +5,7 @@ def test_ConfigService():
     """
     Test the ConfigService class
     """
-    from .pdconfd.main import ConfigService
+    from paradrop.confd.main import ConfigService
 
     manager = MagicMock()
 

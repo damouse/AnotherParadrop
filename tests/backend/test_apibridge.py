@@ -1,7 +1,7 @@
 from mock import MagicMock
 from nose.tools import assert_raises
 
-from .pdfcd import apibridge
+from paradrop.backend import apibridge
 
 
 def test_BridgeRequest():

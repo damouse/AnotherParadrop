@@ -12,7 +12,7 @@ def test_isPDError():
     """
     Test paradrop.lib.api.pdapi.isPDError
     """
-    from paradrop.lib.api import pdapi
+    from paradrop.backend import pdapi
 
     assert pdapi.isPDError(pdapi.OK)
     assert pdapi.isPDError(pdapi.ERR_BADPARAM)
