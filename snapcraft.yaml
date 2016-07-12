@@ -2,35 +2,41 @@ name: paradrop
 version: 3
 summary: Routers
 description: Routers and Virtualization
-confinement: strict
+confinement: devmode
 vendor: ParadropLabs <pd@paradrop.org>
 icon: ./icon.png
 
+frameworks:
+  - docker
+
 services:
   paradrop:
-    start: ./bin/core
+    start: pd
     description: "Paradrop Daemon"
     caps:
       - network-client
       - network-service
       - network-admin
+      - network-control
+      - network-observe
+      
+      # - docker_client
+      # - firewall-control 
+      # Note: firewall-control stops the snap from isntalling with no error message.
+      # Maybe its an option only for newer (16.04) versions of snappy?
 
 parts:
   paradrop:
     plugin: python2
     source: src
+    stage-packages:
+      - hostapd
+      - dnsmasq
 
-  paradrop-run-script:
+  assets:
     plugin: copy
-    source: src
     files:
-      run: bin/run
-
-  # core:
-  #   plugin: go
-  #   source: core
-  #   build-packages:
-  #     - python-dev
-  #   stage-packages:
-  #     - python-dev
-
+      src/pipework: pipework
+      stage/usr/bin/paradrop: pd
+    after:
+      - paradrop

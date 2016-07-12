@@ -12,73 +12,34 @@ $ sudo apt-get update
 $ sudo apt-get install snapcraft ubuntu-device-flash
 ```
 
-There are a number of ways to build and run Paradrop, one of which involves directly invoking `go`. If you want to go this route (which is likely the fastest way to develop) you'll need to have go installed. See the instructions (here)[https://golang.org/doc/install]. 
-
 ### Building Paradrop
 
 When it comes to running the paradrop service, you've got options. Here they are in order of speed. 
 
-#### Directly  
-
-Execute the go script directly. You must have go, python 2.7, pip, and the python development tools installed. 
+Directly run paradrop as a python program:  
 
 ```
-# Make sure go is installed
-go version #=> go version go1.6 linux/amd64
-
-# grab the python headers
-sudo apt-get install python-dev
+pip install -e src/requirements.txt
+export PYTHONPATH=src
+python -m paradrop.main --local
 ```
 
-The go core essentially runs `import paradrop`, so you have three choices on how to satisfy that import.
+#### Staged
 
-Installing to system (quick): 
-
-```
-sudo pip install -e python
-```
-
-Installing to virtualenv (safe): 
+Let snapcraft download dependencies and build the environment, then run paradrop in that environment.
 
 ```
-virtualenv env
-source env/bin/activate
-pip install -e python
+$ snapcraft stage  # builds project within parts/ directory
+$ snapcraft shell  # drop into environment
+snapcraft: $ paradrop --local
 ```
 
-Temporarily updating PYTHONPATH (best):
-
-```
-export PYTHONPATH=python
-```
-
-Pull the trigger on one of these then start paradrop with:
-
-```
-go run core/*.go
-```
-
-### Staged
-
-Snaps are a lot like docker containers in that they wrap up a progam and all dependencies. Snapcraft has an intermediate build option that allows you to run your program in a production-like environment. 
-
-You do not need go or python installed. 
-
-```
-$ snapcraft stage # builds project within parts/ directory
-$ snapcraft shell # drop into environment
-snapcraft: $ core # directly start the core 
-```
-
-### Containerized
+#### Containerized
 
 Run the project within a containerized snappy on your host operating system. 
 
 ```
-# build the snap
 snapcraft assemble
-
-# run the snap
 snapcraft run  
 ```
 
@@ -95,26 +56,43 @@ export SNAPCRAFT_RUN_QEMU_ARGS="-usb -device usb-host,hostbus=1,hostaddr=10"
 ```
 
 
-### Virtualized
+*NOTE*: as of this writing `snapcraft run` always fails when `frameworks: docker` is listed in the yaml. The run command never suceeds, but you cant ssh in to install docker until it does. You have to manually boot the image and install docker. 
 
-Like containerized, but runs snappy in a virtual machine instead of a container. Head to (the snappy website)[https://developer.ubuntu.com/en/snappy/start/], download your favorite VM image, and then upload your snap.
+Snapcraft will download the image for you after running `snapcraft run` the first time. After doing do:
+
+```
+# Boot the image
+kvm -m 512 -netdev user,id=net0,hostfwd=tcp::8090-:80,hostfwd=tcp::8022-:22,hostfwd=tcp::9999-:14321,hostfwd=tcp::9000-:9000 -netdev user,id=net1 -device e1000,netdev=net0 -device e1000,netdev=net1 $WIFI_CMD image/15.04.img
+
+# Connect to it
+ssh -p 8022 ubuntu@localhost
+```
+
+Username/password are both `ubuntu` by default.
+
+#### Virtualized
+
+*NOTE: steps not verified-- YMMV*
+
+Like containerized, but runs snappy in a virtual machine instead of a container. Head to [the snappy website](https://developer.ubuntu.com/en/snappy/start/), download your favorite VM image, and then upload your snap.
 
 ```
 snapcraft assemble
 snappy-remote install -url ubuntu@localhost *.snap
 ```
 
-Note: command not verified. More detail to follow
-
-### Flashed
+#### Flashed
 
 Flash paradrop onto a physical device. 
 
 Instructions to follow. 
 
+
 ## Working with Snapcraft
 
 See tutorial on [making your first snap](https://github.com/snapcore/snapcraft/blob/master/docs/your-first-snap.md) with snapcraft. Their github also has a nice set of [demo applications](https://github.com/snapcore/snapcraft/tree/master/demos).
+
+Especially useful is the [snapcraft.yaml syntax page](https://developer.ubuntu.com/en/snappy/build-apps/snapcraft-syntax/).
 
 Not sure whats going on? Check out `snapcraft help sources` and `snapcraft help plugins` for documentation on config file structure.
 
@@ -122,24 +100,24 @@ Not sure whats going on? Check out `snapcraft help sources` and `snapcraft help 
 
 Get logs from a running service: 
 ```
-sudo snappy service logs ethereum
+sudo snappy service logs paradrop
 ```
 
 Start, stop, or restart services: 
 
 ```
-# with a service called "ethereum"
+# with a service called "paradrop"
 
-sudo snappy service start ethereum
-sudo snappy service stop ethereum
-sudo snappy service restart ethereum
+sudo snappy service start paradrop
+sudo snappy service stop paradrop
+sudo snappy service restart paradrop
 ```
 
 See [this link](https://blog.slock.it/let-s-play-with-snappy-ethereum-816588198528#.bwel1tmb1) for more info.
 
 ### Updating
 
-We may be able to let snaps update themselves.See `snapd-control` [here](https://developer.ubuntu.com/en/snappy/guides/interfaces/).
+We may be able to let snaps update themselves. The permission is called [snapd-control](https://developer.ubuntu.com/en/snappy/guides/interfaces/). Also useful: the [snapd wiki page](https://github.com/intelsdi-x/snap/blob/master/docs/SNAPD.md).
 
 ### Running Tests
 
@@ -155,7 +133,11 @@ Make sure you have nose installed:
 pip install nose
 ```
 
-# Scratch
+## Interacting with Snappy
+
+See the wiki page [on debugging snaps](https://developer.ubuntu.com/en/snappy/build-apps/debug/)
+
+## Scratch
 
 Random notes follow.
 
@@ -168,13 +150,29 @@ export PYTHONPATH=paradrop/docker
 go run core/main.go
 ```
 
-## Random TODO
+### Additional Binaries
 
-- Convert nexus and settings into a conf file that the core reads
-- Migrate settings to the core
-- Set up webserver
-- Pass argslist onto python from go 
-- Deal with multiple `pthread`s accessing the python modules
-- Integrate pdtools
+These are notes @damouse wrote while re-adding binaries for the snapcraft migration. 
 
-See here for the 2.7 problem: https://github.com/docker/docker-py/issues/1019
+Added `hostapd` and `dnsmasq` to `snapcraft.yaml`. When running `snapcraft stage` they appear in the staging directory, but I suspect they're not making it to the final snap. Need to verify they get copied over, that paradrop can access them, and that they have the neccesary permissions.
+
+Added `frameworks: docker` and `caps: docker_client`. This does not automatically install the docker snap, unfortunatly. 
+
+Havent converted the snap from an app to a framework. Likely will have to, but haven't hit anything that failed majorly yet to need it. 
+
+Pipework should be copied over-- but does it copy over to the root directory that snappy calls `start` on our service? Make sure that the script shows up in the right place and is callable.
+
+No progress on auto-updating.
+
+Snapcraft just assembles snaps (still very useful!) in the `snap/` directory, it doesn't fundementally change their structure. If any of these steps cause us problems we can override the final product before snapping it ourselves.
+
+
+### Scratch
+
+Random notes.
+
+Copying the snap manually:
+
+```
+scp -i /home/damouse/.ssh/id_rsa -oStrictHostKeyChecking=no -oUserKnownHostsFile=/tmp/tmpx_dx6dgk -oKbdInteractiveAuthentication=no -P 8022 /home/damouse/code/python/paradrop/paradrop_3_amd64.snap ubuntu@localhost:~/
+```
