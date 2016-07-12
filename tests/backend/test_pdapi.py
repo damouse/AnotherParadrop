@@ -1,8 +1,10 @@
+
+
 def test_PDAPIError():
     """
     Test the PDAPIError class
     """
-    from paradrop.lib.api.pdapi import PDAPIError
+    from paradrop.backend.pdapi import PDAPIError
 
     error = PDAPIError("etype", "msg")
     assert str(error) == "PDAPIError etype: msg"
@@ -26,7 +28,7 @@ def test_getErrorToken():
     """
     Test paradrop.lib.api.pdapi.getErrorToken
     """
-    from paradrop.lib.api.pdapi import getErrorToken
+    from paradrop.backend.pdapi import getErrorToken
 
     # Should be a random token every time.
     token1 = getErrorToken()

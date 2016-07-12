@@ -1,10 +1,10 @@
-from .fc import configurer
+from paradrop.chute import configurer
 from mock import patch, MagicMock
 
 
-@patch('.fc.configurer.log')
-@patch('.fc.configurer.updateObject')
-@patch('.fc.configurer.reloadChutes')
+@patch('paradrop.chute.configurer.log')
+@patch('paradrop.chute.configurer.updateObject')
+@patch('paradrop.chute.restart.reloadChutes')
 def test_Configurer(mReload, mUpdObj, mOut):
 
     storage = MagicMock()

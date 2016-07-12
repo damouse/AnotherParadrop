@@ -82,9 +82,9 @@ The following are tests I most likely broke during the move. The number after th
 
 `confd/test_manager:116`: OSError on `/etc`
 
+`chute/test_updateObject`: patches updateObject.exc, but the plan content from exc was moved to chute. I updated the patch with no progress.
 
-
-
+`chute/test_restart:29`: patch failure
 
 
 

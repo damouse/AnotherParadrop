@@ -7,9 +7,9 @@ import sys
 import copy
 import pickle
 
-from paradrop.shared import log
-from paradrop.shared import pdos
-from paradrop.shared import settings
+from paradrop.shared import log, pdos, settings
+
+from .chute import Chute
 
 
 class PDStorage(object):
