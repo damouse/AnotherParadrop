@@ -66,7 +66,7 @@ storage -> backend.fc.chutestorage
 
 ## Directory Update Notes
 
-The following are tests I most likely broke during the move. The number after the file name is the line of the disabled test. File names are relative to `{ROOT}/tests`.
+The following are tests I most likely broke during the move. Most of these are issues with `mock.patch` not set up correctly for the new structure 
 
 `test_pdconfd:336`: raises OSError trying to write to `/etc/config`
 

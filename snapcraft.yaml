@@ -7,7 +7,7 @@ vendor: ParadropLabs <pd@paradrop.org>
 icon: ./icon.png
 
 services:
-  sev:
+  paradrop:
     start: ./bin/core
     description: "Paradrop Daemon"
     caps:
@@ -16,14 +16,21 @@ services:
       - network-admin
 
 parts:
-  core:
-    plugin: go
-    source: core
-    build-packages:
-      - python-dev
-    stage-packages:
-      - python-dev
-
   paradrop:
     plugin: python2
-    source: python
+    source: src
+
+  paradrop-run-script:
+    plugin: copy
+    source: src
+    files:
+      run: bin/run
+
+  # core:
+  #   plugin: go
+  #   source: core
+  #   build-packages:
+  #     - python-dev
+  #   stage-packages:
+  #     - python-dev
+
