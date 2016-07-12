@@ -5,10 +5,9 @@ import tempfile
 from nose.tools import assert_raises
 from mock import MagicMock, Mock, patch
 
-from .pdmock import MockChute, MockUpdate
+from ..pdmock import MockChute, MockUpdate
 
-from paradrop.shared import settings
-from paradrop.shared import pdos
+from paradrop.shared import settings, pdos
 
 
 def fake_interface_list():

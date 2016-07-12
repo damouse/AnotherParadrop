@@ -1,6 +1,6 @@
 from mock import MagicMock, Mock, patch
 
-from .pdmock import call, do_nothing, make_dummy
+from ..pdmock import call, do_nothing, make_dummy
 
 
 def test_server_complete():

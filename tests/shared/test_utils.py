@@ -6,7 +6,7 @@ import tempfile
 from mock import MagicMock, Mock, patch
 from nose.tools import assert_raises
 
-from .pdmock import MockChute, MockChuteStorage, writeTempFile
+from ..pdmock import MockChute, MockChuteStorage, writeTempFile
 
 from paradrop.shared import pdos
 from paradrop.chute.chutestorage import PDStorage

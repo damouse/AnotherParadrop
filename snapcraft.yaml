@@ -6,12 +6,9 @@ confinement: devmode
 vendor: ParadropLabs <pd@paradrop.org>
 icon: ./icon.png
 
-# frameworks:
-#   - docker
-
 services:
   paradrop:
-    start: run
+    start: runpd
     description: "Paradrop Daemon"
     caps:
       - network-client
@@ -19,24 +16,15 @@ services:
       - network-admin
       - network-control
       - network-observe
-      
-      # - docker_client
-      # - firewall-control 
-      # Note: firewall-control stops the snap from isntalling with no error message.
-      # Maybe its an option only for newer (16.04) versions of snappy?
 
 parts:
   paradrop:
     plugin: python2
     source: src
-    stage-packages:
-      - hostapd
-      - dnsmasq
 
   assets:
     plugin: copy
     files:
-      src/pipework: pipework
-      src/run: run
+      src/runpd: runpd
     after:
       - paradrop

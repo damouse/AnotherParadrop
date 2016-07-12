@@ -86,6 +86,12 @@ The following are tests I most likely broke during the move. Most of these are i
 
 `chute/test_restart:29`: patch failure
 
+## Missing Tests
+
+The following appear to be missing tests. Take "appear" to mean that @damouse couldnt find or misplaced the testing scripts that mirror the name of the source script.
+
+- backend.apichute
+- backend.plans: State, Struct
 
 
 

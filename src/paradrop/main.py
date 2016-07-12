@@ -30,7 +30,6 @@ def main(args_string=None):
     args = p.parse_args()
 
     # Temp- this should go to nexus (the settings portion of it, at least)
-    # Change the confd directories so we can run locally
     if args.local:
         settings.PDCONFD_WRITE_DIR = "/tmp/pdconfd"
         settings.UCI_CONFIG_DIR = "/tmp/config.d"
