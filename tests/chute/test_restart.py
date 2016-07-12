@@ -25,7 +25,7 @@ def test_updateStatus(mockStore):
 
 
 @patch('paradrop.shared.restart.timeint')
-@patch('paradrop.shared.restart.out')
+@patch('paradrop.shared.restart.log')
 @patch('paradrop.shared.restart.time')
 @patch('paradrop.shared.restart.waitSystemUp')
 @patch('paradrop.shared.restart.reclaimNetworkResources')

@@ -2,7 +2,7 @@ from .fc import configurer
 from mock import patch, MagicMock
 
 
-@patch('.fc.configurer.out')
+@patch('.fc.configurer.log')
 @patch('.fc.configurer.updateObject')
 @patch('.fc.configurer.reloadChutes')
 def test_Configurer(mReload, mUpdObj, mOut):

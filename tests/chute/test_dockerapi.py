@@ -42,7 +42,7 @@ def test_build_host_config():
     assert res == HOST_CONFIG2
 
 
-@patch('paradrop.shared.dockerapi.out')
+@patch('paradrop.shared.dockerapi.log')
 @patch('docker.Client')
 def test_failAndCleanUpDocker(mockDocker, mockOutput):
     """
@@ -77,7 +77,7 @@ def test_failAndCleanUpDocker(mockDocker, mockOutput):
 
 
 @patch('paradrop.shared.dockerapi.setup_net_interfaces')
-@patch('paradrop.shared.dockerapi.out')
+@patch('paradrop.shared.dockerapi.log')
 @patch('docker.Client')
 def test_restartChute(mockDocker, mockOutput, mockInterfaces):
     """
@@ -93,7 +93,7 @@ def test_restartChute(mockDocker, mockOutput, mockInterfaces):
     client.start.assert_called_once_with(container=update.name)
 
 
-@patch('paradrop.shared.dockerapi.out')
+@patch('paradrop.shared.dockerapi.log')
 @patch('docker.Client')
 def test_stopChute(mockDocker, mockOutput):
     """
@@ -108,7 +108,7 @@ def test_stopChute(mockDocker, mockOutput):
     client.stop.assert_called_once_with(container=update.name)
 
 
-@patch('paradrop.shared.dockerapi.out')
+@patch('paradrop.shared.dockerapi.log')
 @patch('docker.Client')
 def test_removeChute(mockDocker, mockOutput):
     """
@@ -136,7 +136,7 @@ def test_removeChute(mockDocker, mockOutput):
 @patch('paradrop.shared.dockerapi.failAndCleanUpDocker')
 @patch('paradrop.shared.dockerapi.build_host_config')
 @patch('paradrop.shared.dockerapi.setup_net_interfaces')
-@patch('paradrop.shared.dockerapi.out')
+@patch('paradrop.shared.dockerapi.log')
 @patch('docker.Client')
 def test_startChute(mockDocker, mockOutput, mockInterfaces, mockConfig, mockFail):
     """
@@ -183,7 +183,7 @@ def test_startChute(mockDocker, mockOutput, mockInterfaces, mockConfig, mockFail
 
 @patch('paradrop.shared.dockerapi.os')
 @patch('paradrop.shared.dockerapi.subprocess')
-@patch('paradrop.shared.dockerapi.out')
+@patch('paradrop.shared.dockerapi.log')
 def test_setup_net_interfaces(mockOutput, mockSubproc, mockOS):
     """
     Test that the setup_net_interfaces function does it's job.
@@ -212,7 +212,7 @@ def test_setup_net_interfaces(mockOutput, mockSubproc, mockOS):
 
 @patch('__builtin__.open')
 @patch('paradrop.shared.dockerapi.os')
-@patch('paradrop.shared.dockerapi.out')
+@patch('paradrop.shared.dockerapi.log')
 def test_writeDockerConfig(mockOutput, mockOS, mock_open):
     """
     Test that the writeDockerConfig function does it's job.

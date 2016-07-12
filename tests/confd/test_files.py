@@ -2,7 +2,7 @@
 # from mock import patch, MagicMock
 
 
-# @patch('.exc.files.out')
+# @patch('.exc.files.log')
 # def test_generatePlans(mockOutput):
 #     """
 #     Test that the generatePlans function does it's job.

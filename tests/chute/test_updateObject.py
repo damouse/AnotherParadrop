@@ -3,7 +3,7 @@ from mock import patch, MagicMock
 
 
 @patch('paradrop.chute.updateObject.chutestorage')
-@patch('paradrop.chute.updateObject.out')
+@patch('paradrop.chute.updateObject.log')
 @patch('paradrop.chute.updateObject.exc')
 def test_updateObject(mExc, mOut, mStore):
 
