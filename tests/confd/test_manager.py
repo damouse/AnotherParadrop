@@ -113,54 +113,54 @@ def test_change_channel():
     shutil.rmtree(temp)
 
 
-# @patch("paradrop.confd.command.Command.execute")
-# def test_manager_execute(execute):
-#     """
-#     Test the manager execute method
-#     """
-#     from paradrop.confd.manager import ConfigManager
+@patch("paradrop.confd.command.Command.execute")
+def test_manager_execute(execute):
+    """
+    Test the manager execute method
+    """
+    from paradrop.confd.manager import ConfigManager
 
-#     manager = ConfigManager(writeDir="/tmp")
+    manager = ConfigManager(writeDir="/tmp")
 
-#     source = os.path.join(CONFIG_DIR, "multi_ap")
-#     manager.loadConfig(search=source, execute=True)
-#     assert execute.call_count > 1
+    source = os.path.join(CONFIG_DIR, "multi_ap")
+    manager.loadConfig(search=source, execute=True)
+    assert execute.call_count > 1
 
-#     # Verify the order of commands:
-#     # "interface add" < "addr add" < "hostapd"
-#     ifaceAdd = None
-#     addrAdd = None
-#     hostapd = None
-#     i = 0
-#     for cmd in manager.previousCommands.commands():
-#         print(cmd)
-#         if "interface add" in cmd:
-#             ifaceAdd = i
-#         elif "addr add" in cmd:
-#             addrAdd = i
-#         elif "hostapd" in cmd:
-#             hostapd = i
-#         i += 1
-#     assert ifaceAdd < addrAdd and addrAdd < hostapd
+    # Verify the order of commands:
+    # "interface add" < "addr add" < "hostapd"
+    ifaceAdd = None
+    addrAdd = None
+    hostapd = None
+    i = 0
+    for cmd in manager.previousCommands.commands():
+        print(cmd)
+        if "interface add" in cmd:
+            ifaceAdd = i
+        elif "addr add" in cmd:
+            addrAdd = i
+        elif "hostapd" in cmd:
+            hostapd = i
+        i += 1
+    assert ifaceAdd < addrAdd and addrAdd < hostapd
 
-#     execute.reset_mock()
-#     manager.unload(execute=True)
-#     assert execute.call_count > 1
+    execute.reset_mock()
+    manager.unload(execute=True)
+    assert execute.call_count > 1
 
-#     # Verify the order of commands:
-#     # "kill" < "addr del" < "iw dev ... del"
-#     print("---")
-#     kill = None
-#     addrDel = None
-#     iwDev = None
-#     i = 0
-#     for cmd in manager.previousCommands.commands():
-#         print(cmd)
-#         if "kill" in cmd:
-#             kill = i
-#         elif "addr del" in cmd:
-#             addrDel = i
-#         elif "iw dev" in cmd:
-#             iwDev = i
-#         i += 1
-#     assert kill < addrDel and addrDel < iwDev
+    # Verify the order of commands:
+    # "kill" < "addr del" < "iw dev ... del"
+    print("---")
+    kill = None
+    addrDel = None
+    iwDev = None
+    i = 0
+    for cmd in manager.previousCommands.commands():
+        print(cmd)
+        if "kill" in cmd:
+            kill = i
+        elif "addr del" in cmd:
+            addrDel = i
+        elif "iw dev" in cmd:
+            iwDev = i
+        i += 1
+    assert kill < addrDel and addrDel < iwDev
