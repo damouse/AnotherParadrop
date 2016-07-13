@@ -1,0 +1,2 @@
+#!/bin/sh
+python -m paradrop.main -l -v $*

@@ -12,16 +12,15 @@ $ sudo apt-get update
 $ sudo apt-get install snapcraft ubuntu-device-flash
 ```
 
-### Building Paradrop
+### Building and Running Paradrop
 
 When it comes to running the paradrop service, you've got options. Here they are in order of speed. 
 
 Directly run paradrop as a python program:  
 
 ```
-pip install -e src/requirements.txt
-export PYTHONPATH=src
-python -m paradrop.main --local
+cd src
+python -m paradrop.main --local --verbose
 ```
 
 #### Staged
@@ -70,6 +69,7 @@ ssh -p 8022 ubuntu@localhost
 
 Username/password are both `ubuntu` by default.
 
+
 #### Virtualized
 
 *NOTE: steps not verified-- YMMV*
@@ -81,20 +81,17 @@ snapcraft assemble
 snappy-remote install -url ubuntu@localhost *.snap
 ```
 
-#### Flashed
-
-Flash paradrop onto a physical device. 
-
-Instructions to follow. 
-
 
 ## Working with Snapcraft
 
-See tutorial on [making your first snap](https://github.com/snapcore/snapcraft/blob/master/docs/your-first-snap.md) with snapcraft. Their github also has a nice set of [demo applications](https://github.com/snapcore/snapcraft/tree/master/demos).
+Some helpful links:
 
-Especially useful is the [snapcraft.yaml syntax page](https://developer.ubuntu.com/en/snappy/build-apps/snapcraft-syntax/).
+- [Your First Snap](https://github.com/snapcore/snapcraft/blob/master/docs/your-first-snap.md)
+- [Snapcraft Demos](https://github.com/snapcore/snapcraft/tree/master/demos).
+- [Snapcraft Yaml Syntax Page](https://developer.ubuntu.com/en/snappy/build-apps/snapcraft-syntax/).
 
 Not sure whats going on? Check out `snapcraft help sources` and `snapcraft help plugins` for documentation on config file structure.
+
 
 ## Managing Snappy
 
@@ -114,6 +111,10 @@ sudo snappy service restart paradrop
 ```
 
 See [this link](https://blog.slock.it/let-s-play-with-snappy-ethereum-816588198528#.bwel1tmb1) for more info.
+
+Screen a snap for any problems with `click-review *.snap`.
+
+Once installed paradrop sets all its information in `/var/lib/apps/paradrop.sideload/current`
 
 ### Updating
 
@@ -174,5 +175,5 @@ Random notes.
 Copying the snap manually:
 
 ```
-scp -i /home/damouse/.ssh/id_rsa -oStrictHostKeyChecking=no -oUserKnownHostsFile=/tmp/tmpx_dx6dgk -oKbdInteractiveAuthentication=no -P 8022 /home/damouse/code/python/paradrop/paradrop_3_amd64.snap ubuntu@localhost:~/
+scp -i /home/damouse/.ssh/id_rsa -oStrictHostKeyChecking=no -oUserKnownHostsFile=/tmp/tmpx_dx6dgk -oKbdInteractiveAuthentication=no -P 8022 *.snap ubuntu@localhost:~/
 ```

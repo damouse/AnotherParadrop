@@ -8,14 +8,12 @@ icon: ./icon.png
 
 services:
   paradrop:
-    start: runpd
+    start: bin/pd
     description: "Paradrop Daemon"
     caps:
       - network-client
       - network-service
       - network-admin
-      - network-control
-      - network-observe
 
 parts:
   paradrop:
@@ -25,6 +23,4 @@ parts:
   assets:
     plugin: copy
     files:
-      src/runpd: runpd
-    after:
-      - paradrop
+      src/pd: bin/pd
