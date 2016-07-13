@@ -78,8 +78,6 @@ The following are tests I most likely broke during the move. Most of these are i
 
 `test_fc:42`: patch fail
 
-`confd/test_{resource, traffic, runtime, name, files}`: patch and migration issues
-
 `confd/test_manager:116`: OSError on `/etc`
 
 `chute/test_updateObject`: patches updateObject.exc, but the plan content from exc was moved to chute. I updated the patch with no progress.

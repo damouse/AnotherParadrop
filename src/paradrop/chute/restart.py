@@ -10,13 +10,14 @@ Checks with pdconfd to make sure it was able to properly bring up all interfaces
 starting chutes.
 '''
 
-from paradrop.shared import log
+import time
+
+from paradrop.shared import log, settings
 from paradrop.chute import chutestorage
 from paradrop.shared.pdutils import str2json, timeint
 from paradrop.confd.client import waitSystemUp
-from paradrop.shared import settings
 from paradrop.config.network import reclaimNetworkResources
-import time
+
 
 FAILURE_WARNING = """
     ************************WARNING************************
