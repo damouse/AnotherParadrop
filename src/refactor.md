@@ -70,12 +70,6 @@ The following are tests I most likely broke during the move. Most of these are i
 
 `test_main:4`: the patch decorator screwed up due to module name changes
 
-`test_exc`: whole thing
-
-`test_lib_config:112`: patch fail
-
-`test_fc:42`: patch fail
-
 `confd/test_manager:116`: OSError on `/etc`
 
 `chute/test_updateObject`: patches updateObject.exc, but the plan content from exc was moved to chute. I updated the patch with no progress.

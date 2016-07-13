@@ -6,8 +6,7 @@ from ..pdmock import MockChute, MockUpdate, do_nothing, make_dummy
 
 
 def test_executionplan():
-    from .exc import executionplan as excplan
-    from .exc import struct
+    from paradrop.chute import executionplan, plans
 
     update = Mock()
 
@@ -15,13 +14,13 @@ def test_executionplan():
     badModule = Mock()
     badModule.generatePlans = Mock(return_value=True)
     update.updateModuleList = [badModule]
-    assert excplan.generatePlans(update)
+    assert executionplan.generatePlans(update)
 
     # This one should succeed.
-    update.updateModuleList = [struct]
-    assert excplan.generatePlans(update) is None
+    update.updateModuleList = [plans.Struct]
+    assert executionplan.generatePlans(update) is None
 
-    excplan.aggregatePlans(update)
+    executionplan.aggregatePlans(update)
 
     # Make a list of dummy functions to run
     plans = list()
@@ -36,8 +35,8 @@ def test_executionplan():
     update.plans = Mock()
     update.plans.getNextTodo = plans.pop
     update.plans.getNextAbort = abortPlans.pop
-    assert excplan.executePlans(update) is False
-    assert excplan.abortPlans(update) is False
+    assert executionplan.executePlans(update) is False
+    assert executionplan.abortPlans(update) is False
 
     # Make a plan with non-callable ("fail" string) to cause an error
     plans = list()
@@ -51,12 +50,12 @@ def test_executionplan():
     update.plans = Mock()
     update.plans.getNextTodo = plans.pop
     update.plans.getNextAbort = abortPlans.pop
-    assert excplan.executePlans(update)
-    assert excplan.abortPlans(update)
+    assert executionplan.executePlans(update)
+    assert executionplan.abortPlans(update)
 
 
 def test_plangraph():
-    from .exc.plangraph import PlanMap
+    from paradrop.chute import plangraph
 
     class Output(object):
         pass
@@ -114,7 +113,7 @@ def test_plangraph():
     #
     # Setup new map
     #
-    pm = PlanMap('test')
+    pm = plangraph.PlanMap('test')
     ch = TestChute()
     ch.guid = 'TESTCHUTE'
 
@@ -216,8 +215,9 @@ def test_state():
     """
     Test plan generation for state module
     """
-    from .exc import state
-    from paradrop.lib import chute, settings
+    from paradrop.chute.plans import State
+    from paradrop.chute import chute
+    from paradrop.shared import settings
 
     # Set this to exercise debug mode code
     settings.DEBUG_MODE = True
@@ -232,45 +232,45 @@ def test_state():
     update.old = None
     update.new = MockChute()
     update.updateType = "stop"
-    assert state.generatePlans(update) is True
+    assert State.generatePlans(update) is True
 
     # Install with no old chute should succeed
     update.updateType = "install"
     update.new.state = chute.STATE_RUNNING
-    assert state.generatePlans(update) is None
+    assert State.generatePlans(update) is None
 
     # Entering invalid state should fail
     update.new.state = chute.STATE_INVALID
-    assert state.generatePlans(update) is True
+    assert State.generatePlans(update) is True
 
     # Start with old chute already running should fail
     update.old = MockChute()
     update.updateType = "start"
     update.old.state = chute.STATE_RUNNING
-    assert state.generatePlans(update) is True
+    assert State.generatePlans(update) is True
 
     # But if the old chute was stopped, then start should succeed
     update.old.state = chute.STATE_STOPPED
-    assert state.generatePlans(update) is None
+    assert State.generatePlans(update) is None
 
     # Should be fine
     update.updateType = "restart"
-    assert state.generatePlans(update) is None
+    assert State.generatePlans(update) is None
 
     # Create should fail when old chute exists
     update.updateType = "create"
-    assert state.generatePlans(update) is True
+    assert State.generatePlans(update) is True
 
     # Delete and set to stopped is fine
     update.new.state = chute.STATE_STOPPED
     update.updateType = "delete"
-    assert state.generatePlans(update) is None
+    assert State.generatePlans(update) is None
 
     # Stopping an already stopped chute should fail
     update.updateType = "stop"
     update.old.state = chute.STATE_STOPPED
-    assert state.generatePlans(update) is True
+    assert State.generatePlans(update) is True
 
     # Stopping a running chute is fine
     update.old.state = chute.STATE_RUNNING
-    assert state.generatePlans(update) is None
+    assert State.generatePlans(update) is None

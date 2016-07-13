@@ -108,20 +108,20 @@ def fake_rules_list():
     return rules
 
 
-# @patch("paradrop.confd.client.reloadAll", mockStatusString)
-# def test_configservice():
-#     """
-#     Test paradrop.config.configservice
-#     """
-#     from paradrop.config import configservice
+@patch("paradrop.confd.client.reloadAll", mockStatusString)
+def test_configservice():
+    """
+    Test paradrop.config.configservice
+    """
+    from paradrop.config import configservice
 
-#     # This one should succeed
-#     update = MockUpdate(name="GoodChute")
-#     assert configservice.reloadAll(update) is None
+    # This one should succeed
+    update = MockUpdate(name="GoodChute")
+    assert configservice.reloadAll(update) is None
 
-#     # This one should raise an exception
-#     update = MockUpdate(name="BadChute")
-#     assert_raises(Exception, configservice.reloadAll, update)
+    # This one should raise an exception
+    update = MockUpdate(name="BadChute")
+    assert_raises(Exception, configservice.reloadAll, update)
 
 
 @patch("paradrop.shared.pdos.readFile", new=mockReadFile)

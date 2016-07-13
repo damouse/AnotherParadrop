@@ -39,45 +39,45 @@ def test_update_object(executePlans, abortPlans):
     update.execute()
 
 
-# @patch(".chute.chutestorage.ChuteStorage.getChute")
-# def test_update_chute(getChute):
-#     """
-#     Test the UpdateChute class
-#     """
-#     from paradrop.chute.updateObject import UpdateChute
-#     from paradrop.lib import chute
+@patch("paradrop.chute.chutestorage.ChuteStorage.getChute")
+def test_update_chute(getChute):
+    """
+    Test the UpdateChute class
+    """
+    from paradrop.chute.updateObject import UpdateChute
+    from paradrop.chute import chute
 
-#     obj = {
-#         'name': 'Test',
-#         'updateClass': 'CHUTE',
-#         'updateType': 'restart',
-#         'new': Mock(),
-#         'old': Mock(),
-#         'tok': 'tok',
-#         'special': 'stuff'
-#     }
+    obj = {
+        'name': 'Test',
+        'updateClass': 'CHUTE',
+        'updateType': 'restart',
+        'new': Mock(),
+        'old': Mock(),
+        'tok': 'tok',
+        'special': 'stuff'
+    }
 
-#     # This means when it looks up the chute in the ChuteStorage,
-#     # it will find one that is the same as the new chute.
-#     getChute.return_value = chute.Chute(obj)
+    # This means when it looks up the chute in the ChuteStorage,
+    # it will find one that is the same as the new chute.
+    getChute.return_value = chute.Chute(obj)
 
-#     # We will remove this field on the new object to test the code
-#     # that imports fields from the old object from storage.
-#     del obj['special']
+    # We will remove this field on the new object to test the code
+    # that imports fields from the old object from storage.
+    del obj['special']
 
-#     update = UpdateChute(obj)
-#     assert update.new.special == update.old.special
+    update = UpdateChute(obj)
+    assert update.new.special == update.old.special
 
-#     update.chuteStor = Mock()
-#     update.chuteStor.deleteChute = Mock()
-#     update.chuteStor.saveChute = Mock()
+    update.chuteStor = Mock()
+    update.chuteStor.deleteChute = Mock()
+    update.chuteStor.saveChute = Mock()
 
-#     update.saveState()
-#     assert update.chuteStor.saveChute.called
+    update.saveState()
+    assert update.chuteStor.saveChute.called
 
-#     update.updateType = "delete"
-#     update.saveState()
-#     assert update.chuteStor.deleteChute.called
+    update.updateType = "delete"
+    update.saveState()
+    assert update.chuteStor.deleteChute.called
 
 
 def test_update_object_parse():
