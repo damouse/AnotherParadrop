@@ -68,8 +68,6 @@ storage -> backend.fc.chutestorage
 
 The following are tests I most likely broke during the move. Most of these are issues with `mock.patch` not set up correctly for the new structure 
 
-`test_pdconfd:336`: raises OSError trying to write to `/etc/config`
-
 `test_main:4`: the patch decorator screwed up due to module name changes
 
 `test_exc`: whole thing

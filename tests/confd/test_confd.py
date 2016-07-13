@@ -8,7 +8,8 @@ from paradrop.confd.command import Command
 from paradrop.confd.manager import ConfigManager
 from paradrop.confd.network import ConfigInterface
 from paradrop.confd.wireless import ConfigWifiDevice, ConfigWifiIface
-from paradrop.shared import pdos
+
+from paradrop.shared import pdos, settings
 
 CONFIG_FILE = "/tmp/test-config"
 WRITE_DIR = "/tmp"
@@ -332,6 +333,12 @@ def test_config_manager():
     """
     from paradrop.confd.base import ConfigObject
     from paradrop.confd.manager import findConfigFiles
+    from paradrop.shared import settings
+
+    # This test tries to read /etc and errs
+    # It didnt before. Im switching the output directory to /tmp for now
+    UCI_BACKUP = settings.UCI_CONFIG_DIR
+    settings.UCI_CONFIG_DIR = WRITE_DIR
 
     files = findConfigFiles()
     assert isinstance(files, list)
@@ -383,6 +390,8 @@ def test_config_manager():
     assert isinstance(result, basestring)
 
     pdos.remove(temp)
+
+    settings.UCI_CONFIG_DIR = UCI_BACKUP
 
 
 def test_config_network_wan():
