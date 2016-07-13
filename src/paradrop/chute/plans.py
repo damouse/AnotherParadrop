@@ -12,7 +12,8 @@ from . import plangraph, chute
 
 class Name:
 
-    def generatePlans(update):
+    @classmethod
+    def generatePlans(klass, update):
         """
             This function looks at a diff of the current Chute (in @chuteStor) and the @newChute,
             then adds Plan() calls to make the Chute match the @newChute.
@@ -33,7 +34,8 @@ class Name:
 
 class Traffic:
 
-    def generatePlans(update):
+    @classmethod
+    def generatePlans(klass, update):
         """
             This function looks at a diff of the current Chute (in @chuteStor) and the @newChute,
             then adds Plan() calls to make the Chute match the @newChute.
@@ -63,7 +65,8 @@ class Traffic:
 
 class Struct:
 
-    def generatePlans(update):
+    @classmethod
+    def generatePlans(klass, update):
         """
             This function looks at a diff of the current Chute (in @chuteStor) and the @newChute,
             then adds Plan() calls to make the Chute match the @newChute.
@@ -120,7 +123,8 @@ class Struct:
 
 class Runtime:
 
-    def generatePlans(update):
+    @classmethod
+    def generatePlans(klass, update):
         """
             This function looks at a diff of the current Chute (in @chuteStor) and the @newChute,
             then adds Plan() calls to make the Chute match the @newChute.
@@ -151,7 +155,8 @@ class Runtime:
 
 class State:
 
-    def generatePlans(update):
+    @classmethod
+    def generatePlans(klass, update):
         """
             This function looks at a diff of the current Chute (in @chuteStor) and the @newChute,
             then adds Plan() calls to make the Chute match the @newChute.
@@ -205,7 +210,8 @@ class State:
 
 class Resource:
 
-    def generatePlans(update):
+    @classmethod
+    def generatePlans(klass, update):
         """
             This function looks at a diff of the current Chute (in @chuteStor) and the @newChute,
             then adds Plan() calls to make the Chute match the @newChute.
@@ -244,7 +250,8 @@ class Resource:
 
 class Files:
 
-    def generatePlans(update):
+    @classmethod
+    def generatePlans(klass, update):
         """
             This function looks at a diff of the current Chute (in @chuteStor) and the @newChute,
             then adds Plan() calls to make the Chute match the @newChute.

@@ -159,12 +159,12 @@ class UpdateChute(UpdateObject):
     """
     # List of all modules that need to be called during execution planning
     updateModuleList = [
-        plans.Name(),
-        plans.State(),
-        plans.Struct(),
-        plans.Resource(),
-        plans.Traffic(),
-        plans.Runtime()
+        plans.Name,
+        plans.State,
+        plans.Struct,
+        plans.Resource,
+        plans.Traffic,
+        plans.Runtime,
     ]
 
     def __init__(self, obj):
