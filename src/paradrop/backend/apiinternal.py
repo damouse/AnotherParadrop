@@ -146,7 +146,6 @@ class RouterSession(cxbr.BaseSession):
 # Old
 ###############################################################################
 
-
 @inlineCallbacks
 def api_provision(pdid, key, cert):
     '''

@@ -42,11 +42,11 @@ def setup(args=None):
 
     # Development mode
     if(args and args.development):
-        thePort = settings.PDFCD_PORT + 10000
+        thePort = settings.PDFCD_PORT
         site.displayTracebacks = True
     elif (args and args.local):
         portalPort = 8080
-        thePort = settings.PDFCD_PORT + 10000
+        thePort = settings.PDFCD_PORT
     elif(args and args.unittest):
         thePort = settings.PDFCD_PORT + 20000
         site.displayTracebacks = True

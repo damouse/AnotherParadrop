@@ -3,4 +3,4 @@ export PATH="$SNAP_APP_PATH/bin:$SNAP_APP_PATH/usr/bin:$PATH"
 export LD_LIBRARY_PATH="$SNAP_APP_PATH/lib:$SNAP_APP_PATH/usr/lib:$SNAP_APP_PATH/lib/x86_64-linux-gnu:$SNAP_APP_PATH/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
 export PYTHONPATH=$SNAP_APP_PATH/usr/lib/python2.7/dist-packages
 
-exec "python2 -m paradrop" $*
+exec "paradrop" -l $*
