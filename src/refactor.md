@@ -64,18 +64,6 @@ storage -> backend.fc.chutestorage
 
 `lib.utils.addresses`: unused
 
-## Directory Update Notes
-
-The following are tests I most likely broke during the move. Most of these are issues with `mock.patch` not set up correctly for the new structure 
-
-`test_main:4`: the patch decorator screwed up due to module name changes
-
-`confd/test_manager:116`: OSError on `/etc`
-
-`chute/test_updateObject`: patches updateObject.exc, but the plan content from exc was moved to chute. I updated the patch with no progress.
-
-`chute/test_restart:29`: patch failure
-
 ## Missing Tests
 
 The following appear to be missing tests. Take "appear" to mean that @damouse couldnt find or misplaced the testing scripts that mirror the name of the source script.
@@ -83,9 +71,9 @@ The following appear to be missing tests. Take "appear" to mean that @damouse co
 - backend.apichute
 - backend.plans: State, Struct
 
+The only test thats commented out is`chute/test_updateObject`. I updated the patches with correct directories, but internal methods dont fire. No idea why, deferring for now.
 
-
-
+`test_main:4`: the patch decorator screwed up due to module name changes.
 
 
 

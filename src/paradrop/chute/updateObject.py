@@ -108,8 +108,8 @@ class UpdateObject(object):
         self.startTime = time.time()
 
         # Generate the plans we need to setup the chute
-        if(executionplan.generatePlans(self)):
-            log.warn('Failed to generate plans\n')
+        if executionplan.generatePlans(self):
+            log.warn('Failed to generate plans')
             self.complete(success=False, message=self.failure)
             return
 

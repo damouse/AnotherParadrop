@@ -28,6 +28,8 @@ def generatePlans(update):
     chutes are added to the OS.
 
     Returns: True in error, as in we should stop with this update plan
+
+    damouse notes: True in error? wtf dale
     """
     log.header('Generating %r\n' % (update))
 
